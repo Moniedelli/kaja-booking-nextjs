@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  email           String    @unique
+  name            String?
+  address         String?
+  image           String?
+  hashPassword    String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  bookings        Booking[]
+  ratingReviews   RatingReview[]  
+}
+
+model Booking {
+  id                Int       @id @default(autoincrement())
+  booking_date      DateTime
+  guestCount        Int?
+  total_price       Float
+  additional_notes  String?
+  status            String?
+  userId            Int
+  tourId            Int
+  user              User      @relation(fields: [userId], references: [id])
+  tour              Tour      @relation(fields: [tourId], references: [id])
+  payments          Payment[]
+}
+
+model Tour {
+  id            Int            @id @default(autoincrement())
+  tourName      String
+  location      String
+  description   String
+  capacity      Int
+  price         Float
+  duration      String
+  image         String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  tourDetails   TourDetail[]
+  bookings      Booking[]
+}
+
+model TourDetail {
+  id              Int         @id @default(autoincrement())
+  tourId          Int
+  detailLocation  String
+  detailInfo      String
+  note            String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  tour            Tour        @relation(fields: [tourId], references: [id])
+}
+
+model Payment {
+  id           Int      @id @default(autoincrement())
+  amount       Float
+  currency     String
+  status       String   // Contoh: 'pending', 'success', 'failed'
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  bookingId    Int
+  booking      Booking     @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+model RatingReview {
+  id          Int       @id @default(autoincrement())
+  rating      Float
+  review      String?
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+// model Community {
+//   id            Int       @id @default(autoincrement())
+//   name          String
+//   description   String
+//   leaders       CommunityLeader[]   // Relasi ke komite atau pemimpin komunitas
+//   activities    CommunityActivity[]
+//   // Tambahkan atribut lain yang relevan untuk komunitas Anda
+// }
+
+// model CommunityLeader {
+//   id          Int      @id @default(autoincrement())
+//   name        String
+//   role        String   // Contoh: Ketua, Sekretaris, Bendahara, dsb.
+//   userId      Int      // Relasi ke pengguna yang sesungguhnya
+//   communityId Int  // Relasi ke komunitas yang sesungguhnya
+//   community   Community @relation(fields: [communityId], references: [id])
+//   // Tambahkan atribut lain yang relevan untuk anggota komite
+// }
+
+// model CommunityActivity {
+//   id            Int       @id @default(autoincrement())
+//   name          String
+//   description   String
+//   date          DateTime   // Tanggal kegiatan dilakukan
+//   communityId   Int        // Relasi ke komunitas yang melakukan kegiatan
+//   community   Community @relation(fields: [communityId], references: [id])
+//   // Tambahkan atribut lain yang relevan untuk kegiatan komunitas
+// }
+
