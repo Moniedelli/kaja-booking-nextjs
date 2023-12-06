@@ -2,7 +2,7 @@
 
 import { Carousel } from "flowbite-react";
 import RatingReview from "./rating";
-import CardComponent from "./card";
+import PlaceCard from "@/app/admin/components/PlaceCard";
 
 const Body = () => {
   return (
@@ -16,7 +16,7 @@ const Body = () => {
           <img src="https://images.pexels.com/photos/6016924/pexels-photo-6016924.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="..." />
         </Carousel>
       </div>
-      <CardComponent />
+      <PlaceCard />
       <RatingReview />
     </>
   )

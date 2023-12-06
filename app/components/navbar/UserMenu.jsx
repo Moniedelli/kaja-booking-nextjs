@@ -8,11 +8,10 @@ import { useRouter } from "next/navigation";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
-import { SafeUser } from "@/app/types";
 import Image from "next/image";
 import Avatar from "../Avatar";
-import SearchComponent from "@/app/admin/components/SearchComponent";
 import Link from "next/link";
+import SearchComponent from "@/app/admin/components/SearchComponent";
 // import useRentModal from "@/app/hooks/useRentModal";
 // import { SafeUser } from "@/app/types";
 

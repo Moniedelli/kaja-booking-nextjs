@@ -6,36 +6,40 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import getTours from '@/app/actions/getService';
 import ClientOnly from '../ClientOnly';
 import { useState, useEffect } from 'react';
+import PlaceCard from '@/app/admin/components/PlaceCard';
 
 const TourComponent = ({ searchParams }) => {
-  const [tour, setTour] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [tour, setTour] = useState([]);
+  // const [currentUser, setCurrentUser] = useState(null);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedTours = await getTours(searchParams);
-        const fetchedCurrentUser = await getCurrentUser();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const fetchedTours = await getTours(searchParams);
+  //       const fetchedCurrentUser = await getCurrentUser();
 
-        setTour(fetchedTours);
-        setCurrentUser(fetchedCurrentUser);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      }
-    };
+  //       setTour(fetchedTours);
+  //       setCurrentUser(fetchedCurrentUser);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, [searchParams]);
+  //   fetchData();
+  // }, [searchParams]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
-  
+    <div>
+      <PlaceCard />
+      <PlaceCard />
+    </div>
   )
 }
 

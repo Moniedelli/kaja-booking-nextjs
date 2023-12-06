@@ -9,8 +9,6 @@ const AboutPage = () => {
     <div className="flex flex-col justify-start max-w-screen-xl mx-auto">
       <div className='flex justify-center gap-5 py-10'>
         <PlaceCard />
-        <PlaceCard />
-        <PlaceCard />
       </div>
       <FooterComponent />
     </div>

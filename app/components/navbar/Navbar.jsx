@@ -2,7 +2,6 @@
 
 import Container from "../Container";
 import UserMenu from "./UserMenu";
-import { SafeUser } from "@/app/types";
 import { usePathname } from "next/navigation";
 
 const NavbarNav = ({
