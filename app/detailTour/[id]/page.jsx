@@ -4,6 +4,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import TourDetail from '@/app/components/TourDetail';
+import Loading from '@/app/components/Loading';
 
 const DetailTour = ({ params: {id} } ) => {
   const [tour, setTour] = useState(null);
@@ -26,12 +27,11 @@ const DetailTour = ({ params: {id} } ) => {
   return (
     <div>
       {tour ? (
-        <div className='text-white'>
-          <h1>{tour.tourName}</h1>
+        <div>
           <TourDetail tour={tour} />
         </div>
       ) : (
-        <p>Loading tour details...</p>
+        <Loading />
       )}
     </div>
   );

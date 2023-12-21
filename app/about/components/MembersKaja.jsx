@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 function MemberKaja() {
   return (
-    <Card className="max-w-sm bg-black text-white">
+    <Card className="max-w-sm bg-black text-white-">
       <div className="flex justify-end px-4 pt-4">
         <Dropdown inline label="">
           <Dropdown.Item>

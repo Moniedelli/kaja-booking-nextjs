@@ -1,0 +1,28 @@
+{
+  //isi setelah klik metode payment
+  "status_code": "201",
+  "status_message": "Transaksi sedang diproses",
+  "transaction_id": "52ae01a2-7f36-4b4d-816d-2b172d8bdd42",
+  "order_id": "27721",
+  "merchant_id": "G425815924",
+  "gross_amount": "1.00",
+  "currency": "IDR",
+  "payment_type": "bank_transfer",
+  "transaction_time": "2023-12-09 18:18:39",
+  "transaction_status": "pending",
+  "fraud_status": "accept",
+  "va_numbers": [
+      {
+          "bank": "bca",
+          "va_number": "15924893703"
+      }
+  ],
+  "expiry_time": "2023-12-10 18:18:39",
+  "bca_va_number": "15924893703",
+  "bca_expiration": "10 December 18:18:39 WIB",
+  "bca_expiration_raw": "2023-12-10 18:18:39 +0700",
+  "pdf_url": "https://app.sandbox.midtrans.com/snap/v1/transactions/27a44a82-392b-41c4-a0f8-a1b735e5148d/pdf",
+  "finish_redirect_url": "https://555a-180-249-105-223.ngrok-free.app/thanks?order_id=27721\u0026status_code=201\u0026transaction_status=pending",
+  "finish_200_redirect_url": "https://555a-180-249-105-223.ngrok-free.app/thanks?order_id=27721\u0026status_code=200\u0026transaction_status=capture",
+  "charge_type": "bca_va"
+}

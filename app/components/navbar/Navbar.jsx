@@ -17,8 +17,8 @@ const NavbarNav = ({
   }
 
   return (
-    <div className="fixed w-full bg-slate-950 x-10 shadow-sm" style={{ zIndex: 1000 }}>
-      <div className="border-b-[1px]">
+    <div className="fixed w-full bg-transparent x-10 shadow-sm" style={{ zIndex: 1000 }}>
+      <div>
         <Container>
           <UserMenu currentUser={currentUser}/>
         </Container>

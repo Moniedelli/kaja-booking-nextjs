@@ -7,7 +7,7 @@ const AdminLayout = ({ children }) => {
     <div className="flex">
       <NavAdmin />
       <SidebarComponent />
-      <div className="flex-1 flex flex-col overflow-hidden bg-white">
+      <div className="flex-1 flex flex-col overflow-hidden bg-zinc-900 rounded-2xl m-4">
         <div className="p-8 overflow-y-auto">{children}</div>
       </div>
     </div>

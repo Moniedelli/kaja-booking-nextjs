@@ -8,9 +8,6 @@ export default async function handler(req, res) {
       where: {
         id: parseInt(id, 10),
       },
-      include: {
-        tourDetails: true, // Include related TourDetails
-      },
     });
 
     if (!tour) {

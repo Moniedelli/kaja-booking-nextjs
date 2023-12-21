@@ -1,6 +1,6 @@
 // pages/your-file-name.js
 
-import { Nunito } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import './globals.css'
 import ClientOnly from './components/ClientOnly'
 import RegisterModal from './components/modals/RegisterModal'
@@ -9,7 +9,14 @@ import LoginModal from './components/modals/LoginModal'
 import NavbarNav from './components/navbar/Navbar'
 import getCurrentUser from './actions/getCurrentUser'
 
-const nunito = Nunito({ subsets: ['latin'] })
+const nunito = Roboto(
+  { 
+    weight: ['400', '700'],
+    style: ['normal', 'italic'],
+    subsets: ['latin'],
+    display: 'swap', 
+  }
+)
 
 export const metadata = {
   title: 'KAJA',

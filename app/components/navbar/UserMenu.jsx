@@ -53,33 +53,29 @@ const UserMenu = ({
     <Navbar rounded className="bg-black text-gray-400">
       <Navbar.Brand href="https://flowbite-react.com">
         <img src="/images/logoKaja.png" className="mr-3 h-14" alt="KajaLogo" />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white"></span>
+        <span className="self-center whitespace-nowrap text-xl font-semibold"></span>
       </Navbar.Brand>
       <div className="flex md:order-2">
-        <Dropdown
-          arrowIcon={false}
-          inline
-          label={
-            <Avatar src={currentUser?.image} />
-          }
-        >
+        <Dropdown arrowIcon={false} inline className="bg-transparent border-transparent" label={<Avatar src={currentUser?.image} />}>
           {currentUser ? (
             <>
-              <Dropdown.Header>
-                <span className="block text-sm">{currentUser.name}</span>
-                <span className="block truncate text-sm font-medium">{currentUser.email}</span>
-              </Dropdown.Header>
-              <Dropdown.Item onClick={() => {}}>My trips</Dropdown.Item>
-              <Dropdown.Item onClick={() => {}}>My favorites</Dropdown.Item>
-              <Dropdown.Item onClick={() => {}}>My reservations</Dropdown.Item>
-              <Dropdown.Item onClick={() => {}}>My properties</Dropdown.Item>
-              <Dropdown.Item onClick={() => {}}>My home</Dropdown.Item>
-              <Dropdown.Item onClick={() => signOut()}>Logout</Dropdown.Item>
+              <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 text-gray-300 rounded-box w-40">
+                <li onClick={() => {}}><a>{currentUser.name}</a></li>
+                <li onClick={() => {}}><a>{currentUser.email}</a></li>
+                <li onClick={() => {}}><a>My trips</a></li>
+                <li onClick={() => {}}><a>My favorites</a></li>
+                <li onClick={() => {}}><a>My reservations</a></li>
+                <li onClick={() => {}}><a>My reservations</a></li>
+                <li onClick={() => {}}><a>My home</a></li>
+                <li onClick={() => signOut()}><a>Logout</a></li>
+              </ul>
             </>
           ) : (
             <>
-              <Dropdown.Item onClick={registerModal.onOpen}>Sign in</Dropdown.Item>
-              <Dropdown.Item onClick={loginModal.onOpen}>Login</Dropdown.Item>
+              <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 text-gray-300 rounded-box w-28">
+                <li onClick={registerModal.onOpen}><a>Sign in</a></li>
+                <li onClick={loginModal.onOpen}><a>Login</a></li>
+              </ul>
             </>
           )}
         </Dropdown>
@@ -87,32 +83,30 @@ const UserMenu = ({
       </div>
       <Navbar.Collapse>
         <Link href="/">
-          <Navbar.Link active className="custome-text-style">
+          <Navbar.Link active className="custome-text-style text-gray-300 hover:text-red-600 bg-gray-300 md:text-gray-300">
             Home
           </Navbar.Link>
         </Link>
         <Navbar.Link
-          className="custome-text-style"
+          className="custome-text-style hover:text-red-600 md:hover:text-gray-300"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
           About
           {dropdownOpen && (
-            <div className="flex justify-center pt-2" style={{ position: 'absolute', zIndex: 1000 }}>
-              <ListGroup className="w-48">
-                <Link href="/about"><ListGroup.Item>Profile</ListGroup.Item></Link>
-                <Link href="/about/quality"><ListGroup.Item>Quality</ListGroup.Item></Link>
-                <Link href="/about/activity"><ListGroup.Item>Activities</ListGroup.Item></Link>
-                <ListGroup.Item disabled>Download</ListGroup.Item>
-              </ListGroup>
+            <div className="flex justify-center pt-2 text-gray-300" style={{ position: 'absolute', zIndex: 1000 }}>
+              <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-40">
+                <Link href="/about" className="md:hover:text-red-600"><li><a>Profile</a></li></Link>
+                <Link href="/about/quality" className="md:hover:text-red-600"><li><a>Quality</a></li></Link>
+                <Link href="/about/activity" className="md:hover:text-red-600"><li><a>Activity</a></li></Link>
+              </ul>
             </div>
           )}
         </Navbar.Link>
-        <Link href="/services"><Navbar.Link className="custome-text-style">Services</Navbar.Link></Link>
-        <Link href="/pricing"><Navbar.Link className="custome-text-style">Pricing</Navbar.Link></Link>
-        <Link href="/contact"><Navbar.Link className="custome-text-style">Contact</Navbar.Link></Link>
+        <Link href="/services"><Navbar.Link className="custome-text-style md:hover:text-red-600">Services</Navbar.Link></Link>
+        <Link href="/pricing"><Navbar.Link className="custome-text-style md:hover:text-red-600">Pricing</Navbar.Link></Link>
+        <Link href="/contact"><Navbar.Link className="custome-text-style md:hover:text-red-600">Contact</Navbar.Link></Link>
       </Navbar.Collapse>
-      <SearchComponent />
     </Navbar>
   );
 }

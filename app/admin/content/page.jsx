@@ -1,14 +1,13 @@
 // pages/admin/dashboard.js (atau halaman lainnya)
 'use client'
 import React from 'react';
-import InputForm from '../components/InputForm'
-import PlaceCard from '../components/PlaceCard';
+import TabContent from '../components/TabContent';
 
 const Content = () => {
   return (
     <div>
-      <InputForm />
-      <PlaceCard />
+      <h2 className='text-2xl font-medium pb-5'>Tour</h2>
+      <TabContent />
     </div>
   );
 };

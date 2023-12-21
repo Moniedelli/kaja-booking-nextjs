@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
-import { useRouter } from "next/navigation"; // Mengganti "next/navigation" menjadi "next/router"
+import { useRouter } from "next/navigation";
 
 import useRegisterModal from "@/app/hooks/useRegisterModal.jsx";
 import useLoginModal from "@/app/hooks/useLoginModal.jsx";
@@ -50,7 +50,7 @@ const LoginModal = () => {
 
       if (callback?.ok) {
         toast.success('Logged in');
-        router.replace(router.asPath); // Mengganti router.refresh() menjadi router.replace()
+        router.refresh(router.asPath);
         loginModal.onClose();
       }
       

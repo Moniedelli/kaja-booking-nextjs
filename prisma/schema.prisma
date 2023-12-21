@@ -10,51 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
 model User {
   id              Int       @id @default(autoincrement())
   email           String    @unique
   name            String?
-  address         String?
-  emailVerified   DateTime?
-  imageSrc        String?
   hashedPassword  String?
+  status          String
+  role            Role @default(USER)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-  bookings        Booking[]
-  ratingReviews   RatingReview[]  
-  accounts        Account[]
-}
-
-model Account {
-  id                 Int    @id @default(autoincrement())
-  userId             Int   
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  
-  access_token       String?  
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  
-  session_state      String?
-  user               User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model Booking {
-  id                Int       @id @default(autoincrement())
-  booking_date      DateTime
-  guestCount        Int?
-  total_price       Float
-  additional_notes  String?
-  status            String?
-  userId            Int
-  tourId            Int
-  user              User      @relation(fields: [userId], references: [id])
-  tour              Tour      @relation(fields: [tourId], references: [id])
-  payments          Payment[]
+  transactions    Transaction[]
 }
 
 model Tour {
@@ -65,43 +34,62 @@ model Tour {
   capacity      Int
   price         Float
   duration      String
-  imageSrc      String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  tourDetails   TourDetail[]
-  bookings      Booking[]
+  detailDescription   String?
+  detailInfo          String?
+  note                String?
+  itinerary           String?
+  include             String?
+  exclude             String?
+  imageSrc            String[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  transactions  Transaction[]
 }
 
-model TourDetail {
-  id              Int         @id @default(autoincrement())
-  tourId          Int
-  detailLocation  String
-  detailInfo      String
-  note            String
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  tour            Tour        @relation(fields: [tourId], references: [id])
+model Transaction {
+  id                Int                 @id @unique
+  total             Int
+  status            Transactions_status @default(PENDING_PAYMENT)
+  quantity          Int?
+  booking_date      DateTime?
+  snap_token        String?             
+  snap_redirect_url String?            
+  payment_method    String?             
+  createdAt         DateTime?           @default(now()) @db.Timestamp(0)
+  updatedAt         DateTime?           @default(now()) @db.Timestamp(0)
+  userId            Int
+  tourId            Int
+  user              User                @relation(fields: [userId], references: [id])
+  tours             Tour                @relation(fields: [tourId], references: [id])
+  @@map("transactions")
 }
 
-model Payment {
-  id           Int      @id @default(autoincrement())
-  amount       Float
-  currency     String
-  status       String   // Contoh: 'pending', 'success', 'failed'
-  description  String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  bookingId    Int
-  booking      Booking     @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+enum Transactions_status {
+  PENDING_PAYMENT
+  PAID
+  CANCELED
 }
 
-model RatingReview {
-  id          Int       @id @default(autoincrement())
-  rating      Float
-  review      String?
-  userId      Int
-  user        User      @relation(fields: [userId], references: [id])
-}
+// model RatingReview {
+//   id          Int       @id @default(autoincrement())
+//   rating      Float
+//   review      String?
+//   userId      Int
+//   user        User      @relation(fields: [userId], references: [id])
+// }
+
+// model Payment {
+//   id           Int      @id @default(autoincrement())
+//   amount       Float
+//   currency     String
+//   status       String   // Contoh: 'pending', 'success', 'failed'
+//   description  String?
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt
+//   bookingId    Int
+//   booking      Booking     @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+// }
 
 // model Community {
 //   id            Int       @id @default(autoincrement())

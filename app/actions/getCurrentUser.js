@@ -14,9 +14,18 @@ export default async function getCurrentUser() {
       return null;
     }
 
-    const currentUser = await prisma.user.findUnique({
-      where: { email: session.user.email },
-    });
+    let currentUser;
+
+    // Mengecek apakah pengguna memiliki role 'ADMIN'
+    if (session.user.role === 'ADMIN') {
+      currentUser = await prisma.admin.findUnique({
+        where: { email: session.user.email },
+      });
+    } else {
+      currentUser = await prisma.user.findUnique({
+        where: { email: session.user.email },
+      });
+    }
 
     if(!currentUser) {
       return null;
@@ -29,6 +38,7 @@ export default async function getCurrentUser() {
         emailVerified: currentUser.emailVerified?.toISOString() || null
     };
   } catch (error){
+    console.error('Error fetching current user:', error);
     return null;
   }
 }

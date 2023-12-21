@@ -54,6 +54,7 @@ export const authOptions = {
   ],
   pages: {
     signIn: '/',
+    signInAdmin: '/admin'
   },
   debug: process.env.NODE_ENV === 'development',
   session: {

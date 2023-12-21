@@ -6,7 +6,7 @@ import Logo from '@/app/components/navbar/Logo';
 
 const FooterComponent = () => {
   return (
-    <div className='py-10'>
+    <div className='py-10 text-gray-300'>
         <div className="w-full">
           <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
             <div>

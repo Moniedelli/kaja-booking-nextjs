@@ -1,5 +1,4 @@
 import Midtrans from 'midtrans-client';
-import { NextResponse } from 'next/server';
 
 let snap = new Midtrans.Snap({
   isProduction: false,
@@ -10,27 +9,28 @@ let snap = new Midtrans.Snap({
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { id, tourName, price, quantity } = req.body;
-
-      const toRupiah = price * 100;
+      const { id, tourName, price, quantity, payment_method } = req.body;
 
       let parameter = {
         item_details: {
           name: tourName,
-          price: toRupiah,
+          price: price,
           quantity: quantity,
         },
         transaction_details: {
           order_id: id,
-          gross_amount: toRupiah * quantity,
+          gross_amount: price * quantity,
         },
+        credit_card: {
+          bank: payment_method,
+        }
       };
 
       const token = await snap.createTransactionToken(parameter);
       console.log(token);
       
       // Send the JSON response using the 'res' object
-      res.status(200).json({ token });
+      res.status(200).json({ token, id });
     } catch (error) {
       console.error('Error during transaction token generation:', error);
       

@@ -7,20 +7,18 @@ import { TbPhotoPlus } from 'react-icons/tb';
 
 const uploadPreset = "iwetgi5b";
 
-const ImageUpload = ({
-  onChange,
-  value
-}) => {
+const ImageUpload = ({ onChange, value }) => {
   const handleUpload = useCallback((result) => {
-    onChange(result.info.secure_url);
-  }, [onChange]);
+    // Assuming value is an array of image sources
+    onChange([...value, result.info.secure_url]);
+  }, [onChange, value]);
 
   return (
     <CldUploadWidget 
       onUpload={handleUpload} 
       uploadPreset={uploadPreset}
       options={{
-        maxFiles: 1
+        maxFiles: 5
       }}
     >
       {({ open }) => {
@@ -35,7 +33,7 @@ const ImageUpload = ({
               border-dashed 
               border-2 
               p-20 
-              border-neutral-300
+              border-gray-500
               flex
               flex-col
               justify-center
