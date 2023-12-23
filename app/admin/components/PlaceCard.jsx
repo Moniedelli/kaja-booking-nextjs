@@ -11,7 +11,7 @@ const PlaceCard = () => {
   useEffect(() => {
     const getPlace = async () => {
       try {
-        const response = await axios('/api/admin/read');
+        const response = await axios('/api/admin/content/read');
         const places = await response.data;
         setPlaceData(places);
       } catch (error) {

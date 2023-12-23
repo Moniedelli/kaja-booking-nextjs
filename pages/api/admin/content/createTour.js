@@ -9,17 +9,22 @@ export const config = {
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { tourName, location, description, capacity, price, duration, imageSrc } = req.body;
+      const { tourName, location, description, capacity, price, duration, detailDescription, detailInfo, note, itinerary, include, exclude, imageSrc } = req.body;
 
-      // Save Tour object to the database using Prisma
       const newTour = await prisma.tour.create({
         data: {
           tourName,
           location,
           description,
           capacity: parseInt(capacity),
-          price: parseFloat(price),
+          price: parseInt(price),
           duration,
+          detailDescription,
+          detailInfo,
+          note, 
+          itinerary,
+          include,
+          exclude,
           imageSrc,
         },
       });

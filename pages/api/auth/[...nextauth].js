@@ -48,13 +48,41 @@ export const authOptions = {
           throw new Error('Invalid credentials');
         }
 
-        return user;
+        return {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+        };
       },
     }),
   ],
   pages: {
-    signIn: '/',
-    signInAdmin: '/admin'
+    signIn: '/'
+  },
+  callbacks: {
+    async session({ session, token }) {
+      if (token) {
+        // Make sure that the user object exists in the session
+        session.user = {
+          id: token.id,
+          email: token.email,
+          role: token.role,
+        };
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      const dbUser = await prisma.user.findFirst({
+        where: {
+          email: token.email,
+        },
+      });
+  
+      return {
+        ...token,
+        role: dbUser ? dbUser.role : null,
+      };
+    },
   },
   debug: process.env.NODE_ENV === 'development',
   session: {

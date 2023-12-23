@@ -7,72 +7,78 @@ import { useState } from 'react';
 function AddAdmin() {
   const [openModal, setOpenModal] = useState(false);
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
 
   function onCloseModal() {
     setOpenModal(false);
     setEmail('');
+    setName('');
+    setPassword('');
   }
+
+  const handleAddAdmin = async () => {
+    try {
+      const response = await fetch('/api/admin/admins/addAdmin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          name,
+          password,
+        }),
+      });
+
+      if (response.ok) {
+        onCloseModal();
+      } else {
+        console.error('Error adding admin');
+      }
+    } catch (error) {
+      console.error('Error adding admin', error);
+    }
+  };
 
   return (
     <>
-      <div onClick={() => setOpenModal(true)} className='pb-5 pt-2 cursor-pointer pl-2 hover:text-gray-700'>
+      <div onClick={()=>document.getElementById('my_modal_3').showModal()} className='pb-5 pt-2 cursor-pointer pl-2 hover:text-gray-700'>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10">
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
         </svg>
       </div>
-      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
-        <Modal.Header />
-        <Modal.Body>
-          <div className="space-y-6 px-3" style={{ overflowX: 'auto', maxHeight: '350px' }}>
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Add admin</h3>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="email" value="Email" />
-              </div>
-              <TextInput
-                id="email"
-                placeholder="name@company.com"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
-              />
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+          <h3 className="font-bold text-lg mb-3">Add Admin</h3>
+
+          <label className="form-control">
+            <div className="label">
+              <span className="label-text">Email</span>
             </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="username" value="Username" />
-              </div>
-              <TextInput id="text" type="text" required />
+            <input value={email} onChange={(event) => setEmail(event.target.value)} required type="email" placeholder="Type here" className="input input-bordered w-full max-w-lg" />
+          </label>
+          <label className="form-control">
+            <div className="label">
+              <span className="label-text">Name</span>
             </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="password" value="Password" />
-              </div>
-              <TextInput id="password" type="password" required />
+            <input value={name} onChange={(event) => setName(event.target.value)} required type="name" placeholder="Type here" className="input input-bordered w-full max-w-lg" />
+          </label>
+          <label className="form-control">
+            <div className="label">
+              <span className="label-text">Password</span>
             </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="employment" value="Employment" />
-              </div>
-              <TextInput id="text" type="text" required />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="phoneNumber" value="Phone number" />
-              </div>
-              <TextInput id="text" type="text" required />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="date" value="Join date" />
-              </div>
-              <TextInput id="date" type="date" required />
-            </div>
-            <div className="w-full">
-              <Button>Add</Button>
-            </div>
+            <input value={password} onChange={(event) => setPassword(event.target.value)} required type="password" placeholder="Type here" className="input input-bordered w-full max-w-lg" />
+          </label>
+
+          <div className="w-full mt-5">
+            <button onClick={handleAddAdmin} className="btn btn-neutral">Add</button>
           </div>
-        </Modal.Body>
-      </Modal>
+        </div>
+      </dialog>
     </>
   );
 }

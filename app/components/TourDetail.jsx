@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import FooterComponent from "./footer/footer";
+import Image from "next/image";
 
 function TourDetail({ tour }) {
   const {
@@ -13,6 +14,14 @@ function TourDetail({ tour }) {
     capacity,
     price,
     imageSrc,
+    duration,
+    location,
+    detailDescription,
+    detailInfo,
+    note,
+    itinerary,
+    include,
+    exclude
   } = tour;
 
   const { id } = useParams();
@@ -29,11 +38,11 @@ function TourDetail({ tour }) {
         <h2 className="text-2xl font-bold py-5">{tourName}</h2>
         <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
           <Carousel>
-            <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
-            <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
-            <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
-            <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
-            <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
+            <Image src={imageSrc[0]} width={1000} height={1000} alt="..." />
+            <Image src={imageSrc[1]} width={1000} height={1000} alt="..." />
+            <Image src={imageSrc[2]} width={1000} height={1000} alt="..." />
+            <Image src={imageSrc[3]} width={1000} height={1000} alt="..." />
+            <Image src={imageSrc[4]} width={1000} height={1000} alt="..." />
           </Carousel>
         </div>
         <div className="pt-5">
@@ -67,10 +76,12 @@ function TourDetail({ tour }) {
             </a>
           </div>
 
-          <div className="flex justify-center pt-5">
+          <div className="flex justify-center pt-5 text-gray-200">
             {activeTab === 'description' && (
               <div>
                 <p>{description} + Detail info</p>
+                <p>{detailDescription} + Detail info</p>
+                <p>{detailInfo} + Detail info</p>
               </div>
             )}
             {activeTab === 'detailInfo' && (
@@ -141,8 +152,8 @@ function TourDetail({ tour }) {
             )}
             {activeTab === 'note' && (
               <div>
-                Include
-                Exclude berupa list
+                <p>{include}</p>
+                <p>{exclude}</p>
               </div>
             )}
           </div>

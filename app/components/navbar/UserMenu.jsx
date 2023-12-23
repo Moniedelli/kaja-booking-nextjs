@@ -1,30 +1,21 @@
 'use client';
 
 import { useCallback, useState } from "react";
-import { Dropdown, Navbar, ListGroup } from "flowbite-react";
-import { AiOutlineMenu } from "react-icons/ai";
+import { Dropdown, Navbar } from "flowbite-react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
-import Image from "next/image";
 import Avatar from "../Avatar";
 import Link from "next/link";
-import SearchComponent from "@/app/admin/components/SearchComponent";
-// import useRentModal from "@/app/hooks/useRentModal";
-// import { SafeUser } from "@/app/types";
-
 
 const UserMenu = ({
   currentUser,
   src
 }) => {
-  const router = useRouter();
-
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  // const rentModal = useRentModal();
 
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -37,18 +28,6 @@ const UserMenu = ({
     setDropdownOpen(false);
   };
 
-  const toggleOpen = useCallback(() => {
-    setIsOpen((value) => !value);
-  }, []);
-
-  // const onRent = useCallback(() => {
-  //   if (!currentUser) {
-  //     return loginModal.onOpen();
-  //   }
-
-  //   rentModal.onOpen();
-  // }, [loginModal, rentModal, currentUser]);
-
   return ( 
     <Navbar rounded className="bg-black text-gray-400">
       <Navbar.Brand href="https://flowbite-react.com">
@@ -56,16 +35,21 @@ const UserMenu = ({
         <span className="self-center whitespace-nowrap text-xl font-semibold"></span>
       </Navbar.Brand>
       <div className="flex md:order-2">
+        {currentUser && currentUser.role === 'ADMIN' && (
+          <div className="mr-5">
+            <button className="btn">
+              <Link href="/admin">
+                Admin Panel
+              </Link>
+            </button>
+          </div>
+        )}
         <Dropdown arrowIcon={false} inline className="bg-transparent border-transparent" label={<Avatar src={currentUser?.image} />}>
           {currentUser ? (
             <>
               <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 text-gray-300 rounded-box w-40">
                 <li onClick={() => {}}><a>{currentUser.name}</a></li>
                 <li onClick={() => {}}><a>{currentUser.email}</a></li>
-                <li onClick={() => {}}><a>My trips</a></li>
-                <li onClick={() => {}}><a>My favorites</a></li>
-                <li onClick={() => {}}><a>My reservations</a></li>
-                <li onClick={() => {}}><a>My reservations</a></li>
                 <li onClick={() => {}}><a>My home</a></li>
                 <li onClick={() => signOut()}><a>Logout</a></li>
               </ul>

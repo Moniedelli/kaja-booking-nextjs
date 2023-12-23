@@ -26,7 +26,11 @@ function UserAccountTable() {
       try {
         const response = await axios('/api/admin/userAccount/user');
         const data = await response.data;
-        setUserAccount(data);
+
+        
+        const userAccountData = data.filter((user) => user.role === 'USER');
+
+        setUserAccount(userAccountData);
       } catch (error) {
         console.error('Error fetching user:', error);
       }
@@ -82,7 +86,7 @@ function UserAccountTable() {
                 <th>
                   <div className="avatar online placeholder">
                     <div className="bg-neutral text-neutral-content rounded-xl w-12">
-                      <span className="text-xs">active</span>
+                      <span className="text-xs">{userAccount.status}</span>
                     </div>
                   </div> 
                 </th>

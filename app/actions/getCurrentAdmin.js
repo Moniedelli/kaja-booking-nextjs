@@ -1,34 +1,21 @@
 // pages/api/admin/auth/getCurrentUser.js
-import { getServerSession } from "next-auth/server";
+import { getServerSession } from "next-auth";
 import prisma from "@/app/libs/prismadb";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export async function getSession() {
-  return await getServerSession();
+  return await getServerSession(authOptions);
 }
 
-export default async function getCurrentAdmin() {
+export default async function getRole() {
   try {
     const session = await getServerSession();
 
-    if (!session?.user?.email) {
-      return null;
-    }
-
-    const currentAdmin = await prisma.admin.findUnique({
-      where: { email: session.user.email },
-    });
-
-    if (!currentAdmin) {
-      return null;
-    }
-
-    return {
-      ...currentAdmin,
-      createdAt: currentAdmin.createdAt.toISOString(),
-      updatedAt: currentAdmin.updatedAt.toISOString(),
-      // Add any additional fields specific to your admin model
-    };
+    // Check if the user is authenticated and has the 'ADMIN' role
+    return !!(session && session.user.role === 'ADMIN');
   } catch (error) {
-    return null;
+    // Handle unauthorized access or other errors
+    console.error(error);
+    return false;
   }
 }

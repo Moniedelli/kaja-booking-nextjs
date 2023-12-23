@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import Button from '../Button';
+import { Button } from 'flowbite-react';
 
 const Modal = ({
   isOpen,
@@ -158,11 +158,12 @@ const Modal = ({
                       outline
                     />  
                   )}
-                  <Button 
-                    disabled={disable} 
-                    label={actionLabel} 
-                    onClick={handleSubmit}
-                  />
+                  <div className="w-full">
+                    <Button 
+                      disabled={disable} 
+                      label={actionLabel} 
+                      onClick={handleSubmit}>Continue</Button>
+                  </div>
                 </div>
                 {footer}
               </div>

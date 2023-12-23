@@ -19,7 +19,7 @@ const InputForm = () => {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [capacity, setCapacity] = useState(0);
-  const [price, setPrice] = useState(0.0);
+  const [price, setPrice] = useState(0);
   const [duration, setDuration] = useState('');
   const [detailDescription, setDetailDescription] = useState('');
   const [detailInfo, setDetailInfo] = useState('');
@@ -81,11 +81,7 @@ const InputForm = () => {
     };
 
     try {
-      if (tourId) {
-        const response = await axios.put(`/api/admin/updateTour/${tourId}`, formDataToSend);
-      } else {
-        const response = await axios.post('/api/admin/createTour', formDataToSend);
-      }
+      const response = await axios.post('/api/admin/content/createTour', formDataToSend);
       const success = response.status >= 200 && response.status < 300;
 
       if (success) {
@@ -104,7 +100,7 @@ const InputForm = () => {
         setLocation('');
         setDescription('');
         setCapacity(0);
-        setPrice(0.0);
+        setPrice(0);
         setDuration('');
         setDetailDescription('');
         setDetailInfo('');

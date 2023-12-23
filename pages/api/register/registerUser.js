@@ -1,29 +1,40 @@
-// pages/api/register.js
-
 import bcrypt from 'bcrypt';
 import prisma from '@/app/libs/prismadb';
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    try {
-      // Handle the POST request for user registration
-      const { email, name, password } = req.body;
-      const hashedPassword = await bcrypt.hash(password, 12);
+  if (req.method !== 'POST') {
+    return res.status(405).end();
+  }
 
-      const user = await prisma.user.create({
-        data: {
-          email,
-          name,
-          hashedPassword,
-        },
-      });
+  const { email,name, password } = req.body;
 
-      res.status(200).json(user);
-    } catch (error) {
-      console.error('Error during user creation:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+  try {
+    // Cek apakah email sudah digunakan
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email is already in use' });
     }
-  } else {
-    res.status(405).json({ error: 'Method Not Allowed' });
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Simpan pengguna ke database
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        name,
+        hashedPassword,
+      },
+    });
+
+    res.status(200).json({ message: 'Registration successful', user: newUser });
+  } catch (error) {
+    console.error('Error during registration:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  } finally {
+    await prisma.$disconnect();
   }
 }
