@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import InputForm from './InputForm';
-import PlaceCard from './PlaceCard';
+import PlaceCard from '../../components/PlaceCard';
 import { useState } from 'react';
 import TourList from './TourList';
 

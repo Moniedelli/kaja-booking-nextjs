@@ -80,6 +80,7 @@ export const authOptions = {
   
       return {
         ...token,
+        id: dbUser ? dbUser.id : null,
         role: dbUser ? dbUser.role : null,
       };
     },

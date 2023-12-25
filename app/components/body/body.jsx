@@ -2,7 +2,7 @@
 
 import { Button, Accordion } from "flowbite-react";
 import RatingReview from "./rating";
-import PlaceCard from "@/app/admin/components/PlaceCard";
+import PlaceCard from "@/app/components/PlaceCard";
 import Image from "next/image";
 import GaleryUi from "./galeryUi";
 import Link from "next/link";

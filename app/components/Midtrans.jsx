@@ -2,12 +2,14 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useState } from "react";
 import { numberToRupiah } from "@/utils/toRupiah";
+import { useSession } from "next-auth/react";
 
 const MidtransPayment = ({ tour, selectedDate }) => {
   const [quantity, setQuantity] = useState(1);
   const [paymentUrl, setPaymentUrl] = useState("");
   const [retrievedTransactionId, setRetrievedTransactionId] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
+  const { data: session } = useSession();
 
   const decreaseQuantity = () => {
     setQuantity((prevState) => (quantity > 1 ? prevState - 1 : 1)); // Ensure quantity doesn't go below 1
@@ -31,7 +33,7 @@ const MidtransPayment = ({ tour, selectedDate }) => {
         payment_method: "MIDTRANS",
         booking_date: bookingDate,
         quantity,
-        userId: 2, // Replace with the actual user ID
+        userId: session?.user?.id, // Replace with the actual user ID
         tourId: tour.id, // Assuming your tour object has an 'id' property
       };
 
@@ -179,20 +181,22 @@ const MidtransPayment = ({ tour, selectedDate }) => {
       <div>
         Total Price: {totalPrice}
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-3 justify-between">
         <div className="flex sm:gap-4">
           <button
             className="transition-all hover:opacity-75"
             onClick={decreaseQuantity}
           >
-            ➖
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+            </svg>
           </button>
 
           <input
             type="number"
             id="quantity"
             value={quantity}
-            className="h-10 w-16 text-white border-transparent bg-black text-center"
+            className="h-10 w-16 text-gray-300 border-gray-500 bg-transparent rounded-full text-center"
             onChange={(e) => setQuantity(Number(e.target.value))}
           />
 
@@ -200,24 +204,18 @@ const MidtransPayment = ({ tour, selectedDate }) => {
             className="transition-all hover:opacity-75"
             onClick={increaseQuantity}
           >
-            ➕
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
           </button>
+          <button className="btn btn-xs bg-black sm:btn-sm md:btn-md lg:btn-md glass" onClick={createTransaction}>Confirm</button>
         </div>
-        <button
-          className="rounded bg-indigo-700 p-4 text-sm font-medium transition hover:scale-105"
-          onClick={createTransaction}
-        >
-          Confirm
-        </button>
-        <button
-          className="rounded bg-indigo-500 p-4 text-sm font-medium transition hover:scale-105"
-          onClick={checkout}
-        >
-          Checkout
-        </button>
+      </div>
+      <div className="flex mt-2 gap-3">
+        <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md glass bg-black" onClick={checkout}>Checkout</button>
       </div>
       <button
-        className="text-indigo-500 py-4 text-sm font-medium transition hover:scale-105"
+        className="text-gray-400 py-4 text-sm transition hover:scale-105"
         onClick={generatePaymentLink}
       >
         Create Payment Link

@@ -3,7 +3,7 @@
 import React from 'react';
 import FooterComponent from '../components/footer/footer';
 import { Button } from 'flowbite-react';
-import PlaceCard from '../admin/components/PlaceCard';
+import PlaceCard from '../components/PlaceCard';
 
 const AboutPage = () => {
   return (

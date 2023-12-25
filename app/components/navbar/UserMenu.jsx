@@ -9,6 +9,7 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import Avatar from "../Avatar";
 import Link from "next/link";
+import Notification from "./Notification";
 
 const UserMenu = ({
   currentUser,
@@ -36,7 +37,7 @@ const UserMenu = ({
       </Navbar.Brand>
       <div className="flex md:order-2">
         {currentUser && currentUser.role === 'ADMIN' && (
-          <div className="mr-5">
+          <div className="mr-3 mt-1">
             <button className="btn">
               <Link href="/admin">
                 Admin Panel
@@ -44,6 +45,7 @@ const UserMenu = ({
             </button>
           </div>
         )}
+        <Notification />
         <Dropdown arrowIcon={false} inline className="bg-transparent border-transparent" label={<Avatar src={currentUser?.image} />}>
           {currentUser ? (
             <>

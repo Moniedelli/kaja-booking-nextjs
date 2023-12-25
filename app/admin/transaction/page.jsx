@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import TabCustomer from '../components/TabCustomer';
+import TabTransaction from '../components/TabTransaction';
 
 const Transaction = () => {
   return (
@@ -8,7 +8,7 @@ const Transaction = () => {
       <div className='font-medium text-2xl mb-5'>
         Transaction Data
       </div>
-      <TabCustomer />
+      <TabTransaction />
     </div>
   );
 };

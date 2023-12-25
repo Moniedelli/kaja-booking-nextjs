@@ -75,6 +75,7 @@ enum Transactions_status {
   PENDING_PAYMENT
   PAID
   CANCELED
+  DONE
 }
 
 // model RatingReview {

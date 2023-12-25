@@ -8,6 +8,9 @@ import ToasterProvider from './providers/ToasterProvider'
 import LoginModal from './components/modals/LoginModal'
 import NavbarNav from './components/navbar/Navbar'
 import getCurrentUser from './actions/getCurrentUser'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import Provider from './context/client-provider'
 
 const nunito = Roboto(
   { 
@@ -29,18 +32,22 @@ export default async function RootLayout({
   // getCurrentuser didapat dari server component di bagian action kemudian dibawa(passing) ke client component(NavbarNav)
   const currentUser = await getCurrentUser();
 
+  const session = await getServerSession(authOptions)
+
   return (
     <html lang="en">
       <body className={nunito.className}>
-        <ClientOnly>
-          <ToasterProvider />
-          <LoginModal />
-          <RegisterModal />
-          <NavbarNav currentUser={currentUser} />
-        </ClientOnly>
-        <div className='pt-20'>
-          {children}
-        </div>
+        <Provider session={session}>
+          <ClientOnly>
+            <ToasterProvider />
+            <LoginModal />
+            <RegisterModal />
+            <NavbarNav currentUser={currentUser} />
+          </ClientOnly>
+          <div className='pt-20'>
+            {children}
+          </div>
+        </Provider>
       </body>
     </html>
   )

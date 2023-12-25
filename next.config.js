@@ -8,7 +8,8 @@ const nextConfig = {
     domains: [
       "avatars.githubusercontent.com",
       "images.pexels.com",
-      "res.cloudinary.com"
+      "res.cloudinary.com",
+      "static.promediateknologi.id"
     ]
   }
 }

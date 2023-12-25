@@ -4,8 +4,6 @@ import Image from "next/image";
 import MidtransPayment from "../../components/Midtrans";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { HiMail } from 'react-icons/hi';
-import { Label, TextInput } from 'flowbite-react';
 import PaypalButton from "@/app/components/Paypal";
 import Loading from "@/app/components/Loading";
 
@@ -52,48 +50,33 @@ const Payment = ({ params: { id } }) => {
   return (
     <>
       {tour ? (
-        <main className="max-w-xl mx-auto sm:p-28 text-white">
-          <div className="flex justify-center gap-5">
-            <Image
-              src={tour.imageSrc}
-              alt="..."
-              width={250}
-              height={250}
-              className="w-full object-cover rounded-lg"
-            />
-            <div className="grid-cols-1 md:grid-cols-2 gap-4 flex border border-gray-500 rounded-lg bg-black">
-              <div className="text-white p-6">
-                Ini identitas
-                <div className="max-w-md">
-                  <div className="mb-2 block">
-                    <Label htmlFor="email4" value="Your email" />
+        <main className="text-gray-300">
+          <div className="mx-20 mt-10">
+            <div className="card lg:card-side shadow-xl glass">
+              <figure><Image src={tour.imageSrc[1]} width={650} height={650} className="-ml-10" alt="Album"/></figure>
+              <div>
+                <div className="card-body">
+                  <h2 className="card-title">{tour.tourName}</h2>
+                  <p>$ {tour.price}</p>
+                  <div className="mt-4">
+                    <label htmlFor="datepicker" className="block text-sm font-medium text-gray-300">
+                      Select date for booking tour
+                    </label>
+                    <input
+                      type="date"
+                      id="datepicker"
+                      name="datepicker"
+                      onChange={handleDateChange}
+                      className="mt-1 p-2 mb-4 bg-transparent rounded-md"
+                    />
                   </div>
-                  <TextInput id="email4" type="email" icon={HiMail} placeholder="name@flowbite.com" required />
+                  {selectedDate && (
+                    <p className="mt-1.5 text-sm text-gray-100">
+                      Booking Date: {selectedDate}
+                    </p>
+                  )}
+                  <MidtransPayment tour={tour} selectedDate={selectedDate} />
                 </div>
-              </div>
-              <div className="text-white font-semibold p-6">
-                <h3 className="mt-4 text-lg font-medium">
-                  {tour.tourName}
-                </h3>
-                <p className="mt-1.5 text-2xl text-white">$ {tour.price}</p>
-                <div className="mt-4">
-                  <label htmlFor="datepicker" className="block text-sm font-medium text-white bg-black">
-                    Select date for booking tour
-                  </label>
-                  <input
-                    type="date"
-                    id="datepicker"
-                    name="datepicker"
-                    onChange={handleDateChange}
-                    className="mt-1 p-2 mb-4 border border-gray-300 text-white bg-black rounded-md"
-                  />
-                </div>
-                {selectedDate && (
-                  <p className="mt-1.5 text-sm text-gray-100">
-                    Booking Date: {selectedDate}
-                  </p>
-                )}
-                <MidtransPayment tour={tour} selectedDate={selectedDate} />
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
-// pages/admin/dashboard.js (atau halaman lainnya)
 'use client'
+
 import React, { useState, useEffect } from 'react';
 import { Card } from 'flowbite-react';
 import axios from 'axios';
@@ -23,9 +23,9 @@ const PlaceCard = () => {
   }, []);
   
   return (
-    <div className='flex justify-center gap-4 text-gray-300'>
+    <div className='flex flex-wrap justify-center gap-4 text-gray-300'>
       {placeData.map((item) => (
-        <div className='max-w-xs'>
+        <div className='max-w-xs flex-shrink-0'>
           <Card key={item.id} placeData={item}
             imgAlt="Meaningful alt text for an image that is not purely decorative"
             imgSrc={item.imageSrc[0]}

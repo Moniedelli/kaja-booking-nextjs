@@ -1,36 +1,58 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Tooltip } from 'flowbite-react';
 import axios from 'axios';
 import SearchComponent from './SearchComponent';
-import Link from 'next/link';
+import UpdateStatusTransaction from './UpdateStatusTransaction';
 
 function TransactionTable() {
   const [transactions, setTransactions] = useState([]);
-  const [selectedTransactions, setSelectedTransactions] = useState([]);
+  const [searchNotFound, setSearchNotFound] = useState(false);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios('/api/admin/content/read');
+        const response = await axios('/api/admin/transaction/read');
         const data = await response.data;
-        setTransactions(data);
+
+        const transactionStatus = data.filter((status) => status.status !== 'DONE');
+        setTransactions(transactionStatus);
       } catch (error) {
         console.error('Error fetching transactions:', error);
       }
     };
 
     fetchTransactions();
-  }, []);
+  }, []);  
 
   const handleSearch = async (searchResults) => {
+    let filteredTransactions = [];
+
     if (Array.isArray(searchResults)) {
-      setTransactions(searchResults);
+      filteredTransactions = searchResults;
     } else if (searchResults.transactions) {
-      setTransactions(searchResults.transactions);
-    } else {
-      setTransactions([]); // If the response structure is unexpected
+      filteredTransactions = searchResults.transactions;
+    }
+  
+    // Filter out transactions with status DONE
+    filteredTransactions = filteredTransactions.filter(
+      (transaction) => transaction.status !== 'DONE'
+    );
+  
+    setTransactions(filteredTransactions);
+
+    setSearchNotFound(filteredTransactions.length === 0);
+  };  
+
+  const updateTransactionStatus = async (transactionId) => {
+    try {
+      await axios.put(`/api/admin/transaction/${transactionId}`, {
+        status: 'DONE',
+      });
+      const updatedTransactions = await fetchTransactions();
+      setTransactions(updatedTransactions);
+    } catch (error) {
+      console.error('Error updating transaction status:', error);
     }
   };
 
@@ -74,94 +96,47 @@ function TransactionTable() {
     }
   };
 
-  const handleCheckboxChange = (transactionId) => {
-    // Toggle selectedTransactions based on checkbox changes
-    const isSelected = selectedTransactions.includes(transactionId);
-
-    if (isSelected) {
-      setSelectedTransactions((prev) => prev.filter((id) => id !== transactionId));
-    } else {
-      setSelectedTransactions((prev) => [...prev, transactionId]);
-    }
-  };
-
-  const handleNotifyClick = (selectedTransactions) => {
-    try {
-      // Kirim notifikasi atau lakukan operasi lainnya di server
-      // Gunakan selectedTransactions untuk mengidentifikasi data yang akan dipindahkan
-
-      // Contoh: Memindahkan data ke CustomerHistory
-      const updatedTransactions = transactions.filter(
-        (transaction) => !selectedTransactions.includes(transaction.id)
-      );
-
-      // Simpan data yang dipindahkan ke state atau server
-      setTransactions(updatedTransactions);
-
-      // Kosongkan selectedTransactions setelah pemindahan berhasil
-      setSelectedTransactions([]);
-    } catch (error) {
-      console.error('Error moving data:', error);
-    }
-  };
-
   return (
     <div>
       <SearchComponent onSearch={handleSearch} />
       <div style={{ overflowX: 'auto', maxHeight: '400px' }}>
         <div className="overflow-x-auto">
-          <table className="table table-zebra">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th>
-                <th>Id</th>
-                <th>User Id</th>
-                <th>Tour Id</th>
-                <th>Date</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction) => (
-              <tr key={transaction.id}>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" onChange={() => handleCheckboxChange(transaction.id)} onClick={()=>document.getElementById('my_modal_3').showModal()} />
-                  </label>
-                </th>
-                <th>{transaction.id}</th>
-                <td>{transaction.userId}</td>
-                <td>{transaction.tourId}</td>
-                <th>{formatDate(transaction.booking_date)}</th>
-                <th>{transaction.quantity}</th>
-                <th>{transaction.total}</th>
-                <th>{getStatusBadge(transaction.status)}</th>
-              </tr>
-              ))}
-            </tbody>
-          </table>
+          {searchNotFound ? (
+            <p className="text-center text-muted py-5">No results found.</p>
+          ) : (
+            <table className="table table-zebra">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>User Id</th>
+                  <th>Tour Id</th>
+                  <th>Date</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((transaction) => (
+                <tr key={transaction.id}>
+                  <th>{transaction.id}</th>
+                  <td>{transaction.userId}</td>
+                  <td>{transaction.tourId}</td>
+                  <th>{formatDate(transaction.booking_date)}</th>
+                  <th>{transaction.quantity}</th>
+                  <th>{transaction.total}</th>
+                  <th>{getStatusBadge(transaction.status)}</th>
+                  <th>
+                    <UpdateStatusTransaction transactions={transaction} onUpdate={updateTransactionStatus} />
+                  </th>
+                </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          
         </div>
-
-        <dialog id="my_modal_3" className="modal">
-          <div className="modal-box">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-            <h3 className="font-bold text-lg">Hello!</h3>
-            <p className="py-4">Notify customer and list going to histories table</p>
-            <div className="modal-action">
-              <button className='btn' onClick={() => handleNotifyClick(selectedTransactions)}>Notify</button>
-            </div>
-          </div>
-        </dialog>
       </div>
     </div>
   );

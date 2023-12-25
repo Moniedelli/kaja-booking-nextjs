@@ -1,10 +1,10 @@
 'use client'
 import React from 'react';
 import { useState } from 'react';
-import CustomerHistory from './CustomerHistory';
+import TransactionHistory from './TransactionHistory';
 import TransactionTable from './TransactionTable';
 
-const TabCustomer = () => {
+const TabTransaction = () => {
   const [activeTab, setActiveTab] = useState('tours');
 
   const showTab = (tabId) => {
@@ -57,7 +57,7 @@ const TabCustomer = () => {
         )}
         {activeTab === 'addTour' && (
           <div>
-            <CustomerHistory />
+            <TransactionHistory />
           </div>
         )}
         {activeTab === 'manage' && (
@@ -70,4 +70,4 @@ const TabCustomer = () => {
   );
 };
 
-export default TabCustomer;
+export default TabTransaction;
