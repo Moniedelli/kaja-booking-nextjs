@@ -33,24 +33,29 @@ model User {
 }
 
 model Tour {
-  id            Int            @id @default(autoincrement())
-  tourName      String
-  location      String
-  description   String
-  capacity      Int
-  price         Int
-  duration      String
-  detailDescription   String?
-  detailInfo          String?
+  id                  Int            @id @default(autoincrement())
+  tourName            String
+  location            String
+  description         String
+  capacity            Int?
+  price               Int
+  itinerary           String
   note                String?
-  itinerary           String?
-  include             String?
-  exclude             String?
   imageSrc            String[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  transactions  Transaction[]
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  transactions        Transaction[]
 }
+
+// model Itinerary {
+//   id                   Int            @id @default(autoincrement())
+//   tourId               Int
+//   time                 String
+//   description          String
+//   createdAt            DateTime       @default(now())
+//   updatedAt            DateTime       @updatedAt
+//   tour                 Tour           @relation(fields: [tourId], references: [id])
+// }
 
 model Transaction {
   id                Int                 @id @unique

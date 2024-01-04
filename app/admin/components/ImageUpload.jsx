@@ -33,13 +33,13 @@ const ImageUpload = ({ onChange, value }) => {
               border-dashed 
               border-2 
               p-20 
-              border-gray-500
+              border-neutral-500
               flex
               flex-col
               justify-center
               items-center
               gap-4
-              text-neutral-600
+              text-neutral-500
             "
           >
             <TbPhotoPlus size={50} />

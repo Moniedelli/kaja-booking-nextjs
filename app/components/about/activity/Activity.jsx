@@ -2,7 +2,7 @@
 
 const Activity = () => {
   return (
-    <div className="text-gray-300">
+    <div className="text-gray-300 pt-20">
       <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
         <li>
           <div className="timeline-middle">
@@ -13,7 +13,7 @@ const Activity = () => {
           <div className="timeline-start md:text-end mb-10">
             <div className="font-semibold text-2xl text-left ml-10 -mb-5">KAJA Jeep</div>
             <div className="text-sm text-left m-10">
-            iPhone is a line of smartphones produced by Apple Inc. that use Apple's own iOS mobile operating system. The first-generation iPhone was announced by then-Apple CEO Steve Jobs on January 9, 2007. Since then, Apple has annually released new iPhone models and iOS updates. As of November 1, 2018, more than 2.2 billion iPhones had been sold. As of 2022, the iPhone accounts for 15.6% of global smartphone market share
+            iPhone is a line of smartphones produced by Apple Inc. that use own iOS mobile operating system. The first-generation iPhone was announced by then-Apple CEO Steve Jobs on January 9, 2007. Since then, Apple has annually released new iPhone models and iOS updates. As of November 1, 2018, more than 2.2 billion iPhones had been sold. As of 2022, the iPhone accounts for 15.6% of global smartphone market share
             </div>
           </div>
           <hr/>

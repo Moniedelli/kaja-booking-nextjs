@@ -1,33 +1,19 @@
 'use client'
 
+import { Carousel } from "flowbite-react";
 import Image from "next/image";
 
 const GaleryUi = () => {
   return (
     <>
       <div className="px-28">
-        <div className="carousel rounded-box">
-          <div className="carousel-item">
-            <img src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg" alt="Burger" />
-          </div> 
-          <div className="carousel-item">
-            <img src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg" alt="Burger" />
-          </div> 
-          <div className="carousel-item">
-            <img src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg" alt="Burger" />
-          </div> 
-          <div className="carousel-item">
-            <img src="https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg" alt="Burger" />
-          </div> 
-          <div className="carousel-item">
-            <img src="https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg" alt="Burger" />
-          </div> 
-          <div className="carousel-item">
-            <img src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg" alt="Burger" />
-          </div> 
-          <div className="carousel-item">
-            <img src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg" alt="Burger" />
-          </div>
+        <div className="h-96 sm:h-96 xl:h-96 2xl:h-96">
+          <Carousel>
+            <img src="/images/About.png" alt="..." />
+            <img src="/images/About2.png" alt="..." />
+            <img src="/images/About3.png" alt="..." />
+            <img src="/images/About4.png" alt="..." />
+          </Carousel>
         </div>
       </div>
     </>

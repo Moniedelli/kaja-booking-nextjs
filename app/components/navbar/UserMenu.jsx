@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Dropdown, Navbar } from "flowbite-react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import Avatar from "../Avatar";
 import Link from "next/link";
 import Notification from "./Notification";
+import Image from "next/image";
 
 const UserMenu = ({
   currentUser,
@@ -20,6 +21,20 @@ const UserMenu = ({
 
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const shouldBeScrolled = scrollTop > 50; // Set the scroll threshold as needed
+      setIsScrolled(shouldBeScrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleMouseEnter = () => {
     setDropdownOpen(true);
@@ -30,9 +45,14 @@ const UserMenu = ({
   };
 
   return ( 
-    <Navbar rounded className="bg-black text-gray-400">
+    <Navbar
+      rounded
+      className={`text-gray-400 ${
+        isScrolled ? "bg-black" : "bg-transparent"
+      } transition-all`}
+    >
       <Navbar.Brand href="https://flowbite-react.com">
-        <img src="/images/logoKaja.png" className="mr-3 h-14" alt="KajaLogo" />
+        <Image src="/images/Kaja-Logo.png" width={50} height={100} className="mr-3 h-14" alt="KajaLogo" />
         <span className="self-center whitespace-nowrap text-xl font-semibold"></span>
       </Navbar.Brand>
       <div className="flex md:order-2">
@@ -59,7 +79,7 @@ const UserMenu = ({
           ) : (
             <>
               <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 text-gray-300 rounded-box w-28">
-                <li onClick={registerModal.onOpen}><a>Sign in</a></li>
+                <li onClick={registerModal.onOpen}><a>Sign up</a></li>
                 <li onClick={loginModal.onOpen}><a>Login</a></li>
               </ul>
             </>
@@ -90,7 +110,6 @@ const UserMenu = ({
           )}
         </Navbar.Link>
         <Link href="/services"><Navbar.Link className="custome-text-style md:hover:text-red-600">Services</Navbar.Link></Link>
-        <Link href="/pricing"><Navbar.Link className="custome-text-style md:hover:text-red-600">Pricing</Navbar.Link></Link>
         <Link href="/contact"><Navbar.Link className="custome-text-style md:hover:text-red-600">Contact</Navbar.Link></Link>
       </Navbar.Collapse>
     </Navbar>

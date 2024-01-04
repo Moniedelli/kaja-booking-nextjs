@@ -1,8 +1,5 @@
 'use client'
 
-import { Button, Accordion } from "flowbite-react";
-import RatingReview from "./rating";
-import PlaceCard from "@/app/components/PlaceCard";
 import Image from "next/image";
 import GaleryUi from "./galeryUi";
 import Link from "next/link";
@@ -11,18 +8,18 @@ const Body = () => {
   return (
     <>
       <div className="-mb-10 pl-10">
-        <Image src="/images/jeep_PNG121 2.png" width={1400} height={1400}></Image>
+        <Image src="/images/jeep_PNG121 2.png" width={1400} height={1400} alt="jeep-lp"></Image>
         </div>
       <div className="flex">
-        <div className="pl-28 -mt-56">
+        <div className="pl-28 -mt-44">
           <h2 className="text-extra-huge text-gray-400 opacity-30 font-bold">JEEP</h2>
         </div>
-        <div className="-mt-10 -ml-48">
-          <Image src="/images/jeep_.png" width={650} height={650}></Image>
-          <Image src="/images/jeep_PNG121 3.png" width={650} height={650} className=""></Image>
+        <div className="-mt-5 -ml-36">
+          <Image src="/images/Jeep-landingpage.png" width={600} height={600} alt="jeep-lp"></Image>
+          <Image src="/images/jeep_PNG121 3.png" width={650} height={650} className="" alt="jeep-lp"></Image>
         </div>
       </div>
-      <div className="pl-28 -mt-52 text-gray-300 mb-32">
+      <div className="pl-28 -mt-60 text-gray-300 mb-32">
         <h2 className="text-xl font-bold pb-3 tracking-widest">Kaldera Jeep Adventure</h2>
         <h3 className="text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. <br/>Molestias, a. Eveniet sint, soluta magnam dolor odit quam <br/></h3>
       </div>
@@ -78,13 +75,13 @@ const Body = () => {
       </div>
       <div className="px-28">
         <div className="card lg:card-side shadow-xl glass">
-          <figure><img src="https://daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.jpg" alt="Album"/></figure>
+          <figure><Image src="/images/Jeep-detail.png" width={300} height={300} alt="Album"/></figure>
           <div className="card-body">
             <h2 className="card-title">New album is released!</h2>
             <p>Click the button to listen on Spotiwhy app.</p>
             <div className="card-actions justify-end bg-transparent">
               <Link href="/services">
-                <Button gradientDuoTone="tealToLime">See more</Button>
+                <button className="btn">See more</button>
               </Link>
             </div>
           </div>
@@ -100,75 +97,14 @@ const Body = () => {
         </div>
       </div>
       <GaleryUi />
-      <div className="p-28">
-        <Accordion>
-          <Accordion.Panel>
-            <Accordion.Title>What is Flowbite?</Accordion.Title>
-            <Accordion.Content>
-              <p className="mb-2 dark:text-gray-400">
-                Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons,
-                dropdowns, modals, navbars, and more.
-              </p>
-              <p className="dark:text-gray-400">
-                Check out this guide to learn how to&nbsp;
-                <a
-                  href="https://flowbite.com/docs/getting-started/introduction/"
-                  className="text-cyan-600 hover:underline dark:text-cyan-500"
-                >
-                  get started&nbsp;
-                </a>
-                and start developing websites even faster with components on top of Tailwind CSS.
-              </p>
-            </Accordion.Content>
-          </Accordion.Panel>
-          <Accordion.Panel>
-            <Accordion.Title>Is there a Figma file available?</Accordion.Title>
-            <Accordion.Content>
-              <p className="mb-2 dark:text-gray-400">
-                Flowbite is first conceptualized and designed using the Figma software so everything you see in the library
-                has a design equivalent in our Figma file.
-              </p>
-              <p className="dark:text-gray-400">
-                Check out the
-                <a href="https://flowbite.com/figma/" className="text-cyan-600 hover:underline dark:text-cyan-500">
-                  Figma design system
-                </a>
-                based on the utility classes from Tailwind CSS and components from Flowbite.
-              </p>
-            </Accordion.Content>
-          </Accordion.Panel>
-          <Accordion.Panel>
-            <Accordion.Title>What are the differences between Flowbite and Tailwind UI?</Accordion.Title>
-            <Accordion.Content>
-              <p className="mb-2 dark:text-gray-400">
-                The main difference is that the core components from Flowbite are open source under the MIT license, whereas
-                Tailwind UI is a paid product. Another difference is that Flowbite relies on smaller and standalone
-                components, whereas Tailwind UI offers sections of pages.
-              </p>
-              <p className="mb-2 dark:text-gray-400">
-                However, we actually recommend using both Flowbite, Flowbite Pro, and even Tailwind UI as there is no
-                technical reason stopping you from using the best of two worlds.
-              </p>
-              <p className="mb-2 dark:text-gray-400">Learn more about these technologies:</p>
-              <ul className="list-disc pl-5 dark:text-gray-400">
-                <li>
-                  <a href="https://flowbite.com/pro/" className="text-cyan-600 hover:underline dark:text-cyan-500">
-                    Flowbite Pro
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://tailwindui.com/"
-                    rel="nofollow"
-                    className="text-cyan-600 hover:underline dark:text-cyan-500"
-                  >
-                    Tailwind UI
-                  </a>
-                </li>
-              </ul>
-            </Accordion.Content>
-          </Accordion.Panel>
-        </Accordion>
+      <h2 className="text-3xl font-semibold text-center text-gray-300 pt-10">LOCATION</h2>
+      <div className="flex justify-center pt-5">
+        <div className="bg-zinc-950 p-4 rounded-2xl">
+          <iframe width="800px" height="500px" 
+            style={{ border: 0, borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', }}
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3948.5961844184344!2d115.39966849999999!3d-8.243297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd1f772073b083f%3A0x4bfe801909f40a64!2sKINTAMANI%20JEEP%20ADVENTURE!5e0!3m2!1sid!2sid!4v1704261843813!5m2!1sid!2sid"
+          ></iframe>
+        </div>
       </div>
     </>
   )

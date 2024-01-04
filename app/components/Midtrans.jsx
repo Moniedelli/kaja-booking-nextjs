@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { numberToRupiah } from "@/utils/toRupiah";
 import { useSession } from "next-auth/react";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const MidtransPayment = ({ tour, selectedDate }) => {
   const [quantity, setQuantity] = useState(1);
@@ -213,6 +214,9 @@ const MidtransPayment = ({ tour, selectedDate }) => {
       </div>
       <div className="flex mt-2 gap-3">
         <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md glass bg-black" onClick={checkout}>Checkout</button>
+        <Link href={`/pricing`}>
+          <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md glass bg-amber-300 text-gray-950 font-semibold hover:text-amber-300 italic">PayPal</button>        
+        </Link>
       </div>
       <button
         className="text-gray-400 py-4 text-sm transition hover:scale-105"

@@ -22,7 +22,7 @@ export default async function ({ children }) {
 
   return (
     <Provider>
-      <div className="flex">
+      <div className="flex mt-20">
         <NavAdmin currentUser={currentUser} />
         <SidebarComponent />
         <div className="flex-1 flex flex-col overflow-hidden bg-zinc-900 rounded-2xl m-4">

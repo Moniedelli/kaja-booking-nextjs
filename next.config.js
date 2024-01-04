@@ -9,7 +9,8 @@ const nextConfig = {
       "avatars.githubusercontent.com",
       "images.pexels.com",
       "res.cloudinary.com",
-      "static.promediateknologi.id"
+      "static.promediateknologi.id",
+      "daisyui.com"
     ]
   }
 }

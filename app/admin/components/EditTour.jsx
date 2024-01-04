@@ -20,13 +20,8 @@ const EditTour = ({placeData}) => {
   const [description, setDescription] = useState(placeData.description);
   const [capacity, setCapacity] = useState(placeData.capacity);
   const [price, setPrice] = useState(placeData.price);
-  const [duration, setDuration] = useState(placeData.duration);
-  const [detailDescription, setDetailDescription] = useState(placeData.detailDescription);
-  const [detailInfo, setDetailInfo] = useState(placeData.detailInfo);
-  const [note, setNote] = useState(placeData.note);
   const [itinerary, setItinerary] = useState(placeData.itinerary);
-  const [exclude, setExclude] = useState(placeData.exclude);
-  const [include, setInclude] = useState(placeData.include);
+  const [note, setNote] = useState(placeData.note);
   const [imageSrc, setImageSrc] = useState(placeData.imageSrc);
   const [submitMessage, setSubmitMessage] = useState(null);
 
@@ -40,13 +35,8 @@ const EditTour = ({placeData}) => {
         description,
         capacity,
         price,
-        duration,
-        detailDescription,
-        detailInfo,
-        note,
         itinerary,
-        include,
-        exclude,
+        note,
         imageSrc
       });
   
@@ -122,45 +112,15 @@ const EditTour = ({placeData}) => {
                   </label>
                   <label className="form-control w-full max-w-3xl">
                     <div className="label">
-                      <span className="label-text">Duration</span>
-                    </div>
-                    <input type="text" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Type here" className="input input-xs input-bordered w-full max-w-3xl" />
-                  </label>
-                  <label className="form-control w-full max-w-3xl">
-                    <div className="label">
-                      <span className="label-text">Detail description</span>
-                    </div>
-                    <textarea placeholder="Bio" value={detailDescription} onChange={(e) => setDetailDescription(e.target.value)} className="textarea textarea-bordered textareamax-w-3xl w-full max-w-3xl" ></textarea>
-                  </label>
-                  <label className="form-control w-full max-w-3xl">
-                    <div className="label">
-                      <span className="label-text">Detail Info</span>
-                    </div>
-                    <textarea placeholder="Bio" value={detailInfo} onChange={(e) => setDetailInfo(e.target.value)} className="textarea textarea-bordered textareamax-w-3xl w-full max-w-3xl" ></textarea>
-                  </label>
-                  <label className="form-control w-full max-w-3xl">
-                    <div className="label">
-                      <span className="label-text">Note</span>
-                    </div>
-                    <textarea placeholder="Bio" value={note} onChange={(e) => setNote(e.target.value)} className="textarea textarea-bordered textareamax-w-3xl w-full max-w-3xl" ></textarea>
-                  </label>
-                  <label className="form-control w-full max-w-3xl">
-                    <div className="label">
                       <span className="label-text">Itinerary</span>
                     </div>
                     <textarea placeholder="Bio" value={itinerary} onChange={(e) => setItinerary(e.target.value)} className="textarea textarea-bordered textareamax-w-3xl w-full max-w-3xl" ></textarea>
                   </label>
                   <label className="form-control w-full max-w-3xl">
                     <div className="label">
-                      <span className="label-text">Include</span>
+                      <span className="label-text">Note</span>
                     </div>
-                    <textarea placeholder="Bio" value={include} onChange={(e) => setInclude(e.target.value)} className="textarea textarea-bordered textareamax-w-3xl w-full max-w-3xl" ></textarea>
-                  </label>
-                  <label className="form-control w-full max-w-3xl">
-                    <div className="label">
-                      <span className="label-text">Exclude</span>
-                    </div>
-                    <textarea placeholder="Bio" value={exclude} onChange={(e) => setExclude(e.target.value)} className="textarea textarea-bordered textareamax-w-3xl w-full max-w-3xl" ></textarea>
+                    <textarea placeholder="Bio" value={note} onChange={(e) => setNote(e.target.value)} className="textarea textarea-bordered textareamax-w-3xl w-full max-w-3xl" ></textarea>
                   </label>
                 </div>
                 <div>

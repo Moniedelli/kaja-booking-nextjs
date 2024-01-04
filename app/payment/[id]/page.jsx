@@ -4,7 +4,6 @@ import Image from "next/image";
 import MidtransPayment from "../../components/Midtrans";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import PaypalButton from "@/app/components/Paypal";
 import Loading from "@/app/components/Loading";
 
 const Payment = ({ params: { id } }) => {
@@ -50,10 +49,10 @@ const Payment = ({ params: { id } }) => {
   return (
     <>
       {tour ? (
-        <main className="text-gray-300">
+        <main className="text-gray-300 pt-20">
           <div className="mx-20 mt-10">
             <div className="card lg:card-side shadow-xl glass">
-              <figure><Image src={tour.imageSrc[1]} width={650} height={650} className="-ml-10" alt="Album"/></figure>
+              <figure><Image src={tour.imageSrc[0]} width={650} height={650} className="-ml-10" alt="Album"/></figure>
               <div>
                 <div className="card-body">
                   <h2 className="card-title">{tour.tourName}</h2>
