@@ -3,6 +3,7 @@
 import { Dropdown, Navbar, Button } from "flowbite-react";
 import { signOut } from "next-auth/react";
 import Avatar from "@/app/components/Avatar";
+import Link from "next/link";
 
 const AdminMenu = ({ currentUser, src }) => {
 
@@ -16,6 +17,13 @@ const AdminMenu = ({ currentUser, src }) => {
                 <li onClick={() => {}}><a>{currentUser.name}</a></li>
                 <li onClick={() => {}}><a>{currentUser.email}</a></li>
                 <li onClick={() => {}}><a>My home</a></li>
+                <div>
+                  <li>
+                    <Link href="/">
+                      KAJA Dashboard
+                    </Link>
+                  </li>
+                </div>
                 <li onClick={() => signOut()}><a>Logout</a></li>
               </ul>
             </>

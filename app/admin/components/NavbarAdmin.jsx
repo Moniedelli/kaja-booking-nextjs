@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 
 'use client';
 
@@ -14,13 +15,7 @@ function NavAdmin({currentUser}) {
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Admin Dashboard</span>
       </Navbar.Brand>
       <div className="flex md:order-2 -mb-8 -mt-6">
-        <div className="mr-5">
-          <button className="btn">
-            <Link href="/">
-              KAJA Dashboard
-            </Link>
-          </button>
-        </div>
+        
         <Container>
           <AdminMenu currentUser={currentUser}/>
         </Container>

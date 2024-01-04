@@ -54,15 +54,7 @@ const UserMenu = ({
         <span className="self-center whitespace-nowrap text-xl font-semibold"></span>
       </Navbar.Brand>
       <div className="flex md:order-2">
-        {currentUser && currentUser.role === 'ADMIN' && (
-          <div className="mr-3 mt-1">
-            <button className="btn">
-              <Link href="/admin">
-                Admin Panel
-              </Link>
-            </button>
-          </div>
-        )}
+        
         {/* <Notification /> */}
         <Dropdown arrowIcon={false} inline className="bg-transparent border-transparent" label={<Avatar src={currentUser?.image} />}>
           {currentUser ? (
@@ -71,6 +63,15 @@ const UserMenu = ({
                 <li onClick={() => {}}><a>{currentUser.name}</a></li>
                 <li onClick={() => {}}><a>{currentUser.email}</a></li>
                 <li onClick={() => {}}><a>My home</a></li>
+                {currentUser && currentUser.role === 'ADMIN' && (
+                  <div>
+                    <li>
+                      <Link href="/admin">
+                        Admin panel
+                      </Link>
+                    </li>
+                  </div>
+                )}
                 <li onClick={() => signOut()}><a>Logout</a></li>
               </ul>
             </>
