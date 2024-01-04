@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import Image from 'next/image';
+import ImageUpload from '@/app/admin/components/ImageUpload';
+import { Button } from 'flowbite-react';
 
 const EditTour = ({ onClose }) => {
   const router = useRouter();

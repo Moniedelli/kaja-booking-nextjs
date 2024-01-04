@@ -1,6 +1,5 @@
 'use client';
 
-import { Table } from 'flowbite-react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -46,7 +45,7 @@ function AdminList() {
           </thead>
           <tbody>
             {adminList.map((adminList) => (
-              <tr>
+              <tr key={admin.id}>
                 <th>{adminList.id}</th>
                 <th>{adminList.name}</th>
                 <td>{adminList.email}</td>

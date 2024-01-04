@@ -1,15 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Dropdown, Navbar } from "flowbite-react";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import Avatar from "../Avatar";
 import Link from "next/link";
-import Notification from "./Notification";
 import Image from "next/image";
 
 const UserMenu = ({
@@ -65,7 +63,7 @@ const UserMenu = ({
             </button>
           </div>
         )}
-        <Notification />
+        {/* <Notification /> */}
         <Dropdown arrowIcon={false} inline className="bg-transparent border-transparent" label={<Avatar src={currentUser?.image} />}>
           {currentUser ? (
             <>
