@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React, { ReactNode } from 'react';
 import SidebarComponent from './components/Sidebar';
 import NavAdmin from './components/NavbarAdmin';
