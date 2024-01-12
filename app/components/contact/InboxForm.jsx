@@ -112,7 +112,7 @@ const InboxForm = () => {
                         ></textarea>
                       </label>
                       <div className="py-3">
-                        <button type="submit" className="btn btn-outline btn-warning">Send</button>
+                        <button type="submit" className="btn orange">Send</button>
                         {submitMessage && <p>{submitMessage}</p>}
                       </div>
                     </div>

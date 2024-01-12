@@ -3,7 +3,7 @@ import prisma from '@/app/libs/prismadb';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { total, status = 'PENDING_PAYMENT',quantity, payment_method,booking_date, snap_token = null, snap_redirect_url = null, userId, tourId } = req.body;
+      const { total, status = 'PENDING_PAYMENT',quantity, payment_method,booking_date, userId, tourId } = req.body;
 
       // Pengecekan apakah userId ada
       if (!userId) {
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       }
 
       const id = Math.floor(10000 + Math.random() * 90000);
-
+      
       const newTransaction = await prisma.transaction.create({
         data: {
           id,
@@ -20,8 +20,6 @@ export default async function handler(req, res) {
           quantity,
           payment_method,
           booking_date,
-          snap_token,
-          snap_redirect_url,
           userId,
           tourId,
         },

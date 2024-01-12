@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 import Avatar from "@/app/components/Avatar";
 import Link from "next/link";
 
-const AdminMenu = ({ currentUser, src }) => {
+const AdminMenu = ({ currentUser }) => {
 
   return ( 
     <Navbar rounded className="bg-black text-gray-400">
@@ -13,10 +13,10 @@ const AdminMenu = ({ currentUser, src }) => {
         <Dropdown arrowIcon={false} inline className="bg-transparent border-transparent" label={<Avatar src={currentUser?.image} />}>
           {currentUser ? (
             <>
-              <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 text-gray-300 rounded-box w-40">
+              <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-black mt-3 text-gray-300 rounded-box w-40">
                 <li onClick={() => {}}><a>{currentUser.name}</a></li>
                 <li onClick={() => {}}><a>{currentUser.email}</a></li>
-                <li onClick={() => {}}><a>My home</a></li>
+                {/* <li onClick={() => {}}><a>My home</a></li> */}
                 <div>
                   <li>
                     <Link href="/">

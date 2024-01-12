@@ -10,6 +10,7 @@ const MidtransPayment = ({ tour, selectedDate }) => {
   const [paymentUrl, setPaymentUrl] = useState("");
   const [retrievedTransactionId, setRetrievedTransactionId] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const { data: session } = useSession();
 
   const decreaseQuantity = () => {
@@ -22,16 +23,14 @@ const MidtransPayment = ({ tour, selectedDate }) => {
 
   const { tourName, price } = tour;
 
-  const toRupiah = numberToRupiah(price);
-
   const createTransaction = async () => {
     try {
       const bookingDate = new Date(selectedDate).toISOString();
 
       const data = {
-        total: toRupiah * quantity,
+        total: price * quantity,
         status: 'PENDING_PAYMENT',
-        payment_method: "MIDTRANS",
+        payment_method: "BCA VA",
         booking_date: bookingDate,
         quantity,
         userId: session?.user?.id, // Replace with the actual user ID
@@ -45,7 +44,8 @@ const MidtransPayment = ({ tour, selectedDate }) => {
         const createdTransactionId = response.data.id;
         setRetrievedTransactionId(createdTransactionId); // Set the retrieved transactionId
         // Continue with other logic or state updates as needed
-        setTotalPrice(toRupiah * quantity); 
+        setTotalPrice(price * quantity); 
+        setIsConfirmed(true);
       } else {
         console.error('Failed to create transaction. Server response:', response.data);
       }
@@ -65,7 +65,7 @@ const MidtransPayment = ({ tour, selectedDate }) => {
       const data = {
         id: retrievedTransactionId,
         tourName: tourName,
-        price: toRupiah,
+        price: price,
         quantity: quantity,
       };
   
@@ -82,9 +82,6 @@ const MidtransPayment = ({ tour, selectedDate }) => {
       }
   
       const requestData = await response.json();
-  
-      // Menyimpan token ke database dengan menggunakan ID transaksi
-      await saveTokenToDatabase(requestData.token, retrievedTransactionId);
 
       // Melakukan pembayaran menggunakan Snap
       window.snap.pay(requestData.token);
@@ -99,25 +96,6 @@ const MidtransPayment = ({ tour, selectedDate }) => {
       }
     } catch (error) {
       console.error("Error during checkout:", error);
-    }
-  };
-  
-  // Fungsi untuk menyimpan token ke database dengan menggunakan ID transaksi
-  const saveTokenToDatabase = async (token, id) => {
-    try {
-      // Menggunakan Axios atau fetch untuk mengirim token dan ID transaksi ke API penyimpanan di server
-      const response = await axios.post('/api/tokenizerMidtrans/saveTokenToDB', { token, id });
-  
-      if (response.status === 200) {
-        console.log('Token saved successfully:', response.data);
-        // Anda dapat menangani berhasil menyimpan token ke database di sini
-      } else {
-        console.error('Failed to save token to database. Server response:', response.data);
-        // Anda dapat menangani kegagalan penyimpanan token ke database di sini
-      }
-    } catch (error) {
-      console.error('Error saving token to database:', error);
-      // Anda dapat menangani error penyimpanan token ke database di sini
     }
   };
 
@@ -209,21 +187,25 @@ const MidtransPayment = ({ tour, selectedDate }) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
           </button>
-          <button className="btn btn-xs bg-black sm:btn-sm md:btn-md lg:btn-md glass" onClick={createTransaction}>Confirm</button>
+          <button className="btn bg-transparent hover:bg-transparent border-transparent" onClick={createTransaction}>Confirm</button>
         </div>
       </div>
       <div className="flex mt-2 gap-3">
-        <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md glass bg-black" onClick={checkout}>Checkout</button>
-        <Link href={`/pricing`}>
+      {isConfirmed && ( // Show "Pay" button only if isConfirmed is true
+        <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md glass bg-black" onClick={checkout}>
+          Pay
+        </button>
+      )}
+      {/* <Link href={`/pricing`}>
           <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md glass bg-amber-300 text-gray-950 font-semibold hover:text-amber-300 italic">PayPal</button>        
-        </Link>
+        </Link> */}
       </div>
-      <button
-        className="text-gray-400 py-4 text-sm transition hover:scale-105"
+      {/* <button
+        className="flex justify-start text-gray-400 py-4 text-sm transition hover:scale-105"
         onClick={generatePaymentLink}
       >
         Create Payment Link
-      </button>
+      </button> */}
       <div className="text-black underline">
         {paymentUrl && <Link href={paymentUrl} target="_blank">{paymentUrl}</Link>}
       </div>

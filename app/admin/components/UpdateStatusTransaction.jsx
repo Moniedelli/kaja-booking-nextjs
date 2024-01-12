@@ -11,15 +11,15 @@ function UpdateStatusTransaction({transactions, onUpdate}) {
       <button onClick={()=>document.getElementById(`my_modal_${transactions.id}`).showModal()}>
         <input type="checkbox" checked="checked" className="checkbox" />
         <dialog id={`my_modal_${transactions.id}`} className="modal">
-          <div className="modal-box">
+          <div className="modal-box bg-zinc-900">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => closeModal()}>✕</button>
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
             <h3 className="font-bold text-lg">Hello!</h3>
             <p className="py-4">List going to histories table</p>
-            <div className="modal-action">
-              <button className='btn' onClick={() => handleUpdate()}>Confirm</button>
+            <div className="modal-action flex justify-center">
+              <button className='btn orange' onClick={() => handleUpdate()}>Confirm</button>
             </div>
           </div>
         </dialog>

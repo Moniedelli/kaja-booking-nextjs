@@ -7,7 +7,7 @@ import FooterComponent from "../components/footer/footer";
 export default function Home() {
   return (
     <ClientOnly>
-      <div className="flex flex-col justify-start max-w-screen-xl mx-auto text-white pt-16">
+      <div className="flex flex-col justify-start text-white pt-16">
         <InboxForm />
         <FooterComponent />
       </div>

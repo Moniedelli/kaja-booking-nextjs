@@ -1,7 +1,6 @@
 'use client'
 import React from 'react';
 import InputForm from './InputForm';
-import PlaceCard from '../../components/PlaceCard';
 import { useState } from 'react';
 import TourList from './TourList';
 
@@ -37,7 +36,7 @@ const TabContent = () => {
             </svg>
             Add tour
           </div></a>
-        <a 
+        {/* <a 
           role="tab" 
           className={`tab ${activeTab === 'manage' ? 'tab-active' : ''}`}
           onClick={() => showTab('manage')}
@@ -47,7 +46,7 @@ const TabContent = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Manage
-          </div></a>
+          </div></a> */}
       </div>
 
       <div className="pt-5">
@@ -61,11 +60,11 @@ const TabContent = () => {
             <InputForm />
           </div>
         )}
-        {activeTab === 'manage' && (
+        {/* {activeTab === 'manage' && (
           <div>
             <p>Ini belum tau isi apa</p>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

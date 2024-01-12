@@ -57,13 +57,13 @@ function UserAccountTable() {
 
   return (
     <div>
-      <SearchComponent onSearch={handleSearch} />
+      {/* <SearchComponent onSearch={handleSearch} />
       <button className="btn">
         Found
         <div className="badge badge-secondary">{totalUsers}</div>
         users
-      </button>
-      <div style={{ overflowX: 'auto', maxHeight: '400px' }}>
+      </button> */}
+      <div style={{ overflowX: 'auto', maxHeight: '700px' }}>
         <div className="overflow-x-auto">
           <table className="table table-zebra">
             {/* head */}

@@ -6,7 +6,7 @@ html,
 body,
 :root {
   height: 100%;
-  background-color: black;
+  background-color: #18181b;
 }
 
 .Navbar.Link.active {
@@ -18,10 +18,27 @@ body,
   font-size: 15px;
 }
 
+.bg-yellow {
+  background-color: #FFD369;
+  color: #09090b;
+}
+
+.orange {
+  background-color: #FFD369;
+  color: #09090b;
+  transition: background-color 0.5s, color 0.3s;
+}
+
+.orange:hover {
+  background-color: #09090b; 
+  color: #FFD369; 
+  border: none;
+}
+
 .paddingTop {
   padding-top: -100px;
 }
 
 .text-extra-huge {
-  font-size: 17rem; /* Sesuaikan ukuran font sesuai kebutuhan Anda */
+  font-size: 18rem; /* Sesuaikan ukuran font sesuai kebutuhan Anda */
 }

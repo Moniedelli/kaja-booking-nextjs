@@ -26,8 +26,8 @@ export default async function ({ children }) {
       <div className="flex mt-20">
         <NavAdmin currentUser={currentUser} />
         <SidebarComponent />
-        <div className="flex-1 flex flex-col overflow-hidden bg-zinc-900 rounded-2xl m-4">
-          <div className="p-8 overflow-y-auto">{children}</div>
+        <div className="flex-1 flex flex-col overflow-hidden bg-zinc-900 text-zinc-300 rounded-2xl m-4">
+          <div className="p-5 overflow-y-auto">{children}</div>
         </div>
       </div>
     </Provider>

@@ -36,7 +36,7 @@ const TabTransaction = () => {
             </svg>
             History
           </div></a>
-        <a 
+        {/* <a 
           role="tab" 
           className={`tab ${activeTab === 'manage' ? 'tab-active' : ''}`}
           onClick={() => showTab('manage')}
@@ -46,7 +46,7 @@ const TabTransaction = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Manage
-          </div></a>
+          </div></a> */}
       </div>
 
       <div className="pt-5">
@@ -60,11 +60,11 @@ const TabTransaction = () => {
             <TransactionHistory />
           </div>
         )}
-        {activeTab === 'manage' && (
+        {/* {activeTab === 'manage' && (
           <div>
             <p>Ini belum tau isi apa</p>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

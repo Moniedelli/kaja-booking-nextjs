@@ -43,14 +43,14 @@ const EditTour = ({placeData}) => {
       console.log('Tour berhasil diupdate');
       setSubmitMessage(
         <Toast>
-          {/* ... (your success Toast) */}
+          Success change tour
         </Toast>
       );
     } catch (error) {
       console.error('Terjadi kesalahan:', error);
       setSubmitMessage(
         <Toast>
-          {/* ... (your error Toast) */}
+          Fail change tour
         </Toast>
       );
     }
@@ -73,54 +73,54 @@ const EditTour = ({placeData}) => {
           
           <div className='text-gray-300'>
             <dialog id={`my_modal_${placeData.id}`} className="modal">
-              <div className="modal-box">
+              <div className="modal-box bg-zinc-800">
                 <form method="dialog">
                   {/* if there is a button in form, it will close the modal */}
                   <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <h3 className="font-bold text-lg">Edit {tourName}</h3>
+                <h3 className="font-bold text-lg">Edit <span className='italic'>{tourName}</span></h3>
                 <div className="flex flex-col gap-4 max-w-3xl">
                   <label className="form-control w-full max-w-3xl">
                     <div className="label">
                       <span className="label-text">Tour Name</span>
                     </div>
-                    <input type="text" value={tourName} onChange={(e) => setTourName(e.target.value)} placeholder="Type here" className="input input-xs input-bordered w-full max-w-3xl" />
+                    <input type="text" value={tourName} onChange={(e) => setTourName(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
                   </label>
                   <label className="form-control w-full max-w-3xl">
                     <div className="label">
                       <span className="label-text">Location</span>
                     </div>
-                    <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Type here" className="input input-xs input-bordered w-full max-w-3xl" />
+                    <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
                   </label>
                   <label className="form-control w-full max-w-3xl">
                     <div className="label">
                       <span className="label-text">Description</span>
                     </div>
-                    <textarea placeholder="Bio" value={description} onChange={(e) => setDescription(e.target.value)} className="textarea textarea-bordered textarea-3xl w-full max-w-3xl" ></textarea>
+                    <textarea placeholder="Bio" value={description} onChange={(e) => setDescription(e.target.value)} className="textarea textarea-bordered bg-transparent textarea-3xl w-full max-w-3xl" ></textarea>
                   </label>
                   <label className="form-control w-full max-w-3xl">
                     <div className="label">
                       <span className="label-text">Capacity</span>
                     </div>
-                    <input type="text" value={capacity} onChange={(e) => setCapacity(e.target.value)} placeholder="Type here" className="input input-xs input-bordered w-full max-w-3xl" />
+                    <input type="text" value={capacity} onChange={(e) => setCapacity(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
                   </label>
                   <label className="form-control w-full max-w-3xl">
                     <div className="label">
                       <span className="label-text">Price</span>
                     </div>
-                    <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Type here" className="input input-xs input-bordered w-full max-w-3xl" />
+                    <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
                   </label>
                   <label className="form-control w-full max-w-3xl">
                     <div className="label">
                       <span className="label-text">Itinerary</span>
                     </div>
-                    <textarea placeholder="Bio" value={itinerary} onChange={(e) => setItinerary(e.target.value)} className="textarea textarea-bordered textareamax-w-3xl w-full max-w-3xl" ></textarea>
+                    <textarea placeholder="Bio" value={itinerary} onChange={(e) => setItinerary(e.target.value)} className="textarea textarea-bordered bg-transparent w-full max-w-3xl" ></textarea>
                   </label>
                   <label className="form-control w-full max-w-3xl">
                     <div className="label">
                       <span className="label-text">Note</span>
                     </div>
-                    <textarea placeholder="Bio" value={note} onChange={(e) => setNote(e.target.value)} className="textarea textarea-bordered textareamax-w-3xl w-full max-w-3xl" ></textarea>
+                    <textarea placeholder="Bio" value={note} onChange={(e) => setNote(e.target.value)} className="textarea textarea-bordered bg-transparent w-full max-w-3xl" ></textarea>
                   </label>
                 </div>
                 <div>
@@ -133,13 +133,13 @@ const EditTour = ({placeData}) => {
                         />
                       </Label>
                     </div>
-                    <ImageUpload value={imageSrc} onChange={setImageSrc} />
+                    <ImageUpload value={imageSrc} onChange={handleImageChange} />
                   </div>
                 </div>
                 {/* Tombol Submit Example dan Pesan Submit */}
                 <div className='flex justify-start gap-2'>
-                  <Button type="submit" className='mt-5' onClick={(e) => handleEdit(e)}>Submit changes</Button>
-                    {submitMessage && <p>{submitMessage}</p>}
+                  <button type="submit" className='mt-5 orange py-2 px-5 rounded-3xl' onClick={(e) => handleEdit(e)}>Submit changes</button>
+                  {submitMessage && <p>{submitMessage}</p>}
                 </div>
               </div>
             </dialog>

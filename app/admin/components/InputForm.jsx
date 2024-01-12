@@ -110,7 +110,7 @@ const InputForm = () => {
 
   return (
     <div>
-      <div className='flex justify-center'>
+      <div className='flex justify-center text-zinc-300'>
         {/* Bagian Kiri */}
         <div className="flex flex-col gap-4 max-w-3xl w-full">
           <label className="form-control w-full max-w-3xl">
@@ -191,7 +191,7 @@ const InputForm = () => {
       </div>
     </div>
     <div className='flex justify-center gap-2'>
-      <Button type="submit" className='mt-5' onClick={handleSubmit}>{tourId ? 'Update Tour' : 'Add Tour'}</Button>
+      <button type="submit" className='mt-5 orange py-2 px-5 rounded-3xl' onClick={handleSubmit}>{tourId ? 'Update Tour' : 'Add Tour'}</button>
         {submitMessage && <p>{submitMessage}</p>}
       {/* <Button type="submit" className='mt-5'></Button>
         {submitMessage && <p>{submitMessage}</p>} */}

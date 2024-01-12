@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <ClientOnly>
       <Container>
-        <div className="flex flex-col justify-start max-w-screen-xl mx-auto">
+        <div className="flex flex-col justify-start  mx-auto">
           <Body />
           <FooterComponent />
         </div>

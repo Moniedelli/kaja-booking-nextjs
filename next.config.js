@@ -10,7 +10,8 @@ const nextConfig = {
       "images.pexels.com",
       "res.cloudinary.com",
       "static.promediateknologi.id",
-      "daisyui.com"
+      "daisyui.com",
+      "otomotifzone.com"
     ]
   }
 }

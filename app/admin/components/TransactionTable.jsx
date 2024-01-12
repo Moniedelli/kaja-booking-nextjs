@@ -16,6 +16,9 @@ function TransactionTable() {
         const data = await response.data;
 
         const transactionStatus = data.filter((status) => status.status !== 'DONE');
+        // Urutkan transaksi berdasarkan tanggal pembuatan secara descending (terbaru dulu)
+        transactionStatus.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
         setTransactions(transactionStatus);
       } catch (error) {
         console.error('Error fetching transactions:', error);
@@ -108,28 +111,58 @@ function TransactionTable() {
               {/* head */}
               <thead>
                 <tr>
-                  <th>Id</th>
-                  <th>User Id</th>
-                  <th>Tour Id</th>
-                  <th>Date</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
+                  <th>Transaction Code</th>
+                  <th>Customer Name</th>
+                  <th>Customer Email</th>
+                  <th>Tour Name</th>
+                  <th>Period</th>
+                  <th>Tour Price /person</th>
+                  <th>Quantity /person</th>
+                  <th>Total Price</th>
+                  <th>Created At</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 {transactions.map((transaction) => (
                 <tr key={transaction.id}>
-                  <th>{transaction.id}</th>
-                  <td>{transaction.userId}</td>
-                  <td>{transaction.tourId}</td>
+                  <th className='text-center'>{transaction.id}</th>
+                  <th className='text-center'>{transaction.user.name}</th>
+                  <th className='text-center'>{transaction.user.email}</th>
+                  <th className='text-center'>{transaction.tours.tourName}</th>
                   <th>{formatDate(transaction.booking_date)}</th>
-                  <th>{transaction.quantity}</th>
-                  <th>{transaction.total}</th>
+                  <th className='text-center'>{transaction.tours.price}</th>
+                  <th className='text-center'>{transaction.quantity}</th>
+                  <th className='text-center'>{transaction.total}</th>
+                  <th>{formatDate(transaction.createdAt)}</th>
                   <th>{getStatusBadge(transaction.status)}</th>
                   <th>
                     <UpdateStatusTransaction transactions={transaction} onUpdate={updateTransactionStatus} />
                   </th>
+
+                  {/* Open the modal using document.getElementById('ID').showModal() method */}
+                  <dialog id={`user_modal${transaction.id}`} className="modal">
+                    <div className="modal-box bg-zinc-300 text-zinc-900">
+                      <h3 className="font-semibold text-lg">Data of id user <span className='font-bold text-lg italic'>{transaction.user.id}</span></h3>
+                      <p className="py-4"><span className='font-semibold'>Username:</span> {transaction.user.name}</p>
+                      <p className=""><span className='font-semibold'>Email:</span> {transaction.user.email}</p>
+                    </div>
+                    <form method="dialog" className="modal-backdrop">
+                      <button>close</button>
+                    </form>
+                  </dialog>
+
+                  {/* Open the modal using document.getElementById('ID').showModal() method */}
+                  <dialog id={`tour_modal${transaction.id}`} className="modal">
+                    <div className="modal-box bg-zinc-300 text-zinc-900">
+                      <h3 className="font-semibold text-lg">Data of id tour <span className='font-bold text-lg italic'>{transaction.tours.id}</span></h3>
+                      <p className="py-4"><span className='font-semibold'>Tour name:</span> {transaction.tours.tourName}</p>
+                      <p className=""><span className='font-semibold'>Tour price:</span> {transaction.tours.price} /person</p>
+                    </div>
+                    <form method="dialog" className="modal-backdrop">
+                      <button>close</button>
+                    </form>
+                  </dialog>
                 </tr>
                 ))}
               </tbody>

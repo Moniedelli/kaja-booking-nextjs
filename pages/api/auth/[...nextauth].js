@@ -50,6 +50,7 @@ export const authOptions = {
 
         return {
           id: user.id,
+          name: user.name,
           email: user.email,
           role: user.role,
         };
@@ -65,6 +66,7 @@ export const authOptions = {
         // Make sure that the user object exists in the session
         session.user = {
           id: token.id,
+          name: token.name,
           email: token.email,
           role: token.role,
         };
@@ -82,6 +84,7 @@ export const authOptions = {
         ...token,
         id: dbUser ? dbUser.id : null,
         role: dbUser ? dbUser.role : null,
+        name: dbUser ? dbUser.name : null,
       };
     },
   },
