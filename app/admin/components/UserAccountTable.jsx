@@ -50,9 +50,13 @@ function UserAccountTable() {
   };
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', options);
+    
+    const day = ('0' + date.getDate()).slice(-2); 
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+    const year = ('0' + date.getFullYear()).slice(-4);
+
+    return `${day}/${month}/${year}`;
   };
 
   return (
@@ -69,9 +73,9 @@ function UserAccountTable() {
             {/* head */}
             <thead>
               <tr>
-                <th>User Id</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Phone Number</th>
                 <th>Created At</th>
                 <th>Status</th>
               </tr>
@@ -79,9 +83,9 @@ function UserAccountTable() {
             <tbody>
               {userAccount.map((userAccount) => (
               <tr key={userAccount.id}>
-                <th>{userAccount.id}</th>
                 <td>{userAccount.name}</td>
                 <td>{userAccount.email}</td>
+                <td>{userAccount.phoneNumber}</td>
                 <th>{formatDate(userAccount.createdAt)}</th>
                 <th>
                   <div className="avatar online placeholder">

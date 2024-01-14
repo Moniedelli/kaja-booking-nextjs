@@ -42,7 +42,7 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
-      <div className='pb-5'>
+      <div>
         <ServiceTour />
       </div>
       <div className='py-20 bg-zinc-950 my-10 px-16'>

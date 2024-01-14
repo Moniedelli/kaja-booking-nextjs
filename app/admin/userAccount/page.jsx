@@ -6,7 +6,7 @@ const Transaction = () => {
   return (
     <div>
       <div className='font-medium text-2xl mb-5'>
-        User Account Data
+        Customer Data
       </div>
       <UserAccountTable />
     </div>

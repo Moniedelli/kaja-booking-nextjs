@@ -38,7 +38,6 @@ const TourList = () => {
                 <th>Tour Name</th>
                 <th>Location</th>
                 <th>Description</th>
-                <th>Capacity</th>
                 <th>Price</th>
                 <th>Itinerary</th>
                 <th>Note</th>
@@ -47,15 +46,14 @@ const TourList = () => {
             </thead>
             <tbody>
               {placeData.map((item) => (
-                <tr key={item.id} placeData={item} className='text-xs'>
+                <tr key={item.id} placeData={item} className='text-xs' onClick={()=>document.getElementById(`desc_modal${item.id}`).showModal()}>
                   <td>{item.id}</td>
                   <td>{item.tourName}</td>
                   <td>{item.location}</td>
-                  <td onClick={()=>document.getElementById(`desc_modal${item.id}`).showModal()}>{truncateDescription(item.description)}</td>
-                  <td className='text-center'>{item.capacity}</td>
+                  <td>{truncateDescription(item.description)}</td>
                   <td>{item.price}</td>
-                  <td onClick={()=>document.getElementById(`itinerary_modal${item.id}`).showModal()}>{truncateDescription(item.itinerary)}</td>
-                  <td onClick={()=>document.getElementById(`note_modal${item.id}`).showModal()}>{truncateDescription(item.note)}</td>
+                  <td>{truncateDescription(item.itinerary)}</td>
+                  <td>{truncateDescription(item.note)}</td>
                   <td>
                     <div onClick={()=>document.getElementById(`my_modal1_${item.id}`).showModal()}>
                       <div className="tooltip" data-tip="see more">
@@ -77,32 +75,9 @@ const TourList = () => {
                     </form>
                   </dialog>
 
-                  {/* Open the modal using document.getElementById('ID').showModal() method */}
-                  <dialog id={`itinerary_modal${item.id}`} className="modal">
-                    <div className="modal-box bg-zinc-300 text-zinc-900">
-                      <h3 className="font-semibold text-lg">Itinerary of <span className='font-bold text-lg italic'>{item.tourName}</span></h3>
-                      <p className="py-4">{item.itinerary}</p>
-                    </div>
-                    <form method="dialog" className="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
-
-                  {/* Open the modal using document.getElementById('ID').showModal() method */}
-                  <dialog id={`note_modal${item.id}`} className="modal">
-                    <div className="modal-box bg-zinc-300 text-zinc-900">
-                      <h3 className="font-semibold text-lg">Note of <span className='font-bold text-lg italic'>{item.tourName}</span></h3>
-                      <p className="py-4">{item.description}</p>
-                    </div>
-                    <form method="dialog" className="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
-
                   <dialog id={`my_modal1_${item.id}`} className="modal">
                       <div className="modal-box bg-zinc-800 text-zinc-300">
                         <form method="dialog">
-                          {/* if there is a button in form, it will close the modal */}
                           <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
                         <h3 className="font-bold text-lg">Image of <span className='font-bold text-lg italic'>{item.tourName}</span></h3>

@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     return res.status(405).end();
   }
 
-  const { email,name, password } = req.body;
+  const { email, name, password, phoneNumber } = req.body;
 
   try {
     // Cek apakah email sudah digunakan
@@ -27,6 +27,7 @@ export default async function handler(req, res) {
         email,
         name,
         hashedPassword,
+        phoneNumber
       },
     });
 

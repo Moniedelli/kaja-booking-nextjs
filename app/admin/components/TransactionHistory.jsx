@@ -43,9 +43,13 @@ function TransactionTable() {
   };  
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', options);
+    
+    const day = ('0' + date.getDate()).slice(-2); 
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+    const year = ('0' + date.getFullYear()).slice(-4);
+
+    return `${day}/${month}/${year}`;
   };
 
   return (
@@ -60,25 +64,30 @@ function TransactionTable() {
             {/* head */}
             <thead>
               <tr>
-                <th>Id</th>
-                <th>User Id</th>
-                <th>Tour Id</th>
-                <th>Date</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Status</th>
+                <th>Transaction Code</th>
+                <th>Customer Name</th>
+                <th>Customer Phone</th>
+                <th>Tour Name</th>
+                <th>Tour Price /person</th>
+                <th>Tour Booking User</th>
+                <th>Quantity /person</th>
+                <th>Total Price</th>
                 <th>Updated At</th>
+                <th>Status</th> 
               </tr>
             </thead>
             <tbody>
               {transactions.map((transaction) => (
-              <tr key={transaction.id}>
+              <tr key={transaction.id} className='text-center'>
                 <th>{transaction.id}</th>
-                <td>{transaction.userId}</td>
-                <td>{transaction.tourId}</td>
+                <th>{transaction.user.name}</th>
+                <th>{transaction.user.phoneNumber}</th>
+                <th>{transaction.tours.tourName}</th>
+                <th>{transaction.tours.price}</th>
                 <th>{formatDate(transaction.booking_date)}</th>
                 <th>{transaction.quantity}</th>
                 <th>{transaction.total}</th>
+                <th>{formatDate(transaction.updatedAt)}</th>
                 <th>
                   <div className="badge badge-primary gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -87,7 +96,6 @@ function TransactionTable() {
                     {transaction.status}
                   </div>
                 </th>
-                <th>{formatDate(transaction.updatedAt)}</th>
               </tr>
               ))}
             </tbody>

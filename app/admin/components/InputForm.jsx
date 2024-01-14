@@ -18,7 +18,6 @@ const InputForm = () => {
   const [tourName, setTourName] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [capacity, setCapacity] = useState(0);
   const [price, setPrice] = useState(0);
   const [itinerary, setItinerary] = useState('');
   const [note, setNote] = useState('');
@@ -36,7 +35,6 @@ const InputForm = () => {
           setTourName(tourData.tourName);
           setLocation(tourData.location);
           setDescription(tourData.description)
-          setCapacity(tourData.capacity);
           setPrice(tourData.price);
           setItinerary(tourData.itinerary);
           setNote(tourData.note);
@@ -58,7 +56,6 @@ const InputForm = () => {
       tourName,
       location,
       description,
-      capacity,
       price,
       itinerary,
       note,
@@ -84,7 +81,6 @@ const InputForm = () => {
         setTourName('');
         setLocation('');
         setDescription('');
-        setCapacity(0);
         setPrice(0);
         setItinerary('');
         setNote('');
@@ -130,12 +126,6 @@ const InputForm = () => {
               <span className="label-text">Desc</span>
             </div>
             <textarea placeholder="Type here..." value={description} onChange={(e) => setDescription(e.target.value)} className="textarea bg-transparent textarea-bordered max-w-3xl w-full" ></textarea>
-          </label>
-          <label className="form-control w-full max-w-3xl">
-            <div className="label">
-              <span className="label-text">Capacity</span>
-            </div>
-            <input type="text" value={capacity} onChange={(e) => setCapacity(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
           </label>
           <label className="form-control w-full max-w-3xl">
             <div className="label">

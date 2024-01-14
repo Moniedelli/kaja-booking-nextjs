@@ -9,12 +9,14 @@ function AddAdmin() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   function onCloseModal() {
     setOpenModal(false);
     setEmail('');
     setName('');
     setPassword('');
+    setPhoneNumber('');
   }
 
   const handleAddAdmin = async () => {
@@ -28,6 +30,7 @@ function AddAdmin() {
           email,
           name,
           password,
+          phoneNumber
         }),
       });
 
@@ -72,6 +75,12 @@ function AddAdmin() {
               <span className="label-text text-zinc-300">Password</span>
             </div>
             <input value={password} onChange={(event) => setPassword(event.target.value)} required type="password" placeholder="Type here" className="bg-transparent input input-bordered w-full max-w-lg" />
+          </label>
+          <label className="form-control">
+            <div className="label">
+              <span className="label-text text-zinc-300">Phone Number</span>
+            </div>
+            <input value={phoneNumber} onChange={(event) => setPhoneNumber(event.target.value)} required type="phone" placeholder="Type here" className="bg-transparent input input-bordered w-full max-w-lg" />
           </label>
 
           <div className="w-full mt-5">

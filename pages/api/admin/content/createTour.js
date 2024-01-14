@@ -9,14 +9,13 @@ export const config = {
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { tourName, location, description, capacity, price, itinerary, note, imageSrc } = req.body;
+      const { tourName, location, description, price, itinerary, note, imageSrc } = req.body;
 
       const newTour = await prisma.tour.create({
         data: {
           tourName,
           location,
           description,
-          capacity: parseInt(capacity),
           price: parseInt(price),
           itinerary,
           note,

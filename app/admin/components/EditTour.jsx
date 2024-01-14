@@ -55,11 +55,6 @@ const EditTour = ({placeData}) => {
       );
     }
   };
-  
-    
-  const handleImageChange = (newImages) => {
-    setImageSrc(newImages);
-  };
 
   return (
     <div>
@@ -122,19 +117,6 @@ const EditTour = ({placeData}) => {
                     </div>
                     <textarea placeholder="Bio" value={note} onChange={(e) => setNote(e.target.value)} className="textarea textarea-bordered bg-transparent w-full max-w-3xl" ></textarea>
                   </label>
-                </div>
-                <div>
-                  {/* Input untuk Gambar */}
-                  <div id="fileUpload" className="max-w-3xl">
-                    <div className="mb-2 block">
-                      <Label htmlFor="file" value="Image">
-                        <input
-                          name="image"
-                        />
-                      </Label>
-                    </div>
-                    <ImageUpload value={imageSrc} onChange={handleImageChange} />
-                  </div>
                 </div>
                 {/* Tombol Submit Example dan Pesan Submit */}
                 <div className='flex justify-start gap-2'>

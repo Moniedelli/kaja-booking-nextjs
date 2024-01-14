@@ -25,7 +25,6 @@ export default async function handler(req, res) {
         tourName: req.body.tourName || existingTour.tourName,
         location: req.body.location || existingTour.location,
         description: req.body.description || existingTour.description,
-        capacity: parseInt(req.body.capacity) || existingTour.capacity,
         price: parseInt(req.body.price) || existingTour.price,
         itinerary: req.body.itinerary || existingTour.itinerary,
         note: req.body.note || existingTour.note,

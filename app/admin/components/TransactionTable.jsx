@@ -60,9 +60,13 @@ function TransactionTable() {
   };
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', options);
+    
+    const day = ('0' + date.getDate()).slice(-2); 
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+    const year = ('0' + date.getFullYear()).slice(-4);
+
+    return `${day}/${month}/${year}`;
   };
 
   const getStatusBadge = (status) => {
@@ -113,10 +117,10 @@ function TransactionTable() {
                 <tr>
                   <th>Transaction Code</th>
                   <th>Customer Name</th>
-                  <th>Customer Email</th>
+                  <th>Customer Phone</th>
                   <th>Tour Name</th>
-                  <th>Period</th>
                   <th>Tour Price /person</th>
+                  <th>Tour Booking User</th>
                   <th>Quantity /person</th>
                   <th>Total Price</th>
                   <th>Created At</th>
@@ -125,15 +129,15 @@ function TransactionTable() {
               </thead>
               <tbody>
                 {transactions.map((transaction) => (
-                <tr key={transaction.id}>
-                  <th className='text-center'>{transaction.id}</th>
-                  <th className='text-center'>{transaction.user.name}</th>
-                  <th className='text-center'>{transaction.user.email}</th>
-                  <th className='text-center'>{transaction.tours.tourName}</th>
+                <tr key={transaction.id} className='text-center'>
+                  <th>{transaction.id}</th>
+                  <th>{transaction.user.name}</th>
+                  <th>{transaction.user.phoneNumber}</th>
+                  <th>{transaction.tours.tourName}</th>
+                  <th>{transaction.tours.price}</th>
                   <th>{formatDate(transaction.booking_date)}</th>
-                  <th className='text-center'>{transaction.tours.price}</th>
-                  <th className='text-center'>{transaction.quantity}</th>
-                  <th className='text-center'>{transaction.total}</th>
+                  <th>{transaction.quantity}</th>
+                  <th>{transaction.total}</th>
                   <th>{formatDate(transaction.createdAt)}</th>
                   <th>{getStatusBadge(transaction.status)}</th>
                   <th>

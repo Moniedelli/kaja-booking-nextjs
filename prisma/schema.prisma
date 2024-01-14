@@ -23,9 +23,9 @@ enum UserStatus {
 model User {
   id              Int       @id @default(autoincrement())
   email           String    @unique
-  name            String?
-  hashedPassword  String?
-  emailVerified   DateTime?
+  name            String
+  hashedPassword  String
+  phoneNumber     String
   status          UserStatus @default(ACTIVE)
   role            Role @default(USER)
   createdAt       DateTime  @default(now())
@@ -38,7 +38,6 @@ model Tour {
   tourName            String
   location            String
   description         String
-  capacity            Int?
   price               Int
   itinerary           String
   note                String?
@@ -49,14 +48,13 @@ model Tour {
 }
 
 model Transaction {
-  id                Int                 @id @unique
+  id                Int                 @id @default(autoincrement())
   total             Int
   status            Transactions_status @default(PENDING_PAYMENT)
-  quantity          Int?
-  booking_date      DateTime?         
-  payment_method    String?             
-  createdAt         DateTime?           @default(now()) @db.Timestamp(0)
-  updatedAt         DateTime?           @default(now()) @db.Timestamp(0)
+  quantity          Int
+  booking_date      DateTime            
+  createdAt         DateTime            @default(now()) @db.Timestamp(0)
+  updatedAt         DateTime            @default(now()) @db.Timestamp(0)
   userId            Int
   tourId            Int
   user              User                @relation(fields: [userId], references: [id])

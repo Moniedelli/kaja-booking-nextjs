@@ -22,7 +22,7 @@ const SearchComponent = ({ onSearch }) => {
         <input
           type="search"
           name="search"
-          placeholder="Search by id..."
+          placeholder="Search by id or name..."
           className="bg-transparent h-8 px-5 rounded-full text-xs focus:outline-none transition-all duration-300 focus:ring focus:border-gray-300"
           value={query}
           onChange={(e) => setQuery(e.target.value)}

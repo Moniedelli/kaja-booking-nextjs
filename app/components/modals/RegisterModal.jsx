@@ -14,7 +14,6 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import Modal from "./Modal";
 import Input from "../inputs/Input";
 import Heading from "../Heading";
-import Button from "../Button";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -30,6 +29,7 @@ const RegisterModal = () => {
       name: "",
       email: "",
       password: "",
+      phoneNumber: ""
     },
   });
 
@@ -75,6 +75,14 @@ const RegisterModal = () => {
         id="password"
         label="Password"
         type="password"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input
+        id="phoneNumber"
+        label="Phone Number"
         disabled={isLoading}
         register={register}
         errors={errors}

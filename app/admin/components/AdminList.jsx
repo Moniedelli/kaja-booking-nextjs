@@ -26,13 +26,14 @@ function AdminList() {
   return (
     <div>
       <div className="overflow-x-auto">
-        <table className="table table-zebra">
+        <table className="table">
           {/* head */}
           <thead>
             <tr>
               {/* <th>Admin Id</th> */}
               <th>Name</th>
               <th>Email</th>
+              <th>Phone Number</th>
               <th>Status</th>
               <th></th>
             </tr>
@@ -43,6 +44,7 @@ function AdminList() {
                 {/* <th>{adminList.id}</th> */}
                 <th>{adminList.name}</th>
                 <td>{adminList.email}</td>
+                <td>{adminList.phoneNumber}</td>
                 <td>{adminList.status}</td>
                 <td>
                   <UpdateAdmin adminList={adminList} />

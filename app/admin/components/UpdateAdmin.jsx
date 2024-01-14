@@ -9,6 +9,7 @@ import axios from 'axios';
 const UpdateAdmin = ({adminList}) => {
   const [name, setName] = useState(adminList.name);
   const [email, setEmail] = useState(adminList.email);
+  const [phoneNumber, setPhoneNumber] = useState(adminList.phoneNumber);
   const [status, setStatus] = useState(adminList.status);
   const [submitMessage, setSubmitMessage] = useState(null);
 
@@ -19,6 +20,7 @@ const UpdateAdmin = ({adminList}) => {
       await axios.patch(`/api/admin/admins/${adminList.id}`, {
         name,
         email,
+        phoneNumber,
         status,
       });
   
@@ -55,26 +57,39 @@ const UpdateAdmin = ({adminList}) => {
                   {/* if there is a button in form, it will close the modal */}
                   <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <h3 className="font-bold text-lg">Edit admin with id <span className='italic'>{adminList.id}</span></h3>
+                <h3 className="font-bold text-lg">Edit admin with name <span className='italic'>{adminList.name}</span></h3>
                 <div className="flex flex-col gap-4 max-w-3xl">
-                  <label className="form-control w-full max-w-3xl">
-                    <div className="label">
-                      <span className="label-text">Name</span>
-                    </div>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
-                  </label>
-                  <label className="form-control w-full max-w-3xl">
-                    <div className="label">
-                      <span className="label-text">Email</span>
-                    </div>
-                    <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
-                  </label>
-                  <label className="form-control w-full max-w-3xl">
-                    <div className="label">
-                      <span className="label-text">Status</span>
-                    </div>
-                    <textarea placeholder="Bio" value={status} onChange={(e) => setStatus(e.target.value)} className="textarea textarea-bordered bg-transparent textarea-3xl w-full max-w-3xl" ></textarea>
-                  </label>
+                <label className="form-control">
+                  <div className="label">
+                    <span className="label-text text-zinc-300">Email</span>
+                  </div>
+                  <input value={email} onChange={(event) => setEmail(event.target.value)} required type="email" placeholder="Type here" className="bg-transparent input input-bordered w-full max-w-lg" />
+                </label>
+                <label className="form-control">
+                  <div className="label">
+                    <span className="label-text text-zinc-300">Name</span>
+                  </div>
+                  <input value={name} onChange={(event) => setName(event.target.value)} required type="name" placeholder="Type here" className="bg-transparent input input-bordered w-full max-w-lg" />
+                </label>
+                <label className="form-control">
+                  <div className="label">
+                    <span className="label-text text-zinc-300">Phone Number</span>
+                  </div>
+                  <input value={phoneNumber} onChange={(event) => setPhoneNumber(event.target.value)} required type="phone" placeholder="Type here" className="bg-transparent input input-bordered w-full max-w-lg" />
+                </label>
+                <label className="form-control">
+                  <div className="label">
+                    <span className="label-text text-zinc-300">Status</span>
+                  </div>
+                  <div className='flex gap-2 items-center pb-2'>
+                    <input type="radio" name="radio-1" className="radio bg-transparent" checked={status === 'ACTIVE'} onChange={() => setStatus('ACTIVE')} required />
+                    <h2>Active</h2>
+                  </div>
+                  <div className='flex gap-2 items-center pb-2'>
+                    <input type="radio" name="radio-1" className="radio bg-transparent" checked={status === 'INACTIVE'} onChange={() => setStatus('INACTIVE')} required />
+                    <h2>Inactive</h2>
+                  </div>
+                </label>
                 </div>
                 {/* Tombol Submit Example dan Pesan Submit */}
                 <div className='flex justify-start gap-2'>

@@ -1,17 +1,24 @@
-// Import yang diperlukan
-import { Button, Carousel } from "flowbite-react";
 import ClientOnly from "./ClientOnly";
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import FooterComponent from "./footer/footer";
 import Image from "next/image";
+import ConfirmBooking from "./ConfirmBooking";
+
+function formatPrice(price) {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 function TourDetail({ tour }) {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const today = new Date().toISOString().split('T')[0];
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const tomorrowISO = tomorrow.toISOString().split('T')[0]; 
+
   const {
     tourName,
     description,
-    capacity,
     price,
     imageSrc,
     location,
@@ -21,10 +28,15 @@ function TourDetail({ tour }) {
 
   const { id } = useParams();
 
-  const [activeTab, setActiveTab] = useState('description');
+  const [activeTab, setActiveTab] = useState('itinerary');
 
   const showTab = (tabId) => {
     setActiveTab(tabId);
+  };
+
+  const handleDateChange = (event) => {
+    // Update the selected date when the user picks a date
+    setSelectedDate(event.target.value);
   };
 
   return (
@@ -49,35 +61,45 @@ function TourDetail({ tour }) {
             </div>
           </div>
         </div>
-        
-        <div className="pt-5 flex justify-center">
-            <Link href={`/payment/${id}`}>
-              <button className="orange py-3 px-5 text-lg font-semibold rounded-xl">BOOKING</button>
-            </Link>
+
+        <div className="flex gap-10 pt-10">
+          <div>
+            <h2 className="text-xl font-semibold pb-3">Description</h2>
+            <p>{tour.description}</p>
           </div>
 
+          <div>
+            <div className="card-body bg-zinc-800 rounded-2xl">
+              <h2 className="card-title flex justify-center">Rp {formatPrice(tour.price)} /person</h2>
+              <hr />
+              <div className="flex gap-5">
+                <div className="mt-4">
+                  <label htmlFor="datepicker" className="block text-sm font-medium text-gray-300">
+                    Select date for tour
+                  </label>
+                  <input
+                    type="date"
+                    id="datepicker"
+                    name="datepicker"
+                    onChange={handleDateChange}
+                    min={tomorrowISO}
+                    className="mt-1 p-2 bg-transparent rounded-md"
+                  />
+                </div>
+                <ConfirmBooking tour={tour} selectedDate={selectedDate}  />
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
         <div className="bg-zinc-950 rounded-2xl mt-10 px-28 py-10">
-          <div className="flex pt-5 gap-1 font-semibold">
-            <h2>Capacity: minimum {capacity} people</h2>
-          </div>
-  
-          <div className="flex pt-5 gap-1 font-semibold">
-            <h2>Price: ${price} /people</h2>
-          </div>
-  
           <div>
             <div className="tabs tabs-lifted text-gray-300 text-xl font-semibold pt-5">
               <a
                 role="tab"
-                className={`tab ${activeTab === 'description' ? 'tab-active' : ''}`}
-                onClick={() => showTab('description')}
-              >
-                DESCRIPTION
-              </a>
-              <a
-                role="tab"
-                className={`tab ${activeTab === 'detailInfo' ? 'tab-active' : ''}`}
-                onClick={() => showTab('detailInfo')}
+                className={`tab ${activeTab === 'itinerary' ? 'tab-active' : ''}`}
+                onClick={() => showTab('itinerary')}
               >
                 ITINERARY
               </a>
@@ -91,12 +113,7 @@ function TourDetail({ tour }) {
             </div>
   
             <div className="flex justify-center p-5 mt-5 text-sm rounded-lg text-gray-300">
-              {activeTab === 'description' && (
-                <div>
-                  <p>{description}</p>
-                </div>
-              )}
-              {activeTab === 'detailInfo' && (
+              {activeTab === 'itinerary' && (
                 <div>
                   <div>
                     {itinerary}

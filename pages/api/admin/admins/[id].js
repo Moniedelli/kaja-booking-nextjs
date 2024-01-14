@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const tourId = parseInt(req.query.id);
+  const userId = parseInt(req.query.id);
 
   try {
     // Fetch the existing tour data
@@ -14,21 +14,23 @@ export default async function handler(req, res) {
     });
 
     if (!existingUser) {
-      return res.status(404).json({ error: 'User admin not found' });
+      return res.status(404).json({ error: 'User not found' });
     }
 
-    const updatedTour = await prisma.user.update({
-      where: { id: tourId },
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
       data: {
-        name: req.body.name || existingUser.name,
         email: req.body.email || existingUser.email,
+        name: req.body.name || existingUser.name,
+        phoneNumber: req.body.phoneNumber || existingUser.phoneNumber,
         status: req.body.status || existingUser.status,
+        // Add other fields as needed
       },
     });
 
-    return res.status(200).json({ message: 'User admin updated successfully', data: updatedTour });
+    return res.status(200).json({ message: 'User updated successfully', data: updatedUser });
   } catch (error) {
-    console.error('Error updating tour:', error);
+    console.error('Error updating user:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 }

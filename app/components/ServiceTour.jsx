@@ -2,11 +2,14 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Card } from 'flowbite-react';
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import Container from './Container';
+
+function formatPrice(price) {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 const ServiceTour = () => {
   const [placeData, setPlaceData] = useState([]);
@@ -26,7 +29,7 @@ const ServiceTour = () => {
   }, []);
 
   const truncateDescription = (description) => {
-    return description.length > 140 ? `${description.substring(0, 140)}...` : description;
+    return description.length > 140 ? `${description.substring(0, 200)}...` : description;
   };
 
   return (
@@ -38,7 +41,7 @@ const ServiceTour = () => {
         <div className="card-body">
           <Link href={`/detailTour/${item.id}`} className='flex justify-between'>
             <h2 className="card-title hover:underline">{item.tourName}</h2>
-            <h2 className='text-3xl'>Rp {item.price}</h2>
+            <h2 className='text-3xl'>Rp {formatPrice(item.price)}</h2>
           </Link>
           <h5 className="flex gap-1 pb-5 text-sm font-semibold tracking-tight dark:text-white">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -48,13 +51,9 @@ const ServiceTour = () => {
             <div className='mt-1 hover:underline'>{item.location}</div>
           </h5>
           <p className='mr-28'>{truncateDescription(item.description)}</p>
-          <div className='flex gap-2 items-center'>
-            <h2>{item.capacity}</h2>
-            <div className="badge badge-outline">people</div>
-          </div>
           <div className="card-actions justify-end">
-            <Link href={`/payment/${item.id}`}>
-              <button className="btn orange">Booking</button>
+            <Link href={`/detailTour/${item.id}`}>
+              <button className="btn orange">See Detail</button>
             </Link>
           </div>
         </div>

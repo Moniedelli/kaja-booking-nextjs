@@ -5,7 +5,7 @@ const saltRounds = 10;
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { email, name, password } = req.body;
+    const { email, name, password, phoneNumber } = req.body;
 
     try {
       const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -15,6 +15,7 @@ export default async function handler(req, res) {
           email,
           name,
           hashedPassword, 
+          phoneNumber,
           role: "ADMIN",
         },
       });
