@@ -3,6 +3,7 @@
 
 import { Button, Modal, Label, TextInput, Checkbox } from 'flowbite-react';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 function AddAdmin() {
   const [openModal, setOpenModal] = useState(false);
@@ -12,12 +13,13 @@ function AddAdmin() {
   const [phoneNumber, setPhoneNumber] = useState('');
 
   function onCloseModal() {
-    setOpenModal(false);
+    const modal = document.getElementById('my_modal_3');
+    modal.close();
     setEmail('');
     setName('');
     setPassword('');
     setPhoneNumber('');
-  }
+  }  
 
   const handleAddAdmin = async () => {
     try {
@@ -35,11 +37,19 @@ function AddAdmin() {
       });
 
       if (response.ok) {
+        toast.success("Success add admin");
         onCloseModal();
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
+        toast.error("Error adding admin.")
+        onCloseModal();
         console.error('Error adding admin');
       }
     } catch (error) {
+      toast.error("Error adding admin.")
+      onCloseModal();
       console.error('Error adding admin', error);
     }
   };

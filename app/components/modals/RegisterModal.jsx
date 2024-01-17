@@ -1,8 +1,6 @@
 'use client'
 
 import axios from "axios";
-import { AiFillGithub } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -38,8 +36,17 @@ const RegisterModal = () => {
 
     try {
       await axios.post("/api/register/registerUser", data);
+      
+      await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false, // Do not redirect, as you might want to handle it manually
+      });
+
       toast.success("Registered!");
-      registerModal.onClose();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
@@ -53,41 +60,59 @@ const RegisterModal = () => {
   }, [registerModal, loginModal]);
 
   const bodyContent = (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2">
       <Heading title="Welcome to KAJA" subtitle="Create an account!" />
-      <Input
-        id="email"
-        label="Email"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="name"
-        label="Name"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="password"
-        label="Password"
-        type="password"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="phoneNumber"
-        label="Phone Number"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
+      <label className="form-control w-full max-w-lg">
+        <div className="label">
+          <span className="label-text">Email</span>
+        </div>
+        <Input type="text" placeholder="Type here"  
+          id="email"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required />
+      </label>
+
+      <label className="form-control w-full max-w-lg">
+        <div className="label">
+          <span className="label-text">Name</span>
+        </div>
+        <Input
+          id="name"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </label>
+
+      <label className="form-control w-full max-w-lg">
+        <div className="label">
+          <span className="label-text">Password</span>
+        </div>
+        <Input placeholder="Type here" 
+          id="password"
+          type="password"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </label>
+
+      <label className="form-control w-full max-w-lg">
+        <div className="label">
+          <span className="label-text">Phone Number</span>
+        </div>
+        <Input type="text" placeholder="Type here" 
+          id="phoneNumber"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </label>
     </div>
   );
 
@@ -104,7 +129,6 @@ const RegisterModal = () => {
         className="
           text-neutral-500 
           text-center 
-          mt-4 
           font-light
         "
       >

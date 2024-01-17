@@ -1,29 +1,33 @@
 // pages/api/mostOrderedTour.js
 import prisma from '@/app/libs/prismadb';
-import axios from 'axios';
-import nc from 'next-connect';
 
-const handler = nc();
-
-handler.get(async (req, res) => {
+export default async function handler(req, res) {
   try {
-    const result = await prisma.$queryRaw`
-      SELECT tourId, COUNT(*) as orderCount
-      FROM transactions
-      GROUP BY tourId
-      ORDER BY orderCount DESC
-      LIMIT 1
-    `;
+    if (req.method !== 'GET') {
+      return res.status(405).json({ error: 'Method Not Allowed' });
+    }
 
-    const mostOrderedTourId = result[0].tourId;
+    // Retrieve the tour with the most bookings
+    const tours = await prisma.tour.findMany({
+      include: {
+        transactions: true,
+      },
+    });
 
-    const { data: mostOrderedTourDetails } = await axios.get(`/api/tours/${mostOrderedTourId}`);
+    // Find the tour with the maximum transaction count
+    const mostOrderedTour = tours.reduce((maxTour, currentTour) => {
+      const bookingCount = currentTour.transactions.length;
+      if (bookingCount > (maxTour.transactions?.length || 0)) {
+        return { ...currentTour, transactions: undefined }; // Omit transactions to avoid circular structure
+      }
+      return maxTour;
+    }, {});
 
-    res.json({ mostOrderedTour: mostOrderedTourDetails });
+    res.status(200).json({ mostOrderedTour });
   } catch (error) {
     console.error('Error fetching most ordered tour:', error);
     res.status(500).json({ error: 'Internal server error' });
+  } finally {
+    await prisma.$disconnect();
   }
-});
-
-export default handler;
+}

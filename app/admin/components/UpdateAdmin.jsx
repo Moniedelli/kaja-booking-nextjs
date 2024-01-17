@@ -5,6 +5,7 @@ import {
   Toast,
 } from 'flowbite-react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const UpdateAdmin = ({adminList}) => {
   const [name, setName] = useState(adminList.name);
@@ -12,6 +13,15 @@ const UpdateAdmin = ({adminList}) => {
   const [phoneNumber, setPhoneNumber] = useState(adminList.phoneNumber);
   const [status, setStatus] = useState(adminList.status);
   const [submitMessage, setSubmitMessage] = useState(null);
+
+  function onCloseModal() {
+    const modal = document.getElementById(`my_modal_${adminList.id}`);
+    modal.close();
+    setEmail('');
+    setName('');
+    setPhoneNumber('');
+    setStatus('');
+  }  
 
   const handleEdit = async (e) => {
     e.preventDefault();
@@ -25,18 +35,15 @@ const UpdateAdmin = ({adminList}) => {
       });
   
       console.log('Admin berhasil diupdate');
-      setSubmitMessage(
-        <Toast>
-          Success change admin
-        </Toast>
-      );
+      onCloseModal();
+      toast.success("Success editing admin");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.error('Terjadi kesalahan:', error);
-      setSubmitMessage(
-        <Toast>
-          Fail change admin
-        </Toast>
-      );
+      toast.error("Error editing admin.")
+      onCloseModal();
     }
   };
 
@@ -57,7 +64,7 @@ const UpdateAdmin = ({adminList}) => {
                   {/* if there is a button in form, it will close the modal */}
                   <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <h3 className="font-bold text-lg">Edit admin with name <span className='italic'>{adminList.name}</span></h3>
+                <h3 className="font-bold text-xl pb-3">Edit admin with name <span className='italic'>{adminList.name}</span></h3>
                 <div className="flex flex-col gap-4 max-w-3xl">
                 <label className="form-control">
                   <div className="label">

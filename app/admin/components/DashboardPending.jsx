@@ -4,13 +4,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SearchComponent from './SearchComponent';
 import UpdateToDone from './UpdateToDone';
-import toast from 'react-hot-toast';
 
 function formatPrice(price) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-function TransactionTable() {
+function DashboardPendingBooking() {
   const [transactions, setTransactions] = useState([]);
   const [searchNotFound, setSearchNotFound] = useState(false);
 
@@ -24,7 +23,10 @@ function TransactionTable() {
         // Urutkan transaksi berdasarkan tanggal pembuatan secara descending (terbaru dulu)
         transactionStatus.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-        setTransactions(transactionStatus);
+        // Slice the array to get the latest 5 transactions
+        const latestTransactions = transactionStatus.slice(0, 5);
+
+        setTransactions(latestTransactions);
       } catch (error) {
         console.error('Error fetching transactions:', error);
       }
@@ -57,11 +59,8 @@ function TransactionTable() {
       await axios.put(`/api/admin/transaction/${transactionId}`, {
         status: 'DONE',
       });
-
-      toast.success("Confirmed!");
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      const updatedTransactions = await fetchTransactions();
+      setTransactions(updatedTransactions);
     } catch (error) {
       console.error('Error updating transaction status:', error);
     }
@@ -72,13 +71,9 @@ function TransactionTable() {
       await axios.put(`/api/admin/transaction/${transactionId}`, {
         status: 'CANCELED',
       });
-
-      toast.success("Updated!");
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      const updatedTransactions = await fetchTransactions();
+      setTransactions(updatedTransactions);
     } catch (error) {
-      toast.error("Something went wrong.");
       console.error('Error updating transaction status:', error);
     }
   };
@@ -123,14 +118,14 @@ function TransactionTable() {
           </div>
         );
       default:
-        return null; // Add default case if needed
+        return null;
     }
   };
 
   return (
-    <div>
-      <SearchComponent onSearch={handleSearch} />
-      <div style={{ overflowX: 'auto', maxHeight: '400px' }}>
+    <div style={{maxWidth: '500px'}} className='bg-zinc-800 mt-10 rounded-2xl p-5'> 
+      <h2 className='text-lg font-semibold pb-3'>5 Recent Orders</h2>
+      <div style={{ overflowX: 'auto', maxHeight: '400px'}}>
         <div className="overflow-x-auto">
           {searchNotFound ? (
             <p className="text-center text-muted py-5">No results found.</p>
@@ -139,6 +134,7 @@ function TransactionTable() {
               {/* head */}
               <thead>
                 <tr>
+                  <th></th>
                   <th>Transaction Code</th>
                   <th>Customer Name</th>
                   <th>Customer Phone</th>
@@ -153,6 +149,9 @@ function TransactionTable() {
               <tbody>
                 {transactions.map((transaction) => (
                 <tr key={transaction.id} className='text-center'>
+                  <th>
+                    <UpdateToDone transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />
+                  </th>
                   <th>{transaction.id}</th>
                   <th>{transaction.user.name}</th>
                   <th>{transaction.user.phoneNumber}</th>
@@ -162,9 +161,6 @@ function TransactionTable() {
                   <th>{formatPrice(transaction.total)}</th>
                   <th>{formatDate(transaction.createdAt)}</th>
                   <th>{getStatusBadge(transaction.status)}</th>
-                  <th>
-                    <UpdateToDone transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />
-                  </th>
 
                   {/* Open the modal using document.getElementById('ID').showModal() method */}
                   <dialog id={`user_modal${transaction.id}`} className="modal">
@@ -201,4 +197,4 @@ function TransactionTable() {
   );
 }
 
-export default TransactionTable;
+export default DashboardPendingBooking;

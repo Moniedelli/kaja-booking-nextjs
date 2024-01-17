@@ -14,8 +14,9 @@ export default async function ({ children }) {
   const session = await getServerSession(authOptions);
   const user = session?.user || undefined;
   const isAdmin = user?.role === "ADMIN";
+  const isActive = user?.status === "ACTIVE";
 
-  if (!isAdmin) {
+  if (!isAdmin || !isActive) {
     console.error('Unauthorized access');
     redirect('/');
     return;

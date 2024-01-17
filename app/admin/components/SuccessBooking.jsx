@@ -3,8 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SearchComponent from './SearchComponent';
+import UpdateStatusTransaction from './UpdateStatusTransaction';
+import toast from 'react-hot-toast';
 
-function TransactionTable() {
+function SuccessBooking() {
   const [transactions, setTransactions] = useState([]);
   const [searchNotFound, setSearchNotFound] = useState(false);
 
@@ -14,7 +16,7 @@ function TransactionTable() {
         const response = await axios('/api/admin/transaction/read');
         const data = await response.data;
 
-        const doneStatus = data.filter((transaction) => transaction.status === 'PAID');
+        const doneStatus = data.filter((transaction) => transaction.status === 'DONE');
         setTransactions(doneStatus);
       } catch (error) {
         console.error('Error fetching transactions:', error);
@@ -34,13 +36,43 @@ function TransactionTable() {
     }
   
     filteredTransactions = filteredTransactions.filter(
-      (transaction) => transaction.status === 'PAID'
+      (transaction) => transaction.status === 'DONE'
     );
   
     setTransactions(filteredTransactions);
 
     setSearchNotFound(filteredTransactions.length === 0);
   };  
+
+  const updateTransactionStatus = async (transactionId) => {
+    try {
+      await axios.put(`/api/admin/transaction/${transactionId}`, {
+        status: 'PAID',
+      });
+
+      toast.success("Updated!");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      console.error('Error updating transaction status:', error);
+    }
+  };
+
+  const updateTransactionStatusFail = async (transactionId) => {
+    try {
+      await axios.put(`/api/admin/transaction/${transactionId}`, {
+        status: 'CANCELED',
+      });
+
+      toast.success("Updated!");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      console.error('Error updating transaction status:', error);
+    }
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -96,6 +128,9 @@ function TransactionTable() {
                     {transaction.status}
                   </div>
                 </th>
+                <th>
+                    <UpdateStatusTransaction transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />
+                  </th>
               </tr>
               ))}
             </tbody>
@@ -107,4 +142,4 @@ function TransactionTable() {
   );
 }
 
-export default TransactionTable;
+export default SuccessBooking;

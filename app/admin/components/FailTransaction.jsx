@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SearchComponent from './SearchComponent';
 
-function TransactionTable() {
+function TransactionFail() {
   const [transactions, setTransactions] = useState([]);
   const [searchNotFound, setSearchNotFound] = useState(false);
 
@@ -14,7 +14,7 @@ function TransactionTable() {
         const response = await axios('/api/admin/transaction/read');
         const data = await response.data;
 
-        const doneStatus = data.filter((transaction) => transaction.status === 'PAID');
+        const doneStatus = data.filter((transaction) => transaction.status === 'CANCELED');
         setTransactions(doneStatus);
       } catch (error) {
         console.error('Error fetching transactions:', error);
@@ -34,7 +34,7 @@ function TransactionTable() {
     }
   
     filteredTransactions = filteredTransactions.filter(
-      (transaction) => transaction.status === 'PAID'
+      (transaction) => transaction.status === 'DONE'
     );
   
     setTransactions(filteredTransactions);
@@ -89,11 +89,11 @@ function TransactionTable() {
                 <th>{transaction.total}</th>
                 <th>{formatDate(transaction.updatedAt)}</th>
                 <th>
-                  <div className="badge badge-primary gap-2">
+                  <div className="badge badge-error gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
-                    {transaction.status}
+                    FAIL
                   </div>
                 </th>
               </tr>
@@ -107,4 +107,4 @@ function TransactionTable() {
   );
 }
 
-export default TransactionTable;
+export default TransactionFail;

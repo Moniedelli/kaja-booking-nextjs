@@ -3,7 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-import EditTour from './EditTour';
+import Link from 'next/link';
+
+function formatPrice(price) {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 const TourList = () => {
   const [placeData, setPlaceData] = useState([]);
@@ -30,6 +34,7 @@ const TourList = () => {
     <div className='text-gray-300'>
       <div style={{ overflowX: 'auto', maxHeight: '700px' }}>
         <div className="overflow-x-auto">
+          <h2 className='text-sm text-zinc-500 pb-5 italic hover:underline'>You can click the id to see tour detail</h2>
           <table className="table table-zebra">
             {/* head */}
             <thead>
@@ -46,36 +51,21 @@ const TourList = () => {
             </thead>
             <tbody>
               {placeData.map((item) => (
-                <tr key={item.id} placeData={item} className='text-xs' onClick={()=>document.getElementById(`desc_modal${item.id}`).showModal()}>
-                  <td>{item.id}</td>
+                <tr key={item.id} placeData={item} className='text-xs'>
+                  <Link href={`/admin/content/${item.id}`}>
+                    <td className='pt-11'>{item.id}</td>
+                  </Link>
                   <td>{item.tourName}</td>
                   <td>{item.location}</td>
                   <td>{truncateDescription(item.description)}</td>
-                  <td>{item.price}</td>
+                  <td>{formatPrice(item.price)}</td>
                   <td>{truncateDescription(item.itinerary)}</td>
                   <td>{truncateDescription(item.note)}</td>
                   <td>
-                    <div onClick={()=>document.getElementById(`my_modal1_${item.id}`).showModal()}>
-                      <div className="tooltip" data-tip="see more">
-                        <Image src={item.imageSrc[0]} imgAlt="Meaningful alt text for an image that is not purely decorative" width={100} height={100} alt='' className='cursor-pointer'></Image>
-                      </div>
-                    </div>
+                    <Image src={item.imageSrc[0]} imgAlt="Meaningful alt text for an image that is not purely decorative" width={100} height={100} alt=''></Image>
                   </td>
-                  <td className='flex justify-center gap-2 pt-5'>
-                    <EditTour placeData={item} />
-                  </td>
-                  {/* Open the modal using document.getElementById('ID').showModal() method */}
-                  <dialog id={`desc_modal${item.id}`} className="modal">
-                    <div className="modal-box bg-zinc-300 text-zinc-900">
-                      <h3 className="font-semibold text-lg">Description of <span className='font-bold text-lg italic'>{item.tourName}</span></h3>
-                      <p className="py-4">{item.description}</p>
-                    </div>
-                    <form method="dialog" className="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
 
-                  <dialog id={`my_modal1_${item.id}`} className="modal">
+                  {/* <dialog id={`my_modal1_${item.id}`} className="modal">
                       <div className="modal-box bg-zinc-800 text-zinc-300">
                         <form method="dialog">
                           <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
@@ -89,7 +79,7 @@ const TourList = () => {
                           <Image src={item.imageSrc[4]} imgAlt="Meaningful alt text for an image that is not purely decorative" width={450} height={450} alt='' className='rounded-2xl'></Image>
                         </div>
                       </div>
-                    </dialog>
+                    </dialog> */}
                 </tr>
               ))}
             </tbody>

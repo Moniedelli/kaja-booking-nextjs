@@ -7,8 +7,6 @@ import {
   SubmitHandler, 
   useForm
 } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
-import { AiFillGithub } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
 import useRegisterModal from "@/app/hooks/useRegisterModal.jsx";
@@ -71,23 +69,31 @@ const LoginModal = () => {
         title="Welcome back"
         subtitle="Login to your account!"
       />
-      <Input
-        id="email"
-        label="Email"
-        disabled={isLoading}
-        register={register}  
-        errors={errors}
-        required
-      />
-      <Input
-        id="password"
-        label="Password"
-        type="password"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
+      <label className="form-control w-full max-w-lg">
+        <div className="label">
+          <span className="label-text">Email</span>
+        </div>
+        <Input type="text" placeholder="Type here" 
+          id="email"
+          disabled={isLoading}
+          register={register}  
+          errors={errors}
+          required
+        />
+      </label>
+      <label className="form-control w-full max-w-lg">
+        <div className="label">
+          <span className="label-text">Password</span>
+        </div>
+        <Input placeholder="Type here" 
+          id="password"
+          type="password"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </label>
     </div>
   )
 

@@ -55,7 +55,7 @@ const Dashboard = ({ }) => {
     </div>
     <div className='bg-zinc-800 mx-36 rounded-2xl'>
       <div className='p-10'>
-        <p className='text-lg'>My Order</p>
+        <p className='text-lg'>My Booking</p>
           <div role="tablist" className="tabs tabs-bordered">
             <a role="tab" className={`tab ${activeTab === 'pending' ? 'tab-active' : ''}`} onClick={() => showTab('pending')}>Pending Payment</a>
             <a role="tab" className={`tab ${activeTab === 'done' ? 'tab-active' : ''}`} onClick={() => showTab('done')}>Done</a>

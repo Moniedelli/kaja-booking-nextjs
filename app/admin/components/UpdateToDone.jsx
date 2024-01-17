@@ -1,6 +1,6 @@
 'use client';
 
-function UpdateStatusTransaction({transactions, onUpdate, toFail}) {
+function UpdateToDone({transactions, onUpdate, toFail}) {
 
   const handleUpdate = async () => {
     await onUpdate(transactions.id);
@@ -23,7 +23,7 @@ function UpdateStatusTransaction({transactions, onUpdate, toFail}) {
             <h3 className="font-bold text-lg">Hello!</h3>
             <p className="py-4">Update this transaction status</p>
             <div className="modal-action flex justify-center">
-              <button className='btn btn-success' onClick={() => handleUpdate()}>PAID</button>
+              <button className='btn orange' onClick={() => handleUpdate()}>Confirm</button>
               <button className='btn red' onClick={() => handleUpdateToFail()}>FAIL</button>
             </div>
           </div>
@@ -33,4 +33,4 @@ function UpdateStatusTransaction({transactions, onUpdate, toFail}) {
   );
 }
 
-export default UpdateStatusTransaction;
+export default UpdateToDone;

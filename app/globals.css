@@ -35,6 +35,18 @@ body,
   border: none;
 }
 
+.red {
+  background-color: #ef4444;
+  color: #fef2f2;
+  transition: background-color 0.5s, color 0.3s;
+}
+
+.red:hover {
+  background-color: #09090b; 
+  color: #ef4444; 
+  border: none;
+}
+
 .paddingTop {
   padding-top: -100px;
 }

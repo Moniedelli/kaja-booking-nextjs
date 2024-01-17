@@ -23,6 +23,16 @@ function AdminList() {
     fetchUser();
   }, []);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    
+    const day = ('0' + date.getDate()).slice(-2); 
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); 
+    const year = ('0' + date.getFullYear()).slice(-4);
+
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -35,6 +45,8 @@ function AdminList() {
               <th>Email</th>
               <th>Phone Number</th>
               <th>Status</th>
+              <th>Created At</th>
+              <th>Updated At</th>
               <th></th>
             </tr>
           </thead>
@@ -46,6 +58,8 @@ function AdminList() {
                 <td>{adminList.email}</td>
                 <td>{adminList.phoneNumber}</td>
                 <td>{adminList.status}</td>
+                <td>{formatDate(adminList.createdAt)}</td>
+                <td>{formatDate(adminList.updatedAt)}</td>
                 <td>
                   <UpdateAdmin adminList={adminList} />
                 </td>
