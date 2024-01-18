@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SearchComponent from './SearchComponent';
 import UpdateToDone from './UpdateToDone';
+import Link from 'next/link';
 
 function formatPrice(price) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -124,7 +125,9 @@ function DashboardPendingBooking() {
 
   return (
     <div style={{maxWidth: '500px'}} className='bg-zinc-800 mt-10 rounded-2xl p-5'> 
-      <h2 className='text-lg font-semibold pb-3'>5 Recent Orders</h2>
+      <Link href={`/admin/transaction`}>
+        <h2 className='text-lg font-semibold pb-3'>5 Recent Orders</h2>
+      </Link>
       <div style={{ overflowX: 'auto', maxHeight: '400px'}}>
         <div className="overflow-x-auto">
           {searchNotFound ? (

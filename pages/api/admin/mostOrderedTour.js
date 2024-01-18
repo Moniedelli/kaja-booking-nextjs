@@ -7,21 +7,28 @@ export default async function handler(req, res) {
       return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
-    // Retrieve the tour with the most bookings
+    // Retrieve the tour with the most bookings and filter by PAID transactions
     const tours = await prisma.tour.findMany({
       include: {
-        transactions: true,
+        transactions: {
+          where: {
+            status: 'PAID',
+          },
+        },
       },
     });
 
-    // Find the tour with the maximum transaction count
-    const mostOrderedTour = tours.reduce((maxTour, currentTour) => {
-      const bookingCount = currentTour.transactions.length;
-      if (bookingCount > (maxTour.transactions?.length || 0)) {
-        return { ...currentTour, transactions: undefined }; // Omit transactions to avoid circular structure
-      }
-      return maxTour;
-    }, {});
+    // Sort tours based on the number of PAID transactions in descending order
+    tours.sort((a, b) => {
+      const paidBookingCountA = a.transactions.filter(transaction => transaction.status === 'PAID').length;
+      const paidBookingCountB = b.transactions.filter(transaction => transaction.status === 'PAID').length;
+
+      return paidBookingCountB - paidBookingCountA;
+    });
+
+    // Get the tour with the most PAID transactions (first element after sorting)
+    const mostOrderedTour = tours[0];
+
 
     res.status(200).json({ mostOrderedTour });
   } catch (error) {

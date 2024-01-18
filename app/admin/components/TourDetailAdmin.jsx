@@ -22,8 +22,20 @@ const TourDetailAdmin = ({ tour }) => {
 
   const [imageSrc, setImageSrc] = useState(tour.imageSrc);
 
-  const handleImageChange = (newImageSrc) => {
-    setImageSrc(newImageSrc);
+  const handleImageChange = async (newImageSrc) => {
+    try {
+      // Update the image directly in the database
+      await axios.patch(`/api/admin/content/${tour.id}`, {
+        imageSrc: newImageSrc,
+      });
+
+      // If the database update is successful, update the local state
+      setImageSrc(newImageSrc);
+      toast.success('Image updated successfully');
+    } catch (error) {
+      console.error('Error updating image:', error);
+      toast.error('Failed to update image');
+    }
   };
 
   return (
@@ -61,11 +73,17 @@ const TourDetailAdmin = ({ tour }) => {
 
           <div className="pt-10">
             <h2 className="text-xl font-semibold pb-3">Image</h2>
-            {/* <ImageUpload onChange={handleImageChange} value={imageSrc} /> */}
+            <ImageUpload onChange={handleImageChange} value={imageSrc} />
             <div className=" flex flex-col justify-center gap-3">
               {Array.isArray(imageSrc) && imageSrc.map((src, index) => (
-                <div key={index}>
-                  <Image className="rounded-lg" src={src} width={1000} height={1000} alt={`Image ${index}`} />
+                <div key={index} className="relative inline-block">
+                  <Image
+                    className="rounded-lg"
+                    src={src}
+                    width={1000}
+                    height={1000}
+                    alt={`Image ${index}`}
+                  />
                 </div>
               ))}
             </div>

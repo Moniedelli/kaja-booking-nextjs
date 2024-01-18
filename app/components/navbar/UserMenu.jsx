@@ -66,7 +66,7 @@ const UserMenu2 = ({ currentUser }) => {
           <Dropdown arrowIcon={false} inline className="pt-2 bg-transparent border-transparent" label={<Avatar src={currentUser?.image} />}>
             {currentUser ? (
               <>
-                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-zinc-950 text-gray-300 rounded-box w-40">
+                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-zinc-950 text-gray-300 rounded-box max-w-lg">
                   <li onClick={() => {}}><a>{currentUser.name}</a></li>
                   <li onClick={() => {}}><a>{currentUser.email}</a></li>
                   <Link href={`/user`}>

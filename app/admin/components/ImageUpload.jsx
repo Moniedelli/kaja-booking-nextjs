@@ -8,10 +8,17 @@ import { TbPhotoPlus } from 'react-icons/tb';
 const uploadPreset = "iwetgi5b";
 
 const ImageUpload = ({ onChange, value }) => {
-  const handleUpload = useCallback((result) => {
-    // Replace all previous images with the new image
-    onChange([result.info.secure_url]);
-  }, [onChange]);
+  const handleUpload = (result) => {
+    // Append the new image to the existing images
+    onChange([...value, result.info.secure_url]);
+  };
+
+  const handleRemove = (index) => {
+    // Remove the image at the specified index
+    const updatedImages = [...value];
+    updatedImages.splice(index, 1);
+    onChange(updatedImages);
+  };
 
   return (
     <CldUploadWidget
@@ -46,13 +53,20 @@ const ImageUpload = ({ onChange, value }) => {
             Click to upload
           </div>
           {Array.isArray(value) && value.map((image, index) => (
-            <div key={index} className="relative inset-0 w-full h-full">
+            <div key={index} className="relative inline-block">
               <Image
-                fill
-                style={{ objectFit: 'cover' }}
                 src={image}
                 alt={`Image ${index}`}
+                width={100}
+                height={100}
+                className="rounded-lg"
               />
+              <button
+                onClick={() => handleRemove(index)}
+                className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full cursor-pointer"
+              >
+                x
+              </button>
             </div>
           ))}
         </div>

@@ -3,6 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SearchComponent from './SearchComponent';
+import Link from 'next/link';
+
+function formatPrice(price) {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 function TransactionTable() {
   const [transactions, setTransactions] = useState([]);
@@ -49,7 +54,7 @@ function TransactionTable() {
     const month = ('0' + (date.getMonth() + 1)).slice(-2); 
     const year = ('0' + date.getFullYear()).slice(-4);
 
-    return `${day}/${month}/${year}`;
+    return `${month}/${day}/${year}`;
   };
 
   return (
@@ -66,28 +71,24 @@ function TransactionTable() {
               <tr>
                 <th>Transaction Code</th>
                 <th>Customer Name</th>
-                <th>Customer Phone</th>
                 <th>Tour Name</th>
-                <th>Tour Price /person</th>
-                <th>Tour Booking User</th>
+                <th>Tour Date</th>
                 <th>Quantity /person</th>
                 <th>Total Price</th>
-                <th>Updated At</th>
                 <th>Status</th> 
               </tr>
             </thead>
             <tbody>
               {transactions.map((transaction) => (
               <tr key={transaction.id} className='text-center'>
-                <th>{transaction.id}</th>
+                <Link href={`/admin/transaction/${transaction.id}`}>
+                    <th>{transaction.id}</th>
+                  </Link>
                 <th>{transaction.user.name}</th>
-                <th>{transaction.user.phoneNumber}</th>
                 <th>{transaction.tours.tourName}</th>
-                <th>{transaction.tours.price}</th>
                 <th>{formatDate(transaction.booking_date)}</th>
                 <th>{transaction.quantity}</th>
-                <th>{transaction.total}</th>
-                <th>{formatDate(transaction.updatedAt)}</th>
+                <th>{formatPrice(transaction.total)}</th>
                 <th>
                   <div className="badge badge-primary gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">

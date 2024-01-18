@@ -9,6 +9,10 @@ export default async function handler(req, res) {
     const updatedTransaction = await prisma.transaction.update({
       where: { id: parseInt(id) },
       data: { status },
+      include: {
+        user: true, 
+        tours: true, 
+      },
     });
 
     res.json(updatedTransaction);

@@ -5,6 +5,7 @@ import axios from 'axios';
 import SearchComponent from './SearchComponent';
 import UpdateToDone from './UpdateToDone';
 import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 function formatPrice(price) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -90,7 +91,7 @@ function TransactionTable() {
     const month = ('0' + (date.getMonth() + 1)).slice(-2); 
     const year = ('0' + date.getFullYear()).slice(-4);
 
-    return `${day}/${month}/${year}`;
+    return `${month}/${day}/${year}`;
   };
 
   const getStatusBadge = (status) => {
@@ -141,26 +142,24 @@ function TransactionTable() {
                 <tr>
                   <th>Transaction Code</th>
                   <th>Customer Name</th>
-                  <th>Customer Phone</th>
                   <th>Tour Name</th>
                   <th>Tour Date</th>
                   <th>Quantity /person</th>
                   <th>Total Price</th>
-                  <th>Created At</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 {transactions.map((transaction) => (
                 <tr key={transaction.id} className='text-center'>
-                  <th>{transaction.id}</th>
+                  <Link href={`/admin/transaction/${transaction.id}`}>
+                    <th>{transaction.id}</th>
+                  </Link>
                   <th>{transaction.user.name}</th>
-                  <th>{transaction.user.phoneNumber}</th>
                   <th>{transaction.tours.tourName}</th>
                   <th>{formatDate(transaction.booking_date)}</th>
                   <th>{transaction.quantity}</th>
                   <th>{formatPrice(transaction.total)}</th>
-                  <th>{formatDate(transaction.createdAt)}</th>
                   <th>{getStatusBadge(transaction.status)}</th>
                   <th>
                     <UpdateToDone transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />

@@ -24,7 +24,7 @@ function UpdateToDone({transactions, onUpdate, toFail}) {
             <p className="py-4">Update this transaction status</p>
             <div className="modal-action flex justify-center">
               <button className='btn orange' onClick={() => handleUpdate()}>Confirm</button>
-              <button className='btn red' onClick={() => handleUpdateToFail()}>FAIL</button>
+              <button className='btn red' onClick={() => handleUpdateToFail()}>Cancel</button>
             </div>
           </div>
         </dialog>
