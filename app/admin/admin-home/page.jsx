@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import Loading from '../components/Loading';
-import CancelBooking from '../components/CancelBooking';
+import Loading from '@/app/components/Loading';
+import CancelBooking from '@/app/components/CancelBooking';
 import axios from 'axios';
 
 const Dashboard = ({ }) => {
@@ -48,16 +48,17 @@ const Dashboard = ({ }) => {
   };
 
   return (
-    <div className='text-zinc-300 py-20'>
-    <h3 className='text-left px-28 font-semibold text-2xl'>Welcome, {session?.user?.name}!</h3>
+    <div className='text-zinc-300'>
+    <h3 className='text-left px-10 font-semibold text-2xl'>Welcome Admin, {session?.user?.name}!</h3>
     <div className='flex justify-center py-8'>
       <Image src='/images/7309681.jpg' width={150} height={150} className='rounded-3xl' alt='' />
     </div>
-    <div className='bg-zinc-800 mx-36 rounded-2xl'>
+    <div className='bg-zinc-800 mx-16 rounded-2xl'>
       <div className='p-10'>
-        <p className='text-lg'>My Booking</p>
+        <p className='text-lg pb-2'>My Booking</p>
           <div role="tablist" className="tabs tabs-bordered">
             <a role="tab" className={`tab ${activeTab === 'pending' ? 'tab-active' : ''}`} onClick={() => showTab('pending')}>Pending Payment</a>
+            <a role="tab" className={`tab ${activeTab === 'success-booking' ? 'tab-active' : ''}`} onClick={() => showTab('success-booking')}>Success Booking</a>
             <a role="tab" className={`tab ${activeTab === 'done' ? 'tab-active' : ''}`} onClick={() => showTab('done')}>Done</a>
             <a role="tab" className={`tab ${activeTab === 'fail' ? 'tab-active' : ''}`} onClick={() => showTab('fail')}>Fail</a>
           </div>
@@ -94,7 +95,31 @@ const Dashboard = ({ }) => {
                   </div>
                 </div>
               )) ||
-              (activeTab === 'done' && transaction.status === 'DONE' && (
+              (activeTab === 'success-booking' && transaction.status === 'DONE' && (
+                <div key={transaction.id} className='border border-zinc-600 p-4 rounded-md mb-4'>
+                  <div>
+                  <div className='flex justify-between items-center'>
+                    <h4 className='text-lg font-semibold'>Transaction ID: {transaction.id}</h4>
+                    <span className='text-yellow-500 font-bold text-sm'>
+                      {transaction.status}
+                    </span>
+                  </div>
+                  <div className='mt-2'>
+                    <p className='text-gray-600'>Total: ${transaction.total}</p>
+                    <p className='text-gray-600'>Create At: {new Date(transaction.createdAt).toLocaleDateString()}</p>
+                    <p>Your Booking Date: {new Date(transaction.booking_date).toLocaleDateString()}</p>
+                    <p>Payment Method: {transaction.payment_method}</p>
+                  </div>
+                  <div className='mt-4'>
+                    <p className='text-sm font-medium text-gray-700'>Products:</p>
+                    <ul className='list-disc pl-5'>
+                      <li key={transaction.tours.id} className='text-gray-600'>{transaction.tours.tourName} - Qty: {transaction.quantity}</li>
+                    </ul>
+                  </div>
+                </div>
+                </div>
+              )) ||
+              (activeTab === 'done' && transaction.status === 'PAID' && (
                 <div key={transaction.id} className='border border-zinc-600 p-4 rounded-md mb-4'>
                   <div>
                   <div className='flex justify-between items-center'>

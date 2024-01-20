@@ -124,79 +124,74 @@ function DashboardPendingBooking() {
   };
 
   return (
-    <div style={{maxWidth: '500px'}} className='bg-zinc-800 mt-10 rounded-2xl p-5'> 
-      <Link href={`/admin/transaction`}>
-        <h2 className='text-lg font-semibold pb-3'>5 Recent Orders</h2>
-      </Link>
-      <div style={{ overflowX: 'auto', maxHeight: '400px'}}>
-        <div className="overflow-x-auto">
-          {searchNotFound ? (
-            <p className="text-center text-muted py-5">No results found.</p>
-          ) : (
-            <table className="table table-zebra">
-              {/* head */}
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Transaction Code</th>
-                  <th>Customer Name</th>
-                  <th>Customer Phone</th>
-                  <th>Tour Name</th>
-                  <th>Tour Date</th>
-                  <th>Quantity /person</th>
-                  <th>Total Price</th>
-                  <th>Created At</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.map((transaction) => (
-                <tr key={transaction.id} className='text-center'>
-                  <th>
-                    <UpdateToDone transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />
-                  </th>
-                  <th>{transaction.id}</th>
-                  <th>{transaction.user.name}</th>
-                  <th>{transaction.user.phoneNumber}</th>
-                  <th>{transaction.tours.tourName}</th>
-                  <th>{formatDate(transaction.booking_date)}</th>
-                  <th>{transaction.quantity}</th>
-                  <th>{formatPrice(transaction.total)}</th>
-                  <th>{formatDate(transaction.createdAt)}</th>
-                  <th>{getStatusBadge(transaction.status)}</th>
+    <div className='stat'>
+      <div style={{backgroundColor: '#1d232a'}} className='-mx-6 mt-5 rounded-2xl p-5'> 
+        <Link href={`/admin/transaction`}>
+          <h2 className='stat-title'>5 Recent Orders</h2>
+        </Link>
+        <div style={{ overflowX: 'auto', maxHeight: '400px'}}>
+          <div className="overflow-x-auto">
+            {searchNotFound ? (
+              <p className="text-center text-muted py-5">No results found.</p>
+            ) : (
+              <table className="table table-zebra text-center">
+                {/* head */}
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Code</th>
+                    <th>Customer</th>
+                    <th>Tour Name</th>
+                    <th>Tour Date</th>
+                    <th>Qty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {transactions.map((transaction) => (
+                  <tr key={transaction.id} className='text-center text-gray-400'>
+                    <th>
+                      <UpdateToDone transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />
+                    </th>
+                    <th>{transaction.id}</th>
+                    <th>{transaction.user.name}</th>
+                    <th>{transaction.tours.tourName}</th>
+                    <th>{formatDate(transaction.booking_date)}</th>
+                    <th>{transaction.quantity}</th>
 
-                  {/* Open the modal using document.getElementById('ID').showModal() method */}
-                  <dialog id={`user_modal${transaction.id}`} className="modal">
-                    <div className="modal-box bg-zinc-300 text-zinc-900">
-                      <h3 className="font-semibold text-lg">Data of id user <span className='font-bold text-lg italic'>{transaction.user.id}</span></h3>
-                      <p className="py-4"><span className='font-semibold'>Username:</span> {transaction.user.name}</p>
-                      <p className=""><span className='font-semibold'>Email:</span> {transaction.user.email}</p>
-                    </div>
-                    <form method="dialog" className="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
+                    {/* Open the modal using document.getElementById('ID').showModal() method */}
+                    <dialog id={`user_modal${transaction.id}`} className="modal">
+                      <div className="modal-box bg-zinc-300 text-zinc-900">
+                        <h3 className="font-semibold text-lg">Data of id user <span className='font-bold text-lg italic'>{transaction.user.id}</span></h3>
+                        <p className="py-4"><span className='font-semibold'>Username:</span> {transaction.user.name}</p>
+                        <p className=""><span className='font-semibold'>Email:</span> {transaction.user.email}</p>
+                      </div>
+                      <form method="dialog" className="modal-backdrop">
+                        <button>close</button>
+                      </form>
+                    </dialog>
 
-                  {/* Open the modal using document.getElementById('ID').showModal() method */}
-                  <dialog id={`tour_modal${transaction.id}`} className="modal">
-                    <div className="modal-box bg-zinc-300 text-zinc-900">
-                      <h3 className="font-semibold text-lg">Data of id tour <span className='font-bold text-lg italic'>{transaction.tours.id}</span></h3>
-                      <p className="py-4"><span className='font-semibold'>Tour name:</span> {transaction.tours.tourName}</p>
-                      <p className=""><span className='font-semibold'>Tour price:</span> {transaction.tours.price} /person</p>
-                    </div>
-                    <form method="dialog" className="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
-                </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          
+                    {/* Open the modal using document.getElementById('ID').showModal() method */}
+                    <dialog id={`tour_modal${transaction.id}`} className="modal">
+                      <div className="modal-box bg-zinc-300 text-zinc-900">
+                        <h3 className="font-semibold text-lg">Data of id tour <span className='font-bold text-lg italic'>{transaction.tours.id}</span></h3>
+                        <p className="py-4"><span className='font-semibold'>Tour name:</span> {transaction.tours.tourName}</p>
+                        <p className=""><span className='font-semibold'>Tour price:</span> {transaction.tours.price} /person</p>
+                      </div>
+                      <form method="dialog" className="modal-backdrop">
+                        <button>close</button>
+                      </form>
+                    </dialog>
+                  </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            
+          </div>
         </div>
       </div>
     </div>
+    
   );
 }
 

@@ -8,7 +8,7 @@ import Link from "next/link";
 const AdminMenu = ({ currentUser }) => {
 
   return ( 
-    <Navbar rounded className="bg-black text-gray-400">
+    <Navbar rounded className="bg-transparent text-gray-400">
       <div className="flex md:order-2">
         <Dropdown arrowIcon={false} inline className="bg-transparent border-transparent" label={<Avatar src={currentUser?.image} />}>
           {currentUser ? (
@@ -16,7 +16,9 @@ const AdminMenu = ({ currentUser }) => {
               <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-black mt-3 text-gray-300 rounded-box w-40">
                 <li onClick={() => {}}><a>{currentUser.name}</a></li>
                 <li onClick={() => {}}><a>{currentUser.email}</a></li>
-                {/* <li onClick={() => {}}><a>My home</a></li> */}
+                <Link href={`/admin/admin-home`}>
+                  <li onClick={() => {}}><a>Admin home</a></li>
+                </Link>
                 <div>
                   <li>
                     <Link href="/">

@@ -64,11 +64,11 @@ function TransactionFail() {
         {searchNotFound ? (
           <p className='text-center text-gray-300'>No results found.</p>
         ) : (
-          <table className="table table-zebra">
+          <table className="table table-zebra text-center">
             {/* head */}
             <thead>
               <tr>
-                <th>Transaction Code</th>
+                <th>Code</th>
                 <th>Customer Name</th>
                 <th>Tour Name</th>
                 <th>Tour Date</th>

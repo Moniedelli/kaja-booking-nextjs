@@ -4,6 +4,7 @@ import axios from "axios";
 import ClientOnly from "../ClientOnly";
 import { useState } from "react";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 const InboxForm = () => {
   const [name, setName] = useState('');
@@ -25,41 +26,20 @@ const InboxForm = () => {
 
       if (response.status === 200) {
         console.log('Email sent successfully');
-        setSubmitMessage(
-          <div className="toast toast-end">
-            <div className="alert alert-success">
-              <span>Message sent successfully.</span>
-            </div>
-          </div>
-        );
+        toast.success("Success send message");
 
         setName('');
         setEmail('');
         setSubject('');
         setMessage('');
 
-        setTimeout(() => {
-          setSubmitMessage(null);
-        }, 5000);
       } else {
         console.error('Failed to send email');
-        setSubmitMessage(
-          <div className="toast toast-end">
-            <div className="alert alert-info">
-              <span>Filed send message</span>
-            </div>
-          </div>
-        );
+        toast.error("Error send message.")
       }
     } catch (error) {
       console.error('Error sending email:', error);
-      setSubmitMessage(
-        <div className="toast toast-end">
-          <div className="alert alert-info">
-            <span>Filed send message</span>
-          </div>
-        </div>
-      );
+      toast.error("Error send message.")
     }
   };
 
@@ -113,7 +93,6 @@ const InboxForm = () => {
                       </label>
                       <div className="py-3">
                         <button type="submit" className="btn orange">Send</button>
-                        {submitMessage && <p>{submitMessage}</p>}
                       </div>
                     </div>
                   </div>

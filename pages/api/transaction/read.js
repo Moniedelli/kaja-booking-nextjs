@@ -1,5 +1,3 @@
-// pages/api/transactions.js
-
 import { getSession } from 'next-auth/react';
 import prisma from '@/app/libs/prismadb';
 

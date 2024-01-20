@@ -74,14 +74,14 @@ const TourDetailAdmin = ({ tour }) => {
           <div className="pt-10">
             <h2 className="text-xl font-semibold pb-3">Image</h2>
             <ImageUpload onChange={handleImageChange} value={imageSrc} />
-            <div className=" flex flex-col justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 pt-10">
               {Array.isArray(imageSrc) && imageSrc.map((src, index) => (
-                <div key={index} className="relative inline-block">
+                <div key={index} className="relative inline-block flex-shrink-0 mb-3">
                   <Image
                     className="rounded-lg"
                     src={src}
-                    width={1000}
-                    height={1000}
+                    width={300}
+                    height={300}
                     alt={`Image ${index}`}
                   />
                 </div>

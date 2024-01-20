@@ -131,16 +131,16 @@ function TransactionTable() {
   return (
     <div>
       <SearchComponent onSearch={handleSearch} />
-      <div style={{ overflowX: 'auto', maxHeight: '400px' }}>
+      <div style={{ overflowX: 'auto' }}>
         <div className="overflow-x-auto">
           {searchNotFound ? (
             <p className="text-center text-muted py-5">No results found.</p>
           ) : (
-            <table className="table table-zebra">
+            <table className="table table-zebra text-center">
               {/* head */}
               <thead>
                 <tr>
-                  <th>Transaction Code</th>
+                  <th>Code</th>
                   <th>Customer Name</th>
                   <th>Tour Name</th>
                   <th>Tour Date</th>

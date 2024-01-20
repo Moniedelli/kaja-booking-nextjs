@@ -8,12 +8,13 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import Link from "next/link";
 import Avatar from "../Avatar";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const UserMenu2 = ({ currentUser }) => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -69,9 +70,11 @@ const UserMenu2 = ({ currentUser }) => {
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-zinc-950 text-gray-300 rounded-box max-w-lg">
                   <li onClick={() => {}}><a>{currentUser.name}</a></li>
                   <li onClick={() => {}}><a>{currentUser.email}</a></li>
-                  <Link href={`/user`}>
-                    <li onClick={() => {}}><a>My home</a></li>
-                  </Link>
+                  {session && session.user && session.user.role !== 'ADMIN' && (
+                    <Link href={`/user`}>
+                      <li onClick={() => {}}><a>My home</a></li>
+                    </Link>
+                  )}
                   {currentUser && currentUser.role === 'ADMIN' && (
                     <div>
                       <li>

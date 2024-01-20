@@ -14,6 +14,7 @@ const ConfirmBooking = ({ tour, selectedDate }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [retrievedTransactionId, setRetrievedTransactionId] = useState(null);
   const { data: session } = useSession();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const decreaseQuantity = () => {
@@ -41,6 +42,8 @@ const ConfirmBooking = ({ tour, selectedDate }) => {
 
   const createTransaction = async () => {
     try {
+      setLoading(true);
+
       const bookingDate = new Date(selectedDate).toISOString();
 
       const data = {
@@ -64,6 +67,8 @@ const ConfirmBooking = ({ tour, selectedDate }) => {
       }
     } catch (error) {
       console.error('Error creating transaction:', error);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -101,7 +106,15 @@ const ConfirmBooking = ({ tour, selectedDate }) => {
           </button>
         </div>
       </div>
-      <button className="orange mt-5 px-32 py-3 text-lg font-semibold rounded-xl -ml-44" onClick={createTransaction}>Booking</button>
+      <button
+        className={`orange mt-5 px-32 py-3 text-lg font-semibold rounded-xl -ml-44 ${
+          loading ? "opacity-50 cursor-not-allowed" : "hover:opacity-75"
+        }`}
+        onClick={createTransaction}
+        disabled={loading} // Disable button when loading
+      >
+        {loading ? "Processing..." : "Booking"}
+      </button>
     </div>
   );
 };

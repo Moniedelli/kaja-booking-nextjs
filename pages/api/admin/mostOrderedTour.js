@@ -27,10 +27,10 @@ export default async function handler(req, res) {
     });
 
     // Get the tour with the most PAID transactions (first element after sorting)
-    const mostOrderedTour = tours[0];
+    const topTwoTours = tours.slice(0, 2);
 
 
-    res.status(200).json({ mostOrderedTour });
+    res.status(200).json({ topTwoTours });
   } catch (error) {
     console.error('Error fetching most ordered tour:', error);
     res.status(500).json({ error: 'Internal server error' });
