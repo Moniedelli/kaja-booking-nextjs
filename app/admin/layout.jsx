@@ -13,7 +13,7 @@ export default async function ({ children }) {
 
   const session = await getServerSession(authOptions);
   const user = session?.user || undefined;
-  const isAdmin = user?.role === "USER";
+  const isAdmin = user?.role === "ADMIN";
   const isActive = user?.status === "ACTIVE";
 
   if (!isAdmin || !isActive) {
