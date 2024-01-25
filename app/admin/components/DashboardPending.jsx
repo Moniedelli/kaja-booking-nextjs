@@ -86,7 +86,7 @@ function DashboardPendingBooking() {
     const month = ('0' + (date.getMonth() + 1)).slice(-2); 
     const year = ('0' + date.getFullYear()).slice(-4);
 
-    return `${day}/${month}/${year}`;
+    return `${month}/${day}/${year}`;
   };
 
   const getStatusBadge = (status) => {

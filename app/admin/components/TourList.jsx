@@ -53,12 +53,12 @@ const TourList = () => {
               {placeData.map((item) => (
                 <tr key={item.id} placeData={item} className='text-xs'>
                   <Link href={`/admin/content/${item.id}`}>
-                    <td className='pt-11'>{item.id}</td>
+                    <td className='pt-11 font-bold hover:underline'>{item.id}</td>
                   </Link>
                   <td>{item.tourName}</td>
                   <td>{item.location}</td>
                   <td>{truncateDescription(item.description)}</td>
-                  <td>{formatPrice(item.price)}</td>
+                  <td className='text-right'>{formatPrice(item.price)}</td>
                   <td>{truncateDescription(item.itinerary)}</td>
                   <td>{truncateDescription(item.note)}</td>
                   <td>

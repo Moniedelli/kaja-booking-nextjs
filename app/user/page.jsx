@@ -7,6 +7,10 @@ import Loading from '../components/Loading';
 import CancelBooking from '../components/CancelBooking';
 import axios from 'axios';
 
+function formatPrice(price) {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 const Dashboard = ({ }) => {
   const { data: session } = useSession();
   const [userTransactions, setUserTransactions] = useState([]);
@@ -53,12 +57,17 @@ const Dashboard = ({ }) => {
     <div className='flex justify-center py-8'>
       <Image src='/images/7309681.jpg' width={150} height={150} className='rounded-3xl' alt='' />
     </div>
+    <div className='flex justify-center flex-col text-zinc-500 pb-10 text-center'>
+      <h3>Email: {session?.user?.email}</h3>
+      <h3>Phone Number: {session?.user?.phoneNumber}</h3>
+    </div>
     <div className='bg-zinc-800 mx-36 rounded-2xl'>
       <div className='p-10'>
-        <p className='text-lg'>My Booking</p>
+        <p className='text-lg pb-5'>My Booking</p>
           <div role="tablist" className="tabs tabs-bordered">
             <a role="tab" className={`tab ${activeTab === 'pending' ? 'tab-active' : ''}`} onClick={() => showTab('pending')}>Pending Payment</a>
-            <a role="tab" className={`tab ${activeTab === 'done' ? 'tab-active' : ''}`} onClick={() => showTab('done')}>Done</a>
+            <a role="tab" className={`tab ${activeTab === 'done' ? 'tab-active' : ''}`} onClick={() => showTab('done')}>Success Booking</a>
+            <a role="tab" className={`tab ${activeTab === 'success-booking' ? 'tab-active' : ''}`} onClick={() => showTab('success-booking')}>Paid</a>
             <a role="tab" className={`tab ${activeTab === 'fail' ? 'tab-active' : ''}`} onClick={() => showTab('fail')}>Fail</a>
           </div>
 
@@ -74,16 +83,15 @@ const Dashboard = ({ }) => {
                       </span>
                     </div>
                     <div className='mt-2'>
-                      <p className='text-gray-600'>Total: ${transaction.total}</p>
-                      <p className='text-gray-600'>Create At: {new Date(transaction.createdAt).toLocaleDateString()}</p>
-                      <p>Your Booking Date: {new Date(transaction.booking_date).toLocaleDateString()}</p>
-                      <p>Payment Method: {transaction.payment_method}</p>
+                      <p className='text-gray-600'>Total: Rp {formatPrice(transaction.total)}</p>
+                      <p className='text-gray-600'>Created At: {new Date(transaction.createdAt).toLocaleDateString()}</p>
+                      <p>Your Tour Date: {new Date(transaction.booking_date).toLocaleDateString()}</p>
                     </div>
                     <div className='mt-4'>
-                      <p className='text-sm font-medium text-gray-700'>Products:</p>
+                      <p className='text-sm font-medium text-gray-700'>Tour:</p>
                       <div className='flex justify-between'>
                         <ul className='list-disc pl-5'>
-                          <li key={transaction.tours.id} className='text-gray-600'>{transaction.tours.tourName} - Qty: {transaction.quantity}</li>
+                          <li key={transaction.tours.id} className='text-gray-600'>{transaction.tours.tourName} - Qty: {transaction.quantity} person</li>
                         </ul>
                         <div className='flex gap-2 -mt-6'>
                           {/* <button className="btn btn-active btn-secondary">Pay</button> */}
@@ -99,15 +107,39 @@ const Dashboard = ({ }) => {
                   <div>
                   <div className='flex justify-between items-center'>
                     <h4 className='text-lg font-semibold'>Transaction ID: {transaction.id}</h4>
+                    <span className='text-indigo-700 font-bold text-sm'>
+                      {transaction.status}
+                    </span>
+                  </div>
+                  <div className='mt-2'>
+                    <p className='text-gray-600'>Total: Rp{formatPrice(transaction.total)}</p>
+                    <p className='text-gray-600'>Created At: {new Date(transaction.createdAt).toLocaleDateString()}</p>
+                    {/* <p className='text-gray-600'>Updated At: {new Date(transaction.updatedAt).toLocaleDateString()}</p> */}
+                    <p>Your Tour Date: {new Date(transaction.booking_date).toLocaleDateString()}</p>
+                  </div>
+                  <div className='mt-4'>
+                    <p className='text-sm font-medium text-gray-700'>Products:</p>
+                    <ul className='list-disc pl-5'>
+                      <li key={transaction.tours.id} className='text-gray-600'>{transaction.tours.tourName} - Qty: {transaction.quantity}</li>
+                    </ul>
+                  </div>
+                </div>
+                </div>
+              )) ||
+              (activeTab === 'success-booking' && transaction.status === 'PAID' && (
+                <div key={transaction.id} className='border border-zinc-600 p-4 rounded-md mb-4'>
+                  <div>
+                  <div className='flex justify-between items-center'>
+                    <h4 className='text-lg font-semibold'>Transaction ID: {transaction.id}</h4>
                     <span className='text-green-500 font-bold text-sm'>
                       {transaction.status}
                     </span>
                   </div>
                   <div className='mt-2'>
-                    <p className='text-gray-600'>Total: ${transaction.total}</p>
-                    <p className='text-gray-600'>Create At: {new Date(transaction.createdAt).toLocaleDateString()}</p>
-                    <p>Your Booking Date: {new Date(transaction.booking_date).toLocaleDateString()}</p>
-                    <p>Payment Method: {transaction.payment_method}</p>
+                    <p className='text-gray-600'>Total: Rp{formatPrice(transaction.total)}</p>
+                    <p className='text-gray-600'>Created At: {new Date(transaction.createdAt).toLocaleDateString()}</p>
+                    {/* <p className='text-gray-600'>Updated At: {new Date(transaction.updatedAt).toLocaleDateString()}</p> */}
+                    <p>Your Tour Date: {new Date(transaction.booking_date).toLocaleDateString()}</p>
                   </div>
                   <div className='mt-4'>
                     <p className='text-sm font-medium text-gray-700'>Products:</p>
@@ -128,10 +160,10 @@ const Dashboard = ({ }) => {
                     </span>
                   </div>
                   <div className='mt-2'>
-                    <p className='text-gray-600'>Total: ${transaction.total}</p>
-                    <p className='text-gray-600'>Create At: {new Date(transaction.createdAt).toLocaleDateString()}</p>
-                    <p>Your Booking Date: {new Date(transaction.booking_date).toLocaleDateString()}</p>
-                    <p>Payment Method: {transaction.payment_method}</p>
+                    <p className='text-gray-600'>Total: Rp {formatPrice(transaction.total)}</p>
+                    <p className='text-gray-600'>Created At: {new Date(transaction.createdAt).toLocaleDateString()}</p>
+                    {/* <p className='text-gray-600'>Updated At: {new Date(transaction.updatedAt).toLocaleDateString()}</p> */}
+                    <p>Your Tour Date: {new Date(transaction.booking_date).toLocaleDateString()}</p>
                   </div>
                   <div className='mt-4'>
                     <p className='text-sm font-medium text-gray-700'>Products:</p>

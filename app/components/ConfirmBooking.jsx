@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";  // Import useEffect
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 function formatPrice(price) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -43,6 +44,22 @@ const ConfirmBooking = ({ tour, selectedDate }) => {
   const createTransaction = async () => {
     try {
       setLoading(true);
+
+      if (!session) {
+        toast.error("You must log in first!");
+        return;
+      }
+
+      // Check user status before creating transaction
+      if (session.user.status === 'INACTIVE') {
+        toast.error("Your account is inactive. Please contact support.");
+        return;
+      }
+
+      if (session.user.role === 'ADMIN') {
+        toast.error("You logged in with an ADMIN role. Please use another account for booking!");
+        return;
+      }
 
       const bookingDate = new Date(selectedDate).toISOString();
 

@@ -53,6 +53,7 @@ export const authOptions = {
           name: user.name,
           email: user.email,
           role: user.role,
+          phoneNumber: user.phoneNumber,
           status: user.status
         };
       },
@@ -70,6 +71,7 @@ export const authOptions = {
           name: token.name,
           email: token.email,
           role: token.role,
+          phoneNumber: token.phoneNumber,
           status: token.status
         };
       }
@@ -87,6 +89,7 @@ export const authOptions = {
         id: dbUser ? dbUser.id : null,
         role: dbUser ? dbUser.role : null,
         name: dbUser ? dbUser.name : null,
+        phoneNumber: dbUser ? dbUser.phoneNumber : null,
         status: dbUser ? dbUser.status : null
       };
     },

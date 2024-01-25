@@ -2,25 +2,29 @@
 
 import { Toast } from "flowbite-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 function CancelBooking({userTransactions, onUpdate}) {
-	const [submitMessage, setSubmitMessage] = useState(null);
+  function onCloseModal() {
+    const modal = document.getElementById(`my_modal_${userTransactions.id}`);
+    modal.close();
+  }  
 
   const handleUpdate = async () => {
     try {
       await onUpdate(userTransactions.id);
-      setSubmitMessage(
-        <Toast>
-          You canceled this tour
-        </Toast>
-			)
+      toast.success("Confirmed!");
+      onCloseModal();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.error('Error canceling booking:', error);
-      setSubmitMessage(
-        <Toast>
-          Fail canceled this tour
-        </Toast>
-      );
+      toast.error("Failed!");
+      onCloseModal();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }
   };
 
@@ -37,9 +41,8 @@ function CancelBooking({userTransactions, onUpdate}) {
             <h3 className="font-bold text-lg">Hello!</h3>
             <p className="py-4">Do you wanna cancel this tour order?</p>
             <div className="modal-action flex justify-center">
-              <button className='btn orange' onClick={() => handleUpdate()}>Confirm</button>
+              <button className='btn btn-error' onClick={() => handleUpdate()}>Confirm</button>
             </div>
-						{submitMessage && <p>{submitMessage}</p>}
           </div>
         </dialog>
       </button>

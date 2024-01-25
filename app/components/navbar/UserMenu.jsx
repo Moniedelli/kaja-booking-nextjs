@@ -51,7 +51,7 @@ const UserMenu2 = ({ currentUser }) => {
               <details>
                 <summary>About</summary>
                 <ul className="p-2 bg-zinc-900">
-                  <li><a href="/about" className={isActiveRoute('/about') ? 'bg-zinc-800 hover:text-zinc-200' : ''}>Profile</a></li>
+                  <li><a href="/about" className={isActiveRoute('/about') ? 'bg-zinc-800 hover:text-zinc-200' : ''}>Community</a></li>
                   <li><a href="/about/activity" className={isActiveRoute('/about/activity') ? 'bg-zinc-800 hover:text-zinc-200' : ''}>Activity</a></li>
                 </ul>
               </details>

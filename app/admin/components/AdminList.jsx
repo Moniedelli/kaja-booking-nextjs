@@ -30,7 +30,7 @@ function AdminList() {
     const month = ('0' + (date.getMonth() + 1)).slice(-2); 
     const year = ('0' + date.getFullYear()).slice(-4);
 
-    return `${day}/${month}/${year}`;
+    return `${month}/${day}/${year}`;
   };
 
   return (
@@ -46,7 +46,7 @@ function AdminList() {
               <th>Phone Number</th>
               <th>Status</th>
               <th>Created At</th>
-              <th>Updated At</th>
+              {/* <th>Updated At</th> */}
               <th></th>
             </tr>
           </thead>
@@ -59,7 +59,7 @@ function AdminList() {
                 <td>{adminList.phoneNumber}</td>
                 <td>{adminList.status}</td>
                 <td>{formatDate(adminList.createdAt)}</td>
-                <td>{formatDate(adminList.updatedAt)}</td>
+                {/* <td>{formatDate(adminList.updatedAt)}</td> */}
                 <td>
                   <UpdateAdmin adminList={adminList} />
                 </td>

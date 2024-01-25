@@ -13,12 +13,12 @@ const AdminMenu = ({ currentUser }) => {
         <Dropdown arrowIcon={false} inline className="bg-transparent border-transparent" label={<Avatar src={currentUser?.image} />}>
           {currentUser ? (
             <>
-              <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-black mt-3 text-gray-300 rounded-box w-40">
+              <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-zinc-800 text-gray-300 rounded-box max-w-2xl">
                 <li onClick={() => {}}><a>{currentUser.name}</a></li>
                 <li onClick={() => {}}><a>{currentUser.email}</a></li>
-                <Link href={`/admin/admin-home`}>
+                {/* <Link href={`/admin/admin-home`}>
                   <li onClick={() => {}}><a>Admin home</a></li>
-                </Link>
+                </Link> */}
                 <div>
                   <li>
                     <Link href="/">

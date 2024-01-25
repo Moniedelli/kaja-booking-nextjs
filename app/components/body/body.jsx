@@ -15,7 +15,7 @@ const Body = () => {
           <div className="pl-28 -mt-40" data-aos="fade-right">
             <h2 className="text-extra-huge text-zinc-400 opacity-30 font-bold">JEEP</h2>
           </div>
-          <div className="-mt-5 -ml-44" data-aos="fade-left">
+          <div className="-mt-5 -ml-32" data-aos="fade-left">
             <Image src="/images/Jeep-landingpage.png" width={600} height={600} alt="jeep-lp"></Image>
             <Image src="/images/jeep_PNG121 3.png" width={650} height={650} className="" alt="jeep-lp"></Image>
           </div>

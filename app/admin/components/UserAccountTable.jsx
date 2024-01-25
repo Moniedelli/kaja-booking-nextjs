@@ -5,6 +5,7 @@ import { Table, Button, Tooltip } from 'flowbite-react';
 import axios from 'axios';
 import SearchComponent from './SearchComponent';
 import Link from 'next/link';
+import UpdateUserStatus from './UpdateUserStatus';
 
 function UserAccountTable() {
   const [userAccount, setUserAccount] = useState([]);
@@ -56,7 +57,7 @@ function UserAccountTable() {
     const month = ('0' + (date.getMonth() + 1)).slice(-2); 
     const year = ('0' + date.getFullYear()).slice(-4);
 
-    return `${day}/${month}/${year}`;
+    return `${month}/${day}/${year}`;
   };
 
   return (
@@ -78,6 +79,7 @@ function UserAccountTable() {
                 <th>Phone Number</th>
                 <th>Created At</th>
                 <th>Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -88,11 +90,10 @@ function UserAccountTable() {
                 <td>{userAccount.phoneNumber}</td>
                 <th>{formatDate(userAccount.createdAt)}</th>
                 <th>
-                  <div className="avatar online placeholder">
-                    <div className="bg-neutral text-neutral-content rounded-xl w-12">
-                      <span className="text-xs">{userAccount.status}</span>
-                    </div>
-                  </div> 
+                  <span className="text-xs">{userAccount.status}</span>
+                </th>
+                <th>
+                  <UpdateUserStatus userAccount={userAccount} />
                 </th>
                 {/* <th>{getStatusBadge(transaction.status)}</th> */}
               </tr>

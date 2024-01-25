@@ -113,13 +113,13 @@ const InputForm = () => {
             <div className="label">
               <span className="label-text">Tour Name</span>
             </div>
-            <input type="text" value={tourName} onChange={(e) => setTourName(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
+            <input type="text" value={tourName} onChange={(e) => setTourName(e.target.value)} placeholder="Type here" className="input input-md bg-transparent input-bordered w-full max-w-3xl" />
           </label>
           <label className="form-control w-full max-w-3xl">
             <div className="label">
               <span className="label-text">Location</span>
             </div>
-            <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
+            <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Type here" className="input input-md bg-transparent input-bordered w-full max-w-3xl" />
           </label>
           <label className="form-control w-full max-w-3xl">
             <div className="label">
@@ -131,7 +131,7 @@ const InputForm = () => {
             <div className="label">
               <span className="label-text">Price</span>
             </div>
-            <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Type here" className="input input-xs bg-transparent input-bordered w-full max-w-3xl" />
+            <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Type here" className="input input-md bg-transparent input-bordered w-full max-w-3xl" />
           </label>
           <label className="form-control w-full max-w-3xl">
             <div className="label">

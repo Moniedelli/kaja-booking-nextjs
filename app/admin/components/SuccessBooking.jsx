@@ -6,6 +6,7 @@ import SearchComponent from './SearchComponent';
 import UpdateStatusTransaction from './UpdateStatusTransaction';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
+import Loading from '@/app/components/Loading';
 
 function formatPrice(price) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -14,6 +15,7 @@ function formatPrice(price) {
 function SuccessBooking() {
   const [transactions, setTransactions] = useState([]);
   const [searchNotFound, setSearchNotFound] = useState(false);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -25,6 +27,8 @@ function SuccessBooking() {
         setTransactions(doneStatus);
       } catch (error) {
         console.error('Error fetching transactions:', error);
+      } finally {
+        setLoading(false); 
       }
     };
 
@@ -94,7 +98,9 @@ function SuccessBooking() {
       <SearchComponent onSearch={handleSearch} />
       <div style={{ overflowX: 'auto', maxHeight: '400px' }}>
         <div className="overflow-x-auto">
-        {searchNotFound ? (
+        {loading ? (
+            <Loading />
+          ) : searchNotFound ? (
           <p className='text-center text-gray-300'>No results found.</p>
         ) : (
           <table className="table table-zebra text-center">
@@ -105,7 +111,7 @@ function SuccessBooking() {
                 <th>Customer Name</th>
                 <th>Tour Name</th>
                 <th>Tour Date</th>
-                <th>Quantity /person</th>
+                <th>Qty /person</th>
                 <th>Total Price</th>
                 <th>Status</th> 
               </tr>
@@ -114,13 +120,13 @@ function SuccessBooking() {
               {transactions.map((transaction) => (
               <tr key={transaction.id} className='text-center'>
                 <Link href={`/admin/transaction/${transaction.id}`}>
-                    <th>{transaction.id}</th>
+                    <th className='hover:underline'>{transaction.id}</th>
                   </Link>
                 <th>{transaction.user.name}</th>
                 <th>{transaction.tours.tourName}</th>
                 <th>{formatDate(transaction.booking_date)}</th>
                 <th>{transaction.quantity}</th>
-                <th>{formatPrice(transaction.total)}</th>
+                <th className='text-right'>{formatPrice(transaction.total)}</th>
                 <th>
                   <div className="badge badge-primary gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">

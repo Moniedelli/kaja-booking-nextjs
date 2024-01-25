@@ -13,12 +13,12 @@ const ImageUpload = ({ onChange, value }) => {
     onChange([...value, result.info.secure_url]);
   };
 
-  const handleRemove = (index) => {
-    // Remove the image at the specified index
-    const updatedImages = [...value];
-    updatedImages.splice(index, 1);
-    onChange(updatedImages);
-  };
+  // const handleRemove = (index) => {
+  //   // Remove the image at the specified index
+  //   const updatedImages = [...value];
+  //   updatedImages.splice(index, 1);
+  //   onChange(updatedImages);
+  // };
 
   return (
     <CldUploadWidget
@@ -52,7 +52,7 @@ const ImageUpload = ({ onChange, value }) => {
           <div className="font-semibold text-lg">
             Click to upload
           </div>
-          {Array.isArray(value) && value.map((image, index) => (
+          {/* {Array.isArray(value) && value.map((image, index) => (
             <div key={index} className="relative inline-block">
               <Image
                 src={image}
@@ -68,7 +68,7 @@ const ImageUpload = ({ onChange, value }) => {
                 x
               </button>
             </div>
-          ))}
+          ))} */}
         </div>
       )}
     </CldUploadWidget>
