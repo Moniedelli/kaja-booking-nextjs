@@ -45,6 +45,16 @@ const ConfirmBooking = ({ tour, selectedDate }) => {
     try {
       setLoading(true);
 
+      if (!selectedDate) {
+        toast(
+          "Please select a date before booking.",
+          {
+            duration: 4000,
+          }
+        );
+        return;
+      }
+
       if (!session) {
         toast.error("You must log in first!");
         return;
@@ -65,7 +75,7 @@ const ConfirmBooking = ({ tour, selectedDate }) => {
 
       const data = {
         total: price * quantity,
-        status: 'PENDING_PAYMENT',
+        status: 'PENDING',
         booking_date: bookingDate,
         quantity,
         userId: session?.user?.id,

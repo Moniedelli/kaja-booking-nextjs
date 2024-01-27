@@ -52,10 +52,8 @@ const TourList = () => {
             <tbody>
               {placeData.map((item) => (
                 <tr key={item.id} placeData={item} className='text-xs'>
-                  <Link href={`/admin/content/${item.id}`}>
-                    <td className='pt-11 font-bold hover:underline'>{item.id}</td>
-                  </Link>
-                  <td>{item.tourName}</td>
+                  <td className='hover:underline'><Link href={`/admin/content/${item.id}`}>{item.id}</Link></td>
+                  <td><Link href={`/admin/content/${item.id}`} className='hover:underline'>{item.tourName}</Link></td>
                   <td>{item.location}</td>
                   <td>{truncateDescription(item.description)}</td>
                   <td className='text-right'>{formatPrice(item.price)}</td>

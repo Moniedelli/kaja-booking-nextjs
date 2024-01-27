@@ -3,7 +3,7 @@ import prisma from '@/app/libs/prismadb';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { id, total, status = 'PENDING_PAYMENT',quantity, payment_method,booking_date, userId, tourId } = req.body;
+      const { id, total, status = 'PENDING',quantity, payment_method,booking_date, userId, tourId } = req.body;
 
       // Pengecekan apakah userId ada
       if (!userId) {

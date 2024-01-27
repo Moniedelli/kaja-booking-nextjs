@@ -1,17 +1,11 @@
 'use client'
 
 import React, { useState } from 'react';
-import {
-  Button,
-  Checkbox,
-  Label,
-  Toast,
-} from 'flowbite-react';
-import { HiCheck, HiExclamation, HiX } from 'react-icons/hi';
 import ImageUpload from './ImageUpload';
 import axios from 'axios';
 import { useEffect } from 'react';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 
 const InputForm = () => {
   const [tourId, setTourId] = useState(null);
@@ -22,7 +16,6 @@ const InputForm = () => {
   const [itinerary, setItinerary] = useState('');
   const [note, setNote] = useState('');
   const [imageSrc, setImageSrc] = useState([]);
-  const [submitMessage, setSubmitMessage] = useState(null);
 
   useEffect(() => {
     const fetchExistingTourData = async () => {
@@ -68,15 +61,7 @@ const InputForm = () => {
 
       if (success) {
         console.log('Tour berhasil dibuat');
-        setSubmitMessage(
-          <Toast>
-            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
-              <HiCheck className="h-5 w-5" />
-            </div>
-            <div className="ml-3 text-max-w-3xl font-normal">Tour created successfully</div>
-            <Toast.Toggle />
-          </Toast>
-        );
+        toast.success("Success add tour!");
 
         setTourName('');
         setLocation('');
@@ -88,15 +73,7 @@ const InputForm = () => {
       }
     } catch (error) {
       console.error('Terjadi kesalahan:', error);
-      setSubmitMessage(
-        <Toast>
-          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
-            <HiX className="h-5 w-5" />
-          </div>
-          <div className="ml-3 text-max-w-3xl font-normal">Filed to create tour</div>
-          <Toast.Toggle />
-        </Toast>
-      );
+      toast.success("Failed add tour!");
     }
   };
 
@@ -182,7 +159,6 @@ const InputForm = () => {
     </div>
     <div className='flex justify-center gap-2'>
       <button type="submit" className='mt-5 orange py-2 px-5 rounded-3xl' onClick={handleSubmit}>{tourId ? 'Update Tour' : 'Add Tour'}</button>
-        {submitMessage && <p>{submitMessage}</p>}
       {/* <Button type="submit" className='mt-5'></Button>
         {submitMessage && <p>{submitMessage}</p>} */}
     </div>

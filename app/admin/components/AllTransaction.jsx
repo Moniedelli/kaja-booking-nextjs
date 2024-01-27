@@ -7,6 +7,9 @@ import UpdateToDone from './UpdateToDone';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
 import Loading from '@/app/components/Loading';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import ReportAllTransaction from './ReportAllTransaction';
 
 function formatPrice(price) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -16,6 +19,121 @@ function AllTransactions() {
   const [transactions, setTransactions] = useState([]);
   const [searchNotFound, setSearchNotFound] = useState(false);
   const [loading, setLoading] = useState(true); 
+  const [sortOrder, setSortOrder] = useState('asc'); // Default sorting order is ascending
+  const [sortedColumn, setSortedColumn] = useState(null);
+
+  const handleSort = (column) => {
+    const isAsc = sortedColumn === column && sortOrder === 'asc';
+    const newSortOrder = isAsc ? 'desc' : 'asc';
+
+    setSortedColumn(column);
+    setSortOrder(newSortOrder);
+
+    // Clone the transactions array to avoid mutating the original state
+    const sortedTransactions = [...transactions];
+
+    // Sorting logic based on the column
+    sortedTransactions.sort((a, b) => {
+      let valueA, valueB;
+
+      switch (column) {
+        case 'user.name':
+          valueA = a.user.name.toLowerCase();
+          valueB = b.user.name.toLowerCase();
+          break;
+        case 'tours.tourName':
+          valueA = a.tours.tourName.toLowerCase();
+          valueB = b.tours.tourName.toLowerCase();
+          break;
+        case 'booking_date':
+          valueA = new Date(a.booking_date);
+          valueB = new Date(b.booking_date);
+          break;
+        // Add more cases if needed for other columns
+        default:
+          break;
+      }
+
+      // Use localeCompare for string comparison and compare dates for 'booking_date'
+      return column === 'booking_date'
+        ? (isAsc ? valueA - valueB : valueB - valueA)
+        : (isAsc ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA));
+    });
+
+    // Update the transactions state with the sorted array
+    setTransactions(sortedTransactions);
+  };
+
+  const generatePDFdetail = (transactionId) => {
+    const transaction = transactions.find((t) => t.id === transactionId);
+  
+    if (!transaction) {
+      console.error('Transaction not found');
+      return;
+    }
+  
+    const doc = new jsPDF();
+  
+    // Set background color
+    doc.setFillColor(32, 32, 32); // Background color
+    doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
+  
+    // Set Font
+    doc.setFont('Arial', 'normal');
+  
+    // Header
+    doc.setTextColor(255, 255, 255); // White text color
+    doc.setFontSize(16);
+    doc.text(`Detail Transaction with ID: ${transaction.id}`, 15, 15);
+  
+    // Transaction Status
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(12);
+    doc.text(`Status: ${transaction.status}`, 15, 30);
+  
+    // Tour Details
+    doc.setTextColor(255, 255, 255);
+    doc.text(transaction.tours.tourName, 15, 70);
+  
+    // Other Details
+    doc.text(`Total: Rp ${formatPrice(transaction.total)}`, 15, 85);
+    doc.text(`Quantity: ${transaction.quantity}`, 15, 95);
+    doc.text(`Tour Date: ${formatDate(transaction.booking_date)}`, 15, 105);
+    doc.text(`Created At: ${formatDate(transaction.createdAt)}`, 15, 115);
+  
+    // User Information
+    doc.text('User Information', 15, 130);
+    doc.text(`Name: ${transaction.user.name}`, 15, 140);
+    doc.text(`Phone Number: ${transaction.user.phoneNumber}`, 15, 150);
+    doc.text(`Email: ${transaction.user.email}`, 15, 160);
+  
+    // Table
+    doc.autoTable({
+      startY: 180,
+      head: [['Code', 'Customer Name', 'Tour Name', 'Tour Date', 'Qty/person', 'Total Price (Rp)', 'Status']],
+      body: [[
+        transaction.id,
+        transaction.user.name,
+        transaction.tours.tourName,
+        formatDate(transaction.booking_date),
+        transaction.quantity,
+        formatPrice(transaction.total),
+        getStatusBadge(transaction.status)
+      ]],
+      theme: 'striped', // 'striped', 'grid', 'plain'
+      styles: {
+        fillColor: [0, 0, 0], // Table background color
+        textColor: [255, 255, 255], // Table text color
+        halign: 'center', // Horizontal alignment (left, center, right)
+        valign: 'middle', // Vertical alignment (top, middle, bottom)
+        cellPadding: 5,
+        fontSize: 12
+      }
+    });
+  
+    // Save the PDF
+    doc.save(`transaction_report_${transaction.id}.pdf`);
+  };
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -98,7 +216,7 @@ function AllTransactions() {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'PENDING_PAYMENT':
+      case 'PENDING':
         return (
           <div className="badge badge-info gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -142,6 +260,7 @@ function AllTransactions() {
   return (
     <div>
       <SearchComponent onSearch={handleSearch} />
+      <ReportAllTransaction />
       <div style={{ overflowX: 'auto' }}>
         <div className="overflow-x-auto">
         {loading ? (
@@ -149,62 +268,91 @@ function AllTransactions() {
           ) : searchNotFound ? (
             <p className="text-center text-muted py-5">No results found.</p>
           ) : (
-            <table className="table table-zebra text-center">
-              {/* head */}
-              <thead>
-                <tr>
-                  <th>Code</th>
-                  <th>Customer Name</th>
-                  <th>Tour Name</th>
-                  <th>Tour Date</th>
-                  <th>Qty /person</th>
-                  <th>Total Price</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.map((transaction) => (
-                <tr key={transaction.id} className='text-center'>
-                  <Link href={`/admin/transaction/${transaction.id}`}>
-                    <th className='hover:underline'>{transaction.id}</th>
-                  </Link>
-                  <th>{transaction.user.name}</th>
-                  <th>{transaction.tours.tourName}</th>
-                  <th>{formatDate(transaction.booking_date)}</th>
-                  <th>{transaction.quantity}</th>
-                  <th className='text-right'>{formatPrice(transaction.total)}</th>
-                  <th>{getStatusBadge(transaction.status)}</th>
-                  <th>
-                    <UpdateToDone transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />
-                  </th>
+            <div style={{ overflowX: 'auto', maxHeight: '700px' }}>
+              <div className="overflow-x-auto">
+                <table className="table table-zebra text-center">
+                  {/* head */}
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                        <th onClick={() => handleSort('user.name')}>
+                          Customer Name
+                          {sortedColumn === 'user.name' && (
+                            <span className={`ml-1 ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}>
+                              {sortOrder === 'asc' ? '▲' : '▼'}
+                            </span>
+                          )}
+                        </th>
+                        <th onClick={() => handleSort('tours.tourName')}>
+                          Tour Name
+                          {sortedColumn === 'tours.tourName' && (
+                            <span className={`ml-1 ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}>
+                              {sortOrder === 'asc' ? '▲' : '▼'}
+                            </span>
+                          )}
+                        </th>
+                        <th onClick={() => handleSort('booking_date')}>
+                          Tour Date
+                          {sortedColumn === 'booking_date' && (
+                            <span className={`ml-1 ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}>
+                              {sortOrder === 'asc' ? '▲' : '▼'}
+                            </span>
+                          )}
+                        </th>
+                      <th>Qty /person</th>
+                      <th>Total Price (Rp)</th>
+                      <th>Status</th>
+                      {/* <th>PDF</th> */}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transactions.map((transaction) => (
+                    <tr key={transaction.id} className='text-center'>
+                      <th className='hover:underline'>
+                        <Link href={`/admin/transaction/${transaction.id}`}>{transaction.id}</Link>
+                      </th>
+                      <th className='hover:underline'>
+                        <Link href={`/admin/transaction/${transaction.id}`}>{transaction.user.name}</Link>
+                      </th>
+                      <th>{transaction.tours.tourName}</th>
+                      <th>{formatDate(transaction.booking_date)}</th>
+                      <th>{transaction.quantity}</th>
+                      <th className='text-right'>{formatPrice(transaction.total)}</th>
+                      <th>{getStatusBadge(transaction.status)}</th>
+                      {/* <th><button onClick={() => generatePDFdetail(transaction.id)}>Download PDF</button></th> */}
+                      <th>
+                        <UpdateToDone transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />
+                      </th>
 
-                  {/* Open the modal using document.getElementById('ID').showModal() method */}
-                  <dialog id={`user_modal${transaction.id}`} className="modal">
-                    <div className="modal-box bg-zinc-300 text-zinc-900">
-                      <h3 className="font-semibold text-lg">Data of id user <span className='font-bold text-lg italic'>{transaction.user.id}</span></h3>
-                      <p className="py-4"><span className='font-semibold'>Username:</span> {transaction.user.name}</p>
-                      <p className=""><span className='font-semibold'>Email:</span> {transaction.user.email}</p>
-                    </div>
-                    <form method="dialog" className="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
+                      {/* Open the modal using document.getElementById('ID').showModal() method */}
+                      <dialog id={`user_modal${transaction.id}`} className="modal">
+                        <div className="modal-box bg-zinc-300 text-zinc-900">
+                          <h3 className="font-semibold text-lg">Data of id user <span className='font-bold text-lg italic'>{transaction.user.id}</span></h3>
+                          <p className="py-4"><span className='font-semibold'>Username:</span> {transaction.user.name}</p>
+                          <p className=""><span className='font-semibold'>Email:</span> {transaction.user.email}</p>
+                        </div>
+                        <form method="dialog" className="modal-backdrop">
+                          <button>close</button>
+                        </form>
+                      </dialog>
 
-                  {/* Open the modal using document.getElementById('ID').showModal() method */}
-                  <dialog id={`tour_modal${transaction.id}`} className="modal">
-                    <div className="modal-box bg-zinc-300 text-zinc-900">
-                      <h3 className="font-semibold text-lg">Data of id tour <span className='font-bold text-lg italic'>{transaction.tours.id}</span></h3>
-                      <p className="py-4"><span className='font-semibold'>Tour name:</span> {transaction.tours.tourName}</p>
-                      <p className=""><span className='font-semibold'>Tour price:</span> {transaction.tours.price} /person</p>
-                    </div>
-                    <form method="dialog" className="modal-backdrop">
-                      <button>close</button>
-                    </form>
-                  </dialog>
-                </tr>
-                ))}
-              </tbody>
-            </table>
+                      {/* Open the modal using document.getElementById('ID').showModal() method */}
+                      <dialog id={`tour_modal${transaction.id}`} className="modal">
+                        <div className="modal-box bg-zinc-300 text-zinc-900">
+                          <h3 className="font-semibold text-lg">Data of id tour <span className='font-bold text-lg italic'>{transaction.tours.id}</span></h3>
+                          <p className="py-4"><span className='font-semibold'>Tour name:</span> {transaction.tours.tourName}</p>
+                          <p className=""><span className='font-semibold'>Tour price:</span> {transaction.tours.price} /person</p>
+                        </div>
+                        <form method="dialog" className="modal-backdrop">
+                          <button>close</button>
+                        </form>
+                      </dialog>
+                    </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           )}
           
         </div>

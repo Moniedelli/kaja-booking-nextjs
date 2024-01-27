@@ -26,10 +26,10 @@ const ButtonListTour = () => {
   }, []);
 
   return (
-    <Container >
-      <div className='flex gap-2 pt-2'>
+    <Container>
+      <div className='flex gap-2 pt-2 flex-wrap'>
         {placeData.map((item) => (
-          <div key={item.id}>
+          <div key={item.id} className='flex-shrink-0 mb-2'>
             <button className='orange py-2 px-4 rounded-full' pill>
               {item.tourName}
             </button>

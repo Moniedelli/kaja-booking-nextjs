@@ -23,7 +23,7 @@ function TransactionTable() {
         const response = await axios('/api/admin/transaction/read');
         const data = await response.data;
 
-        const transactionStatus = data.filter((status) => status.status === 'PENDING_PAYMENT');
+        const transactionStatus = data.filter((status) => status.status === 'PENDING');
         // Urutkan transaksi berdasarkan tanggal pembuatan secara descending (terbaru dulu)
         transactionStatus.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -99,7 +99,7 @@ function TransactionTable() {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'PENDING_PAYMENT':
+      case 'PENDING':
         return (
           <div className="badge badge-info gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -150,17 +150,19 @@ function TransactionTable() {
                   <th>Tour Name</th>
                   <th>Tour Date</th>
                   <th>Qty /person</th>
-                  <th>Total Price</th>
+                  <th>Total Price (Rp)</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 {transactions.map((transaction) => (
                 <tr key={transaction.id} className='text-center'>
-                  <Link href={`/admin/transaction/${transaction.id}`}>
-                    <th className='hover:underline'>{transaction.id}</th>
-                  </Link>
-                  <th>{transaction.user.name}</th>
+                  <th className='hover:underline'>
+                    <Link href={`/admin/transaction/${transaction.id}`}>{transaction.id}</Link>
+                  </th>
+                  <th className='hover:underline'>
+                    <Link href={`/admin/transaction/${transaction.id}`}>{transaction.user.name}</Link>
+                  </th>
                   <th>{transaction.tours.tourName}</th>
                   <th>{formatDate(transaction.booking_date)}</th>
                   <th>{transaction.quantity}</th>

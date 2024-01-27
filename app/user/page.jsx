@@ -73,7 +73,7 @@ const Dashboard = ({ }) => {
 
           <div className="pt-5">
             {userTransactions.map((transaction) => (
-              (activeTab === 'pending' && transaction.status === 'PENDING_PAYMENT' && (
+              (activeTab === 'pending' && transaction.status === 'PENDING' && (
                 <div key={transaction.id} className='border border-zinc-600 p-4 rounded-md mb-4'>
                   <div>
                     <div className='flex justify-between items-center'>

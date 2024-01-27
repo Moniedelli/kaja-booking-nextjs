@@ -24,7 +24,7 @@ const TransactionDetail = ({ transaction }) => {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'PENDING_PAYMENT':
+      case 'PENDING':
         return (
           <div className="badge badge-info gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -123,7 +123,7 @@ const TransactionDetail = ({ transaction }) => {
               <h2 className="text-xl font-semibold pb-2">Status</h2>
               <p className='font-semibold'>{getStatusBadge(transaction.status)}</p>
             </div>
-            {transaction.status === 'PENDING_PAYMENT' && <UpdateToDone transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />}
+            {transaction.status === 'PENDING' && <UpdateToDone transactions={transaction} onUpdate={updateTransactionStatus} toFail={updateTransactionStatusFail} />}
             {transaction.status === 'DONE' && <UpdateStatusTransaction transactions={transaction} onUpdate={updateTransactionStatusToPaid} toFail={updateTransactionStatusFail} />}          </div>
 
           <div className="pt-5">

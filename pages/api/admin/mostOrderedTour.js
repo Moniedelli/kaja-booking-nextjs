@@ -18,21 +18,20 @@ export default async function handler(req, res) {
       },
     });
 
-    // Sort tours based on the number of PAID transactions in descending order
-    tours.sort((a, b) => {
-      const paidBookingCountA = a.transactions.filter(transaction => transaction.status === 'PAID').length;
-      const paidBookingCountB = b.transactions.filter(transaction => transaction.status === 'PAID').length;
-
-      return paidBookingCountB - paidBookingCountA;
+    // Calculate the total quantity of paid bookings for each tour
+    tours.forEach((tour) => {
+      tour.totalPaidBookings = tour.transactions.filter(transaction => transaction.status === 'PAID').length;
     });
 
-    // Get the tour with the most PAID transactions (first element after sorting)
-    const topTwoTours = tours.slice(0, 2);
+    // Sort tours based on the total quantity of PAID transactions in descending order
+    tours.sort((a, b) => b.totalPaidBookings - a.totalPaidBookings);
 
+    // Get the top 5 tours with the most PAID transactions
+    const topFiveTours = tours.slice(0, 5);
 
-    res.status(200).json({ topTwoTours });
+    res.status(200).json({ topFiveTours });
   } catch (error) {
-    console.error('Error fetching most ordered tour:', error);
+    console.error('Error fetching most ordered tours:', error);
     res.status(500).json({ error: 'Internal server error' });
   } finally {
     await prisma.$disconnect();

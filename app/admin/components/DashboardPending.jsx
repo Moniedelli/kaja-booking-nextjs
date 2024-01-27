@@ -20,7 +20,7 @@ function DashboardPendingBooking() {
         const response = await axios('/api/admin/transaction/read');
         const data = await response.data;
 
-        const transactionStatus = data.filter((status) => status.status === 'PENDING_PAYMENT');
+        const transactionStatus = data.filter((status) => status.status === 'PENDING');
         // Urutkan transaksi berdasarkan tanggal pembuatan secara descending (terbaru dulu)
         transactionStatus.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -91,7 +91,7 @@ function DashboardPendingBooking() {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'PENDING_PAYMENT':
+      case 'PENDING':
         return (
           <div className="badge badge-info gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
