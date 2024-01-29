@@ -18,7 +18,7 @@ datasource db {
 
 enum Role {
   ADMIN
-  CUSTOMER
+  USER
 }
 
 enum UserStatus {
@@ -33,7 +33,7 @@ model User {
   hashedPassword  String
   phoneNumber     String
   status          UserStatus @default(ACTIVE)
-  role            Role @default(CUSTOMER)
+  role            Role @default(USER)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   transactions    Transaction[]
