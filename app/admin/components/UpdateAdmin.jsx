@@ -1,9 +1,6 @@
 'use client'
 
 import React, { useState } from 'react';
-import {
-  Toast,
-} from 'flowbite-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -89,11 +86,11 @@ const UpdateAdmin = ({adminList}) => {
                     <span className="label-text text-zinc-300">Status</span>
                   </div>
                   <div className='flex gap-2 items-center pb-2'>
-                    <input type="radio" name="radio-1" className="radio bg-transparent" checked={status === 'ACTIVE'} onChange={() => setStatus('ACTIVE')} required />
+                    <input type="radio" name={`radio-${adminList.id}`} className="radio bg-transparent" checked={status === 'ACTIVE'} onChange={() => setStatus('ACTIVE')} required />
                     <h2>Active</h2>
                   </div>
                   <div className='flex gap-2 items-center pb-2'>
-                    <input type="radio" name="radio-1" className="radio bg-transparent" checked={status === 'INACTIVE'} onChange={() => setStatus('INACTIVE')} required />
+                    <input type="radio" name={`radio-${adminList.id}`} className="radio bg-transparent" checked={status === 'INACTIVE'} onChange={() => setStatus('INACTIVE')} required />
                     <h2>Inactive</h2>
                   </div>
                 </label>

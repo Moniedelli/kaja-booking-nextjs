@@ -33,6 +33,25 @@ function AdminList() {
     return `${month}/${day}/${year}`;
   };
 
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case 'ACTIVE':
+        return (
+          <div className="badge badge-secondary badge-outline">
+            Active
+          </div>
+        );
+      case 'INACTIVE':
+      return (
+        <div className="badge badge-primary badge-outline">
+          Inactive
+        </div>
+        );
+      default:
+        return null; 
+    }
+  };
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -57,7 +76,7 @@ function AdminList() {
                 <th>{adminList.name}</th>
                 <td>{adminList.email}</td>
                 <td>{adminList.phoneNumber}</td>
-                <td>{adminList.status}</td>
+                <td>{getStatusBadge(adminList.status)}</td>
                 <td>{formatDate(adminList.createdAt)}</td>
                 {/* <td>{formatDate(adminList.updatedAt)}</td> */}
                 <td>

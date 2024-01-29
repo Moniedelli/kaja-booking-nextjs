@@ -275,32 +275,33 @@ function AllTransactions() {
                   <thead>
                     <tr>
                       <th>Code</th>
-                        <th onClick={() => handleSort('user.name')}>
-                          Customer Name
-                          {sortedColumn === 'user.name' && (
-                            <span className={`ml-1 ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}>
-                              {sortOrder === 'asc' ? '▲' : '▼'}
-                            </span>
-                          )}
-                        </th>
-                        <th onClick={() => handleSort('tours.tourName')}>
-                          Tour Name
-                          {sortedColumn === 'tours.tourName' && (
-                            <span className={`ml-1 ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}>
-                              {sortOrder === 'asc' ? '▲' : '▼'}
-                            </span>
-                          )}
-                        </th>
-                        <th onClick={() => handleSort('booking_date')}>
-                          Tour Date
-                          {sortedColumn === 'booking_date' && (
-                            <span className={`ml-1 ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}>
-                              {sortOrder === 'asc' ? '▲' : '▼'}
-                            </span>
-                          )}
-                        </th>
+                      <th onClick={() => handleSort('user.name')} className='hover:text-amber-600'>
+                        Customer Name
+                        {sortedColumn === 'user.name' && (
+                          <span className={`ml-1 ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}>
+                            {sortOrder === 'asc' ? '▲' : '▼'}
+                          </span>
+                        )}
+                      </th>
+                      <th onClick={() => handleSort('tours.tourName')} className='hover:text-amber-600'>
+                        Tour Name
+                        {sortedColumn === 'tours.tourName' && (
+                          <span className={`ml-1 ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}>
+                            {sortOrder === 'asc' ? '▲' : '▼'}
+                          </span>
+                        )}
+                      </th>
+                      <th onClick={() => handleSort('booking_date')} className='hover:text-amber-600'>
+                        Tour Date
+                        {sortedColumn === 'booking_date' && (
+                          <span className={`ml-1 ${sortOrder === 'asc' ? 'ascending' : 'descending'}`}>
+                            {sortOrder === 'asc' ? '▲' : '▼'}
+                          </span>
+                        )}
+                      </th>
                       <th>Qty /person</th>
                       <th>Total Price (Rp)</th>
+                      <th>Created At</th>
                       <th>Status</th>
                       {/* <th>PDF</th> */}
                     </tr>
@@ -308,16 +309,17 @@ function AllTransactions() {
                   <tbody>
                     {transactions.map((transaction) => (
                     <tr key={transaction.id} className='text-center'>
-                      <th className='hover:underline'>
+                      <th className='hover:bg-zinc-600 hover:underline'>
                         <Link href={`/admin/transaction/${transaction.id}`}>{transaction.id}</Link>
                       </th>
-                      <th className='hover:underline'>
+                      <th className='hover:bg-zinc-600 hover:underline'>
                         <Link href={`/admin/transaction/${transaction.id}`}>{transaction.user.name}</Link>
                       </th>
                       <th>{transaction.tours.tourName}</th>
                       <th>{formatDate(transaction.booking_date)}</th>
                       <th>{transaction.quantity}</th>
                       <th className='text-right'>{formatPrice(transaction.total)}</th>
+                      <th>{formatDate(transaction.createdAt)}</th>
                       <th>{getStatusBadge(transaction.status)}</th>
                       {/* <th><button onClick={() => generatePDFdetail(transaction.id)}>Download PDF</button></th> */}
                       <th>

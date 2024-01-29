@@ -21,7 +21,7 @@ const TotalTransaction = () => {
 
   return (
     <div>
-      <div className="stats shadow">
+      <div className="stats shadow hover:bg-base-200">
         <div className="stat">
           <div className="stat-figure text-secondary">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.0} stroke="currentColor" className="w-8 h-8">

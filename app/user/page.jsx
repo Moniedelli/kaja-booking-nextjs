@@ -65,8 +65,8 @@ const Dashboard = ({ }) => {
       <div className='p-10'>
         <p className='text-lg pb-5'>My Booking</p>
           <div role="tablist" className="tabs tabs-bordered">
-            <a role="tab" className={`tab ${activeTab === 'pending' ? 'tab-active' : ''}`} onClick={() => showTab('pending')}>Pending Payment</a>
-            <a role="tab" className={`tab ${activeTab === 'done' ? 'tab-active' : ''}`} onClick={() => showTab('done')}>Success Booking</a>
+            <a role="tab" className={`tab ${activeTab === 'pending' ? 'tab-active' : ''}`} onClick={() => showTab('pending')}>Pending</a>
+            <a role="tab" className={`tab ${activeTab === 'done' ? 'tab-active' : ''}`} onClick={() => showTab('done')}>Done</a>
             <a role="tab" className={`tab ${activeTab === 'success-booking' ? 'tab-active' : ''}`} onClick={() => showTab('success-booking')}>Paid</a>
             <a role="tab" className={`tab ${activeTab === 'fail' ? 'tab-active' : ''}`} onClick={() => showTab('fail')}>Fail</a>
           </div>

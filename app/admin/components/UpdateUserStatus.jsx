@@ -53,33 +53,33 @@ const UpdateUserStatus = ({userAccount}) => {
                 </form>
                 <h3 className="font-bold text-xl pb-3">Edit customer status with name <span className='italic'>{userAccount.name}</span></h3>
                 <div className="flex flex-col gap-4 max-w-3xl">
-                <label className="form-control">
-  <div className="label">
-    <span className="label-text text-zinc-300">Status</span>
-  </div>
-  <div className='flex gap-2 items-center pb-2'>
-    <input
-      type="radio"
-      name={`radio-${userAccount.id}`}
-      className="radio bg-transparent"
-      checked={status === 'ACTIVE'}
-      onChange={() => setStatus('ACTIVE')}
-      required
-    />
-    <h2>Active</h2>
-  </div>
-  <div className='flex gap-2 items-center pb-2'>
-    <input
-      type="radio"
-      name={`radio-${userAccount.id}`}
-      className="radio bg-transparent"
-      checked={status === 'INACTIVE'}
-      onChange={() => setStatus('INACTIVE')}
-      required
-    />
-    <h2>Inactive</h2>
-  </div>
-</label>
+                  <label className="form-control">
+                    <div className="label">
+                      <span className="label-text text-zinc-300">Status</span>
+                    </div>
+                    <div className='flex gap-2 items-center pb-2'>
+                      <input
+                        type="radio"
+                        name={`radio-${userAccount.id}`}
+                        className="radio bg-transparent"
+                        checked={status === 'ACTIVE'}
+                        onChange={() => setStatus('ACTIVE')}
+                        required
+                      />
+                      <h2>Active</h2>
+                    </div>
+                    <div className='flex gap-2 items-center pb-2'>
+                      <input
+                        type="radio"
+                        name={`radio-${userAccount.id}`}
+                        className="radio bg-transparent"
+                        checked={status === 'INACTIVE'}
+                        onChange={() => setStatus('INACTIVE')}
+                        required
+                      />
+                      <h2>Inactive</h2>
+                    </div>
+                  </label>
 
                 </div>
                 {/* Tombol Submit Example dan Pesan Submit */}

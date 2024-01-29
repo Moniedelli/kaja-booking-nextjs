@@ -46,7 +46,7 @@ const LoyalCustomers = () => {
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
+                      <div className="mask mask-squircle w-10 h-10">
                         <img src="/images/7309681.jpg" alt="Avatar Tailwind CSS Component" />
                       </div>
                     </div>

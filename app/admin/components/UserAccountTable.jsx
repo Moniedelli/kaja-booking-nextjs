@@ -22,6 +22,25 @@ function UserAccountTable() {
     fetchData();
   }, []);
 
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case 'ACTIVE':
+        return (
+          <div className="badge badge-secondary badge-outline">
+            Active
+          </div>
+        );
+      case 'INACTIVE':
+      return (
+        <div className="badge badge-primary badge-outline">
+          Inactive
+        </div>
+        );
+      default:
+        return null; 
+    }
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -30,8 +49,9 @@ function UserAccountTable() {
 
         
         const userAccountData = data.filter((user) => user.role === 'USER');
-
-        setUserAccount(userAccountData);
+        const sorted = userAccountData.sort((a, b) => a.id - b.id);
+  
+        setUserAccount(sorted);
       } catch (error) {
         console.error('Error fetching user:', error);
       }
@@ -90,7 +110,7 @@ function UserAccountTable() {
                 <td>{userAccount.phoneNumber}</td>
                 <th>{formatDate(userAccount.createdAt)}</th>
                 <th>
-                  <span className="text-xs">{userAccount.status}</span>
+                  <span className="text-xs">{getStatusBadge(userAccount.status)}</span>
                 </th>
                 <th>
                   <UpdateUserStatus userAccount={userAccount} />

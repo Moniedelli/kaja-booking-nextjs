@@ -1,7 +1,7 @@
 import prisma from "@/app/libs/prismadb";
 
 export default async function handler(req, res) {
-  const topTours = await prisma.tour.findMany({
+  const topFiveTours = await prisma.tour.findMany({
     include: {
       transactions: true,
     },
@@ -14,5 +14,5 @@ export default async function handler(req, res) {
   });
 
 
-  res.status(200).json(topTours);
+  res.status(200).json(topFiveTours);
 }

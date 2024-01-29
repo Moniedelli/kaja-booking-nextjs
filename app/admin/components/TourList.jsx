@@ -17,15 +17,18 @@ const TourList = () => {
       try {
         const response = await axios('/api/admin/content/read');
         const places = await response.data;
-        setPlaceData(places);
+  
+        const sortedPlaces = places.sort((a, b) => a.id - b.id);
+  
+        setPlaceData(sortedPlaces);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     getPlace();
   }, []);
-
+  
   const truncateDescription = (description) => {
     return description.length > 100 ? `${description.substring(0, 100)}...` : description;
   };
@@ -52,8 +55,8 @@ const TourList = () => {
             <tbody>
               {placeData.map((item) => (
                 <tr key={item.id} placeData={item} className='text-xs'>
-                  <td className='hover:underline'><Link href={`/admin/content/${item.id}`}>{item.id}</Link></td>
-                  <td><Link href={`/admin/content/${item.id}`} className='hover:underline'>{item.tourName}</Link></td>
+                  <td className='hover:underline hover:bg-zinc-600'><Link href={`/admin/content/${item.id}`}>{item.id}</Link></td>
+                  <td className='hover:underline hover:bg-zinc-600'><Link href={`/admin/content/${item.id}`}>{item.tourName}</Link></td>
                   <td>{item.location}</td>
                   <td>{truncateDescription(item.description)}</td>
                   <td className='text-right'>{formatPrice(item.price)}</td>
